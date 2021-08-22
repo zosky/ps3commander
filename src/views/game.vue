@@ -37,7 +37,7 @@
           {{ g }}
         </div>
       </div>
-      <div class="text-2xl w-full flex flex-row p-2 items-center">
+      <div class="text-2xl w-full flex flex-row p-2 items-center pt-5">
         {{ game?.players }}<span class="text-sm">player</span>
         <div>
           {{
@@ -49,16 +49,16 @@
           }}
         </div>
       </div>
-    </div>
-    <div
-      :class="[
-        'col-span-full p-4 m-3',
-        'ring ring-blue-300',
-        'text-blue-800 text-xs',
-        'rounded-2xl shadow-sm',
-      ]"
-    >
-      {{ game?.desc }}
+      <div
+        :class="[
+          'col-span-full p-4 m-3',
+          'ring ring-blue-300',
+          'text-blue-800 text-xs',
+          'rounded-2xl shadow-sm',
+        ]"
+      >
+        {{ game?.desc }}
+      </div>
     </div>
     <div
       class="w-full p-3 m-2 bg-blue-400 rounded-2xl text-center text-blue-50"
@@ -70,16 +70,16 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, inject } from "vue";
 import { useRoute } from "vue-router";
-import gamesList from "@/store/ps3games.json";
 export default {
   name: "game",
   setup() {
+    const dataStore = inject("$dataStore");
     const route = useRoute();
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
-      game: gamesList.find((g) => g.id == route.params.id),
+      game: dataStore.data.games.find((g) => g.id == route.params.id),
     });
     return { ...toRefs(state) };
   },

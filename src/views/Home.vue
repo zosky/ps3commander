@@ -1,36 +1,37 @@
 <template>
   <div>
-    <Android class="text-4xl font-bold text-blue-600" />
     <div
-      class="flex flex-row flex-wrap justify-center items-center"
+      class="flex flex-row flex-wrap justify-center items-center py-3"
       v-if="$route.name == 'Home'"
     >
       <game-card
-        v-for="game in games.slice(0, 10)"
+        v-for="game in games"
         :key="game.id"
         :game="game"
-        class="transform transition-all w-1/4 -mr-5 hover:scale-110"
+        class="transform transition-all w-1/4 sm:w-1/6 -mr-5 hover:scale-110"
         @click="$router.push({ name: 'game', params: { id: game.id } })"
       />
     </div>
     <router-view />
-    <pre>{{ games }}</pre>
+    <pre
+      v-if="DEV"
+      class="w-screen overflow-scroll h-32 p-2 text-xs bg-red-100"
+      >{{ games }}</pre
+    >
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import { reactive, toRefs } from "vue";
-import { Android } from "mdue";
-import gamesList from "@/store/ps3games.json";
+import { reactive, toRefs, inject, computed } from "vue";
 import gameCard from "@/components/gameCard.vue";
 export default {
   name: "Home",
-  components: { gameCard, Android },
+  components: { gameCard },
   setup() {
+    const dataStore = inject("$dataStore");
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
-      games: gamesList,
+      games: computed(() => dataStore.data.games),
     });
     return { ...toRefs(state) };
   },
