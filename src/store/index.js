@@ -14,7 +14,31 @@ const data = reactive({
 
 const filters = reactive({
   /* filters: watched by display function */
+  players: data.games
+    .reduce((acc, g) => {
+      if (!acc.includes(g.players)) acc.push(g.players);
+      return acc;
+    }, [])
+    ?.sort(),
+  genres: data.games
+    .reduce((acc, g) => {
+      g.genre
+        .filter((G) => !G.includes("oogle_ad_section_start"))
+        .forEach((genre) => {
+          if (!acc.includes(genre)) acc.push(genre);
+        });
+      return acc;
+    }, [])
+    ?.sort(),
+  location: data.games
+    .reduce((acc, g) => {
+      if (!acc.includes(g?.ps3?.info)) acc.push(g?.ps3?.info);
+      return acc;
+    }, [])
+    ?.sort(),
+  apps: data.games.filter((g) => g.name.includes("PSN")),
 });
+
 export default {
   data,
   filters,

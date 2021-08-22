@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col">
     <div
       class="flex flex-row flex-wrap justify-center items-center py-3"
       v-if="$route.name == 'Home'"
@@ -15,7 +15,7 @@
     <router-view />
     <pre
       v-if="DEV"
-      class="w-screen overflow-scroll h-32 p-2 text-xs bg-red-100"
+      class="w-full overflow-scroll h-32 p-2 text-xs bg-red-100"
       >{{ games }}</pre
     >
   </div>

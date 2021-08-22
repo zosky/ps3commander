@@ -2,7 +2,7 @@
   <div
     id="nav"
     :class="[
-      'w-full p-4 flex flex-row justify-between items-center',
+      'p-4 flex flex-row justify-between items-center',
       'from-blue-400 to-blue-800 bg-gradient-to-r',
       'shadow-xl',
     ]"
@@ -21,6 +21,34 @@
       "
     >
       <template v-if="$route.name == 'Home'">
+        <!-- genre dropDown -->
+        <nav-dropdown
+          :list="filters.genres"
+          @mouseleave="showGenres = false"
+          v-if="showGenres"
+        />
+        <!-- genre button+bubble -->
+        <Tag class="text-2xl" @click="showGenres = !showGenres" />
+        <nav-bubble
+          :value="filters.genres.length.toString()"
+          :key="filters.genres.length"
+        />
+        <!-- player count + bubble -->
+        <GamepadVariant
+          class="text-3xl"
+          :class="{ 'text-purple-300': filters.player }"
+          @click="
+            filters.player =
+              filters.player > filters.players.length - 2
+                ? 0
+                : filters.player + 1
+          "
+        />
+        <nav-bubble
+          :value="filters?.players[filters?.player]"
+          :key="filters?.player"
+        />
+        <!-- search + count + bubble -->
         <input
           v-if="showSearch"
           type="search"
@@ -36,29 +64,14 @@
           "
           :placeholder="`search (${games.length})`"
         />
-
         <DatabaseSearchOutline
           v-if="!showSearch"
           @click="showSearch = !showSearch"
         />
         <DatabaseSearch v-else @click="showSearch = !showSearch" />
-        <div
-          class="
-            align-top
-            ring-1 ring-blue-100
-            text-blue-100 text-xs
-            bg-blue-600 bg-opacity-25
-            tracking-tighter
-            font-bold
-            rounded-full
-            px-1
-            -ml-3
-            -mt-4
-          "
-        >
-          {{ games.length }}
-        </div>
+        <nav-bubble :value="games.length.toString()" :key="games.length" />
       </template>
+      <!-- notHome: back -->
       <Backburger v-else class="cursor-pointer" @click="$router.go(-1)" />
     </div>
   </div>
@@ -66,26 +79,38 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import { DatabaseSearch, DatabaseSearchOutline, Backburger } from "mdue";
+import navBubble from "./navBubble.vue";
+import navDropdown from "./navDropdown.vue";
+import {
+  DatabaseSearch,
+  DatabaseSearchOutline,
+  Backburger,
+  GamepadVariant,
+  Tag,
+} from "mdue";
 export default {
   name: "Nav",
   components: {
+    navBubble,
+    navDropdown,
     DatabaseSearch,
     DatabaseSearchOutline,
     Backburger,
+    GamepadVariant,
+    Tag,
   },
   setup() {
     const dataStore = inject("$dataStore");
     dataStore.filters.search = null;
+    dataStore.filters.player = null;
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       games: computed(() => dataStore.data.games),
       filters: dataStore.filters,
       showSearch: false,
+      showGenres: true,
     });
     return { ...toRefs(state) };
   },
 };
 </script>
-
-<style></style>
