@@ -1,23 +1,24 @@
 # ps3commander
+handRolled controller v4(?) - vue3 spa - backed by 1 parts by json extracted from my local gamesDB, and 1 part nodeRed-webManMod-_inTheMiddle-ware_
 
-## Project setup
-```
-npm install
-```
+# TODO
+- ps3 backEnd - power/login/mount/now-playing
+- deploy _(to gh-pages?)_
+# changeLog
+- 21.08.22 - readme init
+- 21.08.21 - list/drill/(auto)nav
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# obligatory screenshots
+<img src="src/assets/screen1.png?raw=true" style="width: 30%;">
+<img src="src/assets/screen2.png?raw=true" style="width: 30%;">
+<img src="src/assets/screen3.png?raw=true" style="width: 30%;">
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
+# App Dev
 ```
-npm run lint
+npm install     ## Project setup
+npm run serve   ## hot-reloads for development
+npm run build   ## Compiles and minifies for production
 ```
 
 ### Customize configuration
