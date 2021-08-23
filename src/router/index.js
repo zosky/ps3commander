@@ -15,6 +15,10 @@ const routes = [
       },
     ],
   },
+  { path: "/genre/:name", name: "genre", component: Home },
+  { path: "/players/:num", name: "players", component: Home },
+  { path: "/controller/:name", name: "controller", component: Home },
+  { path: "/user/:name", name: "user", component: Home },
 ];
 
 const router = createRouter({

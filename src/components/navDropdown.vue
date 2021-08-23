@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-wrapper float-right mr-2 mt-2">
+  <div class="dropdown-wrapper float-right mr-2 Xmt-2 w-0 h-0 overflow-visible">
     <div class="w-3 h-3 rounded-t-full bg-blue-500 -mb-2" />
     <div
       :class="[
@@ -9,19 +9,20 @@
       ]"
     >
       <ul class="list-none overflow-hidden rounded py-2 text-right">
-        <transition-group name="fade">
-          <li
-            v-for="i in list"
-            :key="i"
-            :class="[
-              'px-2 justify-evenly',
-              'transition duration-300',
-              'hover:scale-110 hover:bg-blue-700',
-            ]"
-          >
-            {{ i }}
-          </li>
-        </transition-group>
+        <!-- <transition-group name="fade"> -->
+        <li
+          v-for="i in list"
+          :key="i"
+          :class="[
+            'px-2 justify-evenly',
+            'transition duration-300',
+            'hover:scale-110 hover:bg-blue-700',
+          ]"
+          @click="$emit('thisOne', i)"
+        >
+          {{ i }}
+        </li>
+        <!-- </transition-group> -->
       </ul>
     </div>
   </div>
@@ -31,6 +32,7 @@
 export default {
   name: "dropDown",
   props: { list: { type: Array, default: () => [] } },
+  emits: ["thisOne"],
 };
 </script>
 
