@@ -35,11 +35,11 @@
       </template>
     </div>
     <router-view />
-    <pre
+    <!-- <pre
       v-if="DEV"
       class="w-full overflow-scroll h-32 p-2 text-xs bg-red-100"
       >{{ games }}</pre
-    >
+    > -->
   </div>
 </template>
 
