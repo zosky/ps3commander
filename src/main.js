@@ -6,4 +6,8 @@ import "./assets/tailwind.css";
 import dataStore from "./store/";
 let app = createApp(App);
 app.config.globalProperties.$moment = moment;
-app.use(router).provide("$dataStore", dataStore).mount("#app");
+app
+  .use(router)
+  .provide("moment", moment)
+  .provide("$dataStore", dataStore)
+  .mount("#app");
