@@ -55,30 +55,37 @@ export default {
     const route = useRoute();
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
-      games: computed(() =>
-        route.name == "genre"
-          ? dataStore?.data?.games?.filter((G) =>
-              G?.genre.includes(route.params.name)
-            )
-          : route.name == "players"
-          ? dataStore?.data?.games?.filter(
-              (G) => G?.players == dataStore?.filters?.player
-            )
-          : route.name == "controller"
-          ? dataStore?.data?.games?.filter((G) => {
-              const tc = route.params.name;
-              const tg = dataStore.data.gameTags.controllers[tc];
-              return tg.includes(G.id);
-            })
-          : route.name == "user"
-          ? dataStore?.data?.games?.filter((G) => {
-              const tc = route.params.name;
-              const tg = dataStore.data.gameTags.players[tc];
-              return tg.includes(G.id);
-            })
-          : dataStore.data.games
-      ),
+      games: computed(() => dataStore.data?.theseGames),
     });
+
+    dataStore.data.theseGames = computed(() =>
+      route.name == "superHome"
+        ? dataStore?.data?.games
+            //users
+            ?.filter((G) => {
+              const tcN = route?.params?.name;
+              const tg = dataStore.data.gameTags.players[tcN];
+              return tcN ? tg.includes(G.id) : G;
+            })
+            //genres
+            ?.filter((G) =>
+              route.params?.genre ? G?.genre.includes(route.params?.genre) : G
+            )
+            //controllers
+            ?.filter((G) => {
+              const tc = route.params?.controller;
+              const tg = dataStore.data.gameTags.controllers[tc];
+              return tc ? tg.includes(G.id) : G;
+            })
+            //players
+            ?.filter((G) =>
+              route?.params?.players
+                ? G?.players == dataStore?.filters?.player
+                : G
+            )
+        : dataStore.data.games
+    );
+
     return { ...toRefs(state) };
   },
 };

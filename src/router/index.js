@@ -15,10 +15,11 @@ const routes = [
       },
     ],
   },
-  { path: "/genre/:name", name: "genre", component: Home },
-  { path: "/players/:num", name: "players", component: Home },
-  { path: "/controller/:name", name: "controller", component: Home },
-  { path: "/user/:name", name: "user", component: Home },
+  {
+    path: "/u=:name?/g=:genre?/c=:controller?/p=:players?",
+    name: "superHome",
+    component: Home,
+  },
   {
     path: "/ps3/status",
     name: "ps3status",

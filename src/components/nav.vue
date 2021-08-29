@@ -15,9 +15,11 @@
     ]"
   >
     <div class="flex flex-row">
-      <!-- <span class="italic">ps3</span> -->
-      <myIcons i="ps3" class="w-10 h-auto mr-5" />
-      <!-- <b>commander</b> -->
+      <myIcons
+        i="ps3"
+        class="w-10 h-auto mr-5 cursor-pointer"
+        @click="$router.push('/')"
+      />
     </div>
     <div
       class="
@@ -41,9 +43,20 @@
         ]"
       >
         <template v-for="(gs, u) in users" :key="u">
-          <family :u="u" @click="$router.push(`/user/${u}`)" />
-          <!-- @click="$router.push(`/user/${u}`)" -->
-          <!-- <div v-else>{{ u }}</div> -->
+          <family
+            :u="u"
+            @click="
+              $router.push({
+                name: 'superHome',
+                params: {
+                  name: u,
+                  genre: $route?.params?.genre,
+                  players: $route?.params?.players,
+                  controller: $route?.params?.controller,
+                },
+              })
+            "
+          />
           <nav-bubble :value="`${gs.length}`" />
         </template>
       </div>
@@ -60,7 +73,17 @@
             :i="c"
             class="h-10 fill-current"
             :class="c == 'guitar' ? '-mr-6' : c == 'move' ? '-mr-1' : ''"
-            @click="$router.push({ name: 'controller', params: { name: c } })"
+            @click="
+              $router.push({
+                name: 'superHome',
+                params: {
+                  controller: c,
+                  name: $route?.params?.name,
+                  genre: $route?.params?.genre,
+                  players: $route?.params?.players,
+                },
+              })
+            "
           />
           <nav-bubble :value="`${gs.length}`" />
         </template>
@@ -75,7 +98,15 @@
           (e) => {
             filters.genre = e;
             showGenres = false;
-            $router.push({ name: 'genre', params: { name: e } });
+            $router.push({
+              name: 'superHome',
+              params: {
+                genre: e,
+                name: $route?.params?.name,
+                controller: $route?.params?.controller,
+                players: $route?.params?.players,
+              },
+            });
           }
         "
       />
@@ -97,7 +128,15 @@
           (e) => {
             filters.player = e;
             showPlayer = false;
-            $router.push({ name: 'players', params: { num: e } });
+            $router.push({
+              name: 'superHome',
+              params: {
+                players: e,
+                name: $route?.params?.name,
+                genre: $route?.params?.genre,
+                controller: $route?.params?.controller,
+              },
+            });
           }
         "
       />
@@ -128,7 +167,7 @@
           bg-opacity-75 bg-blue-400
           placeholder-blue-100
         "
-        :placeholder="`search (${games.length})`"
+        :placeholder="`search (${games?.length})`"
       />
       <input
         type="search"
@@ -145,14 +184,14 @@
           bg-opacity-75 bg-blue-400
           placeholder-blue-100
         "
-        :placeholder="`search (${games.length})`"
+        :placeholder="`search (${games?.length})`"
       />
       <DatabaseSearchOutline
         v-if="!showSearch"
         @click="showSearch = !showSearch"
       />
       <DatabaseSearch v-else @click="showSearch = !showSearch" />
-      <nav-bubble :value="games.length.toString()" :key="games.length" />
+      <nav-bubble :value="games?.length?.toString()" :key="games?.length" />
 
       <ps3status />
     </div>
@@ -194,7 +233,7 @@ export default {
     dataStore.filters.player = null;
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
-      games: computed(() => dataStore.data.games),
+      games: computed(() => dataStore.data?.theseGames),
       controllers: computed(() => dataStore.data.gameTags.controllers),
       users: computed(() => dataStore.data.gameTags.players),
       loading: computed(() => dataStore.filters?.loading),
