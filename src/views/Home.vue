@@ -83,6 +83,14 @@ export default {
                 ? G?.players == dataStore?.filters?.player
                 : G
             )
+            // search
+            ?.filter((G) =>
+              dataStore.filters?.search
+                ? G.name
+                    .toLowerCase()
+                    .includes(dataStore.filters.search.toLowerCase())
+                : G
+            )
         : dataStore.data.games
     );
 
