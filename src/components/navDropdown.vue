@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown-wrapper float-right mr-2 Xmt-2 w-0 h-0 overflow-visible">
+  <div class="dropdown-wrapper overflow-visible fixed bg-black bg-opacity-60">
     <div class="w-3 h-3 rounded-t-full bg-blue-500 -mb-2" />
     <div
       :class="[
