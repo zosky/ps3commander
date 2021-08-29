@@ -4,6 +4,7 @@ import gamesList from "./ps3games.json";
 import gameTags from "./ps3tags.json";
 
 const data = reactive({
+  API: "http://192.168.1.62:1880/myGames/ps3/status",
   gamesList: gamesList,
   gameTags: gameTags,
   games: computed(() => {
@@ -47,26 +48,38 @@ const filters = reactive({
   controllers: Object.keys(data.gameTags.controllers),
 });
 
+const getters = reactive({
+  getData: () => {
+    filters.loading = true;
+    fetch(data.API)
+      .then((res) => res.json())
+      .then((DATA) => {
+        filters.loading = false;
+        data.status = DATA;
+        if (DATA.on && !data?.drives) getters.postData("drives", "drives");
+      });
+  },
+  postData: (actionSTR, dataKEY, extraData) => {
+    filters.loading = true;
+    const theD = extraData
+      ? { action: actionSTR, ...extraData }
+      : { action: actionSTR };
+    fetch(data.API, {
+      method: "POST",
+      body: JSON.stringify(theD),
+    })
+      .then((res) => {
+        filters.loading = false;
+        return res.json();
+      })
+      .then((DATA) => {
+        if (dataKEY) data[dataKEY] = DATA;
+      });
+  },
+});
+
 export default {
   data,
   filters,
-  //   ...getters
+  getters,
 };
-
-// const getters = {
-//   GETdata: (what, extra, noSave) => {
-//     // IF(!data[what]) ? POST to NR {cmd:what,...extra} > store resp in data[what]
-//     if (!data[what]) {
-//       const u = `${process.env.VUE_APP_API}/xxx`
-//       const theD = {
-//         method: 'post',
-//         body: JSON.stringify({ cmd: what, ...extra })
-//       }
-//       fetch(u, theD)
-//         .then(res => res.json())
-//         .then(DATA => {
-//           if (noSave != false) data[what] = DATA
-//         })
-//     }
-//   }
-// }

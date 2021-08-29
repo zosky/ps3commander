@@ -19,6 +19,12 @@ const routes = [
   { path: "/players/:num", name: "players", component: Home },
   { path: "/controller/:name", name: "controller", component: Home },
   { path: "/user/:name", name: "user", component: Home },
+  {
+    path: "/ps3/status",
+    name: "ps3status",
+    component: () =>
+      import(/* webpackChunkName: "ps3" */ "@/views/ps3status.vue"),
+  },
 ];
 
 const router = createRouter({

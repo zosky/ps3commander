@@ -60,26 +60,61 @@
         {{ game?.desc }}
       </div>
     </div>
-    <div
-      class="w-full p-3 m-2 bg-blue-400 rounded-2xl text-center text-blue-50"
-      @click="$router.go(-1)"
-    >
-      back
+    <div class="flex flex-row-reverse col-span-full">
+      <DiscPlayer
+        class="p-3 m-2 rounded-2xl text-center text-blue-50 text-9xl"
+        :class="[
+          !playing && user
+            ? 'cursor-pointer bg-blue-400'
+            : 'cursor-wait ring ring-purple-200 text-purple-200 bg-purple-300 ',
+        ]"
+        @click="
+          !playing && user
+            ? mountDisk(game.id)
+            : user == false
+            ? $router.push({ name: 'ps3status' })
+            : ''
+        "
+      />
+
+      <Backburger
+        class="
+          p-3
+          m-2
+          ring ring-blue-400
+          rounded-2xl
+          text-center text-blue-400 text-9xl
+          cursor-pointer
+        "
+        @click="$router.go(-1)"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs, inject } from "vue";
+import { reactive, toRefs, inject, computed } from "vue";
 import { useRoute } from "vue-router";
+import { DiscPlayer, Backburger } from "mdue";
 export default {
   name: "game",
+  components: {
+    DiscPlayer,
+    Backburger,
+  },
   setup() {
     const dataStore = inject("$dataStore");
     const route = useRoute();
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       game: dataStore.data.games.find((g) => g.id == route.params.id),
+      diskMounted: computed(() => dataStore?.data?.status?.disk?.id),
+      playing: computed(() => dataStore?.data?.status?.game?.id),
+      user: computed(() => dataStore?.data?.status?.user?.icon != "lock"),
+      mountDisk: (gameId) => {
+        dataStore.getters.postData("play", null, { id: gameId });
+        dataStore.getters.getData();
+      },
     });
     return { ...toRefs(state) };
   },

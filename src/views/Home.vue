@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col bg-blue-100">
+  <div class="flex flex-col from-blue-100 to-blue-200 bg-gradient-to-r">
     <div
       class="flex flex-row flex-wrap justify-center items-center py-3"
       v-if="
