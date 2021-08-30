@@ -13,7 +13,6 @@ jobs:
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
     - id: goTime
-      uses: actions/checkout@v2
       with: 
         ref: 'gh-pages'
       run: |
