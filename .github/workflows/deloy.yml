@@ -15,14 +15,13 @@ jobs:
         username: 'zosky'
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
-    - name: Switch Branch and Hack Router
+    - name: RouterHack SimLink
       run: |
-        git checkout gh-pages
-        git pull
+        cd dist
         ln -s index.html 404.html
-        git add 404.html
-        git commit -m 'simLink 404'
+        git commit -m '404 router hack'
         git push
+      shell: bash
 
   # router_hack:
   #   # needs: build_vue
