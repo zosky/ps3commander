@@ -1,13 +1,11 @@
 # ps3commander
 handRolled controller v4(?) - vue3 spa ...
  - data backed in as json extracted from my local gamesDB
- - *(comingSoon)* ps3-API / nodeRed-webManMod-_inTheMiddle-ware_
+ - *(Doc:comingSoon)* ps3-API / nodeRed-webManMod-_inTheMiddle-ware_
 
-# TODO
-- ps3-lan-backEnd - power/login/mount/now-playing
-- ~~nav - not "back" - when @ "home+" (component+newPath)~~
-- deploy _(to gh-pages?)_
 # changeLog
+- 21.08.30 - MTP release
+  - deploy to `gh-pages` w/ `.github/workflows/deploy.yml`
 - 21.08.29 - v1b ~complete
   - ps3Status [componenet|vue] 
     - ps3:[on|off] as nav color + bottom-right
