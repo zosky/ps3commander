@@ -1,0 +1,17 @@
+name: simLink index 404 
+on: 
+  push:
+    branches:
+    - gh-pages
+jobs:
+  ln_not_found:
+    runs-on: ubuntu-latest
+    name: lnJob
+    steps:
+    - uses: actions/checkout@v2
+    - id: goTime
+      run: |
+        ln -s index.html 404.html
+        git add -A 404.html
+        git commit -m 'simLink index 404'
+        git push

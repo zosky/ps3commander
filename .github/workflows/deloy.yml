@@ -12,12 +12,3 @@ jobs:
         username: 'zosky'
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
-    - uses: actions/checkout@v2
-    - id: goTime
-      with: 
-        ref: 'gh-pages'
-      run: |
-        ln -s index.html 404.html
-        git add -A 404.html
-        git commit -m 'simLink index 404'
-        git push
