@@ -12,6 +12,7 @@ jobs:
         username: 'zosky'
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
+    - uses: actions/checkout@v2
     - id: goTime
       with: 
         ref: 'gh-pages'
