@@ -20,4 +20,4 @@ jobs:
         git config --global user.name "${{ github.actor }}"
         git add -A 404.html
         git commit -m 'simLink index 404'
-        git push
+        git push git@github.com:${{ github.repository }}.git main:gh-pages
