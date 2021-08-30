@@ -21,7 +21,7 @@ jobs:
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
   router_hack:
-    need: build_vue
+    needs: build_vue
     runs-on: ubuntu-latest
     name: Router Hack
     steps:
