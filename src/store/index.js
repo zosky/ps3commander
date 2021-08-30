@@ -6,15 +6,9 @@ import { useRoute } from "vue-router";
 
 const data = reactive({
   API: "http://192.168.1.62:1880/myGames/ps3/status",
+  games: gamesList,
   gamesList: gamesList,
   gameTags: gameTags,
-  games: computed(() => {
-    if (filters?.search) {
-      return data.gamesList.filter((g) =>
-        g.name.toLowerCase().includes(filters?.search?.toLowerCase())
-      );
-    } else return data.gamesList;
-  }),
   theseGames: computed(() => {
     const route = useRoute();
     return route.name == "superHome"

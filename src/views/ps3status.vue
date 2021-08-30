@@ -1,20 +1,33 @@
 <template>
   <div
     v-if="status?.on != true"
-    class="flex flex-col w-full p-8 gap-2 mt-20 cursor-pointer"
+    class="flex flex-row w-full p-8 gap-2 mt-20 cursor-pointer"
   >
     <div
       :class="[
         'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
         loading
           ? 'animate-bounce text-purple-500 bg-purple-100'
-          : 'text-red-500 bg-red-200',
+          : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
       ]"
       @click="getStatus()"
     >
       <Ethernet class="text-9xl" />
       <span v-if="loading">checking again... </span>
       <span v-else>is the system off ? </span>
+    </div>
+    <div
+      :class="[
+        'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
+        loading
+          ? 'animate-bounce text-purple-500 bg-purple-100'
+          : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
+      ]"
+      @click="$router.push({ name: 'ps3howTo' })"
+    >
+      <HelpRhombusOutline class="text-9xl" />
+      <span>how this works... </span>
+      <!-- <span v-else>is the system off ? </span> -->
     </div>
   </div>
   <div v-else class="flex flex-row flex-wrap w-full p-4 gap-x-4 gap-y-2">
@@ -250,6 +263,7 @@ import {
   //   ServerNetworkOff,
   Reload,
   Lock,
+  HelpRhombusOutline,
 } from "mdue";
 export default {
   name: "ps3status",
@@ -266,6 +280,7 @@ export default {
     Lock,
     Reload,
     Eject,
+    HelpRhombusOutline,
     // HarddiskRemove,
     // ServerNetworkOff,
     // Reload,

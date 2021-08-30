@@ -26,6 +26,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "ps3" */ "@/views/ps3status.vue"),
   },
+  {
+    path: "/ps3/howTo",
+    name: "ps3howTo",
+    component: () =>
+      import(/* webpackChunkName: "ps3" */ "@/views/ps3howTo.vue"),
+  },
 ];
 
 const router = createRouter({
