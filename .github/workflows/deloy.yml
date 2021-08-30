@@ -21,7 +21,7 @@ jobs:
         ln -s index.html 404.html
         git add 404.html
         git commit -m '404 router hack'
-        git push
+        git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git master:gh-pages
       shell: bash
 
   # router_hack:
