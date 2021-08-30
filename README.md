@@ -6,6 +6,7 @@ handRolled controller v4(?) - vue3 spa ...
 # changeLog
 - 21.08.30 - MTP release
   - deploy to `gh-pages` w/ `.github/workflows/deploy.yml`
+  - noNeed to roll my own [[props](https://github.com/marketplace/actions/vue-to-github-pages)]
 - 21.08.29 - v1b ~complete
   - ps3Status [componenet|vue] 
     - ps3:[on|off] as nav color + bottom-right
