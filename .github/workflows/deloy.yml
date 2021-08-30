@@ -13,10 +13,10 @@ jobs:
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
     - id: goTime
-      run: |
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        git config --global user.name "${{ github.actor }}"
-        git checkout gh-pages
+    - uses: actions/checkout@v2
+      - with: 
+        ref: 'gh-pages'
+    - run: |
         ln -s index.html 404.html
         git add -A 404.html
         git commit -m 'simLink index 404'
