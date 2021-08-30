@@ -6,15 +6,8 @@ jobs:
     name: Build Vue
     steps:
     - uses: actions/checkout@v2
-    - name: Router Hack
+    - name: Build and Deploy
       id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.0
-      with:
-        username: 'zosky'
-        reponame: 'ps3commander'
-        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
-    - name: Router Hack
-      id: Router-Hack
       uses: xRealNeon/VuePagesAction@1.0.0
       with:
         username: 'zosky'
@@ -26,7 +19,8 @@ jobs:
     name: Router Hack
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@gh-pages
+        uses: actions/checkout
+          ref: gh-pages
       - name: Make simLink
         run: ln -s index.html 404.html
       - name: Commit
