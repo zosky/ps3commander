@@ -1,26 +1,25 @@
 name: Build and Publish
 on: [push]
 jobs:
-  build_vue:
-    runs-on: ubuntu-latest
-    name: Build Vue
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build and Deploy
-      id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.0
-      with:
-        username: 'zosky'
-        reponame: 'ps3commander'
-        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
+  # build_vue:
+  #   runs-on: ubuntu-latest
+  #   name: Build Vue
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Build and Deploy
+  #     id: Build-Vue
+  #     uses: xRealNeon/VuePagesAction@1.0.0
+  #     with:
+  #       username: 'zosky'
+  #       reponame: 'ps3commander'
+  #       token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
   router_hack:
-    needs: build_vue
+    # needs: build_vue
     runs-on: ubuntu-latest
     name: Router Hack
     steps:
       - name: Checkout Repo
-        uses: actions/checkout
-          ref: gh-pages
+        uses: actions/checkout@gh-pages
       - name: Make simLink
         run: ln -s index.html 404.html
       - name: Commit
