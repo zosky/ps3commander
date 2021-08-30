@@ -15,9 +15,8 @@ jobs:
   four_oh_four_hack:
     runs-on: ubuntu-latest
     name: simLink index.html -> 404.html
-    description: 'This Action simLinks index.html to 404.html so Github pages always goes to the right place'
     branding:
-      icon: 'activity'  
+      icon: 'link-2'  
       color: 'blue'
     steps:
       - uses: actions/checkout@v2
