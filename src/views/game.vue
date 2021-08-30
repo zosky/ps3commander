@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 sm:grid sm:grid-cols-2">
-    <img :src="`/images/${game?.images?.image}`" :alt="game?.id" />
+    <img :src="`${IMGdir}${game?.images?.image}`" :alt="game?.id" />
     <div>
       <div
         :class="[
@@ -131,6 +131,7 @@ export default {
     const route = useRoute();
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
+      IMGdir: process.env.VUE_APP_IMG_BASE,
       game: dataStore.data.games.find((g) => g.id == route.params.id),
       playing: computed(() => dataStore?.data?.status?.game?.id),
       user: computed(() => dataStore?.data?.status?.user?.icon != "lock"),

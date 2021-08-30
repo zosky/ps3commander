@@ -12,3 +12,24 @@ jobs:
         username: 'zosky'
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
+  four_oh_four_hack:
+    runs-on: ubuntu-latest
+    name: simLink index.html -> 404.html
+    description: 'This Action simLinks index.html to 404.html so Github pages always goes to the right place'
+    branding:
+      icon: 'activity'  
+      color: 'blue'
+    runs:
+      using: "composite"
+      steps:
+        - uses: actions/checkout@v2
+        - name: goTime
+          run: |
+            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+            git config --global user.name "${{ github.actor }}"
+            cd dist
+            ln -s index.html 404.html
+            git add -A 404.html
+            git commit -m '${{ inputs.gitmsg }}'
+            git push
+          shell: bash

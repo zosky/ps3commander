@@ -19,14 +19,14 @@
         <!-- desktopShelf -->
         <img
           v-if="i % flexWidth.big == flexWidth.big - 1"
-          src="/images/woodShelf.png"
+          :src="shelf"
           alt="shelf"
           class="col-span-full h-20 w-full px-7 -mt-16 hidden md:block"
         />
         <!-- mobile shelf -->
         <img
           v-if="i % flexWidth.mobile == flexWidth.mobile - 1"
-          src="/images/woodShelf.png"
+          :src="shelf"
           alt="shelf"
           class="col-span-full h-16 w-full pl-7 pr-3 -mt-12 visible sm:hidden"
         />
@@ -47,6 +47,7 @@ export default {
     dataStore.filters.flexWidth = { mobile: 3, big: 6 };
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
+      shelf: `${process.env.VUE_APP_IMG_BASE}woodShelf.png`,
       games: computed(() => dataStore.data?.theseGames),
       flexWidth: computed(() => dataStore.filters.flexWidth),
     });

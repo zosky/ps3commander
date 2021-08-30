@@ -85,7 +85,7 @@
 
       <img
         class="w-3/4"
-        :src="`/images/wheels/${status.disk.id}.png`"
+        :src="`${IMGdir}wheels/${status.disk.id}.png`"
         :alt="status.disk.name"
       />
       <Eject
@@ -289,6 +289,7 @@ export default {
     const dataStore = inject("$dataStore");
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
+      IMGdir: process.env.VUE_APP_IMG_BASE,
       status: computed(() => dataStore.data?.status),
       drives: computed(() => dataStore.data?.drives),
       g: dataStore?.data?.games,

@@ -13,7 +13,7 @@
   >
     <img
       v-if="status?.disk?.id"
-      :src="`/images/wheels/${status.disk.id}.png`"
+      :src="`${IMGdir}wheels/${status.disk.id}.png`"
       :alt="status.disk.name"
     />
     <!-- <div class="text-xs -mt-5 pb-2 pr-2 self-end animate-pulse">
@@ -86,7 +86,7 @@ export default {
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
-      DEV: process.env.NODE_ENV == "development",
+      IMGdir: process.env.VUE_APP_IMG_BASE,
       API: dataStore.data.API,
       loading: computed(() => dataStore.filters?.loading),
       status: computed(() => dataStore.data?.status),
