@@ -12,17 +12,12 @@ jobs:
         username: 'zosky'
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
-  four_oh_four_hack:
-    runs-on: ubuntu-latest
-    name: simLink index.html -> 404.html
-    steps:
-      - uses: actions/checkout@v2
-      - name: goTime
-        run: |
-          cd dist
-          ln -s index.html 404.html
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git config --global user.name "${{ github.actor }}"
-          git add -A 404.html
-          git commit -m 'simLink index 404'
-          git push
+    - id: goTime
+      run: |
+        cd dist
+        ln -s index.html 404.html
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git config --global user.name "${{ github.actor }}"
+        git add -A 404.html
+        git commit -m 'simLink index 404'
+        git push
