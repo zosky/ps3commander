@@ -19,17 +19,14 @@ jobs:
     branding:
       icon: 'activity'  
       color: 'blue'
-    runs:
-      using: "composite"
-      steps:
-        - uses: actions/checkout@v2
-        - name: goTime
-          run: |
-            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-            git config --global user.name "${{ github.actor }}"
-            cd dist
-            ln -s index.html 404.html
-            git add -A 404.html
-            git commit -m '${{ inputs.gitmsg }}'
-            git push
-          shell: bash
+    steps:
+      - uses: actions/checkout@v2
+      - name: goTime
+        run: |
+          cd dist
+          ln -s index.html 404.html
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+          git add -A 404.html
+          git commit -m '${{ inputs.gitmsg }}'
+          git push
