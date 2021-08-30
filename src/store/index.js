@@ -5,7 +5,7 @@ import gameTags from "./ps3tags.json";
 import { useRoute } from "vue-router";
 
 const data = reactive({
-  API: "http://192.168.1.62:1880/myGames/ps3/status",
+  API: process.env.VUE_APP_API,
   games: gamesList,
   gamesList: gamesList,
   gameTags: gameTags,
