@@ -11,7 +11,7 @@
         ? 'from-purple-400 to-purple-800'
         : ps3on
         ? 'from-blue-400 to-blue-800'
-        : 'from-red-400 to-red-800',
+        : 'from-yellow-400 to-yellow-800',
     ]"
   >
     <div class="flex flex-row">
@@ -45,6 +45,12 @@
         <template v-for="(gs, u) in users" :key="u">
           <family
             :u="u"
+            :class="[
+              'transition-all transform',
+              {
+                'text-blue-600 scale-125 ': $route.params?.name == u,
+              },
+            ]"
             @click="
               $router.push({
                 name: 'superHome',
@@ -72,7 +78,13 @@
           <my-icons
             :i="c"
             class="h-10 fill-current"
-            :class="c == 'guitar' ? '-mr-6' : c == 'move' ? '-mr-1' : ''"
+            :class="[
+              c == 'guitar' ? '-mr-6' : c == 'move' ? '-mr-1' : '',
+              'transition-all transform',
+              {
+                'text-blue-600 scale-125 ': $route.params?.controller == c,
+              },
+            ]"
             @click="
               $router.push({
                 name: 'superHome',
@@ -113,7 +125,16 @@
       <!-- @thisOne="(e) => (filters.genre = e)" -->
 
       <!-- genre button+bubble -->
-      <Tag class="text-2xl" @click="showGenres = !showGenres" />
+      <Tag
+        class="text-2xl"
+        @click="showGenres = !showGenres"
+        :class="[
+          'transition-all transform',
+          {
+            'text-blue-600 scale-125 ': $route.params?.genre,
+          },
+        ]"
+      />
       <nav-bubble
         :value="filters.genres.length.toString()"
         :key="filters.genres.length"
@@ -142,7 +163,12 @@
       />
       <GamepadVariant
         class="text-3xl"
-        :class="{ 'text-purple-300': filters.player }"
+        :class="[
+          'transition-all transform',
+          {
+            'text-blue-600 scale-125 ': $route?.params?.players,
+          },
+        ]"
         @click="showPlayer = !showPlayer"
       />
       <nav-bubble
@@ -150,25 +176,7 @@
         :key="filters?.player"
         @mouseleave="filters.showPlayer = false"
       />
-      <!-- search + count + bubble -->
-      <input
-        v-if="showSearch"
-        type="search"
-        v-model="filters.search"
-        class="
-          ring ring-blue-300
-          px-3
-          mx-2
-          w-full
-          sm:hidden
-          rounded-3xl
-          max-w-xs
-          text-lg
-          bg-opacity-75 bg-blue-400
-          placeholder-blue-100
-        "
-        :placeholder="`search (${games?.length})`"
-      />
+      <!-- search DESKTOP + count + bubble -->
       <input
         type="search"
         v-model="filters.search"
@@ -184,17 +192,44 @@
           bg-opacity-75 bg-blue-400
           placeholder-blue-100
         "
-        :placeholder="`search (${games?.length})`"
+        :placeholder="`search`"
       />
+      <!-- mobile seach show/hide -->
       <DatabaseSearchOutline
         v-if="!showSearch"
+        class="sm:hidden"
         @click="showSearch = !showSearch"
       />
       <DatabaseSearch v-else @click="showSearch = !showSearch" />
       <nav-bubble :value="games?.length?.toString()" :key="games?.length" />
-
+      <!-- floating ps3 status -->
       <ps3status />
     </div>
+  </div>
+  <!-- MOBILE SEARCH ON SEPERATE ROW -->
+  <div
+    :class="[
+      'bg-gradient-to-l px-5',
+      loading
+        ? 'from-purple-400 to-purple-800'
+        : ps3on
+        ? 'from-blue-400 to-blue-800'
+        : 'from-yellow-400 to-yellow-800',
+    ]"
+  >
+    <input
+      v-if="showSearch"
+      type="search"
+      v-model="filters.search"
+      :class="[
+        'px-3 my-3 mx-2 self-center',
+        'w-full sm:hidden rounded-3xl text-lg',
+        'ring ring-blue-300',
+        'bg-opacity-75 bg-blue-400',
+        'placeholder-blue-100',
+      ]"
+      :placeholder="`search (${games?.length})`"
+    />
   </div>
 </template>
 

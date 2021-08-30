@@ -64,12 +64,12 @@
       <DiscPlayer
         class="p-3 m-2 rounded-2xl text-center text-blue-50 text-9xl"
         :class="[
-          !playing && user
+          !playing && user && powerOn
             ? 'cursor-pointer bg-blue-400'
             : 'cursor-wait ring ring-purple-200 text-purple-200 bg-purple-300 ',
         ]"
         @click="
-          !playing && user
+          !playing && user && powerOn
             ? mountDisk(game.id)
             : user == false
             ? $router.push({ name: 'ps3status' })
@@ -111,6 +111,7 @@ export default {
       diskMounted: computed(() => dataStore?.data?.status?.disk?.id),
       playing: computed(() => dataStore?.data?.status?.game?.id),
       user: computed(() => dataStore?.data?.status?.user?.icon != "lock"),
+      powerOn: computed(() => dataStore?.data?.status?.on),
       mountDisk: (gameId) => {
         dataStore.getters.postData("play", null, { id: gameId });
         dataStore.getters.getData();
