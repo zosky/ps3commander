@@ -14,13 +14,22 @@ jobs:
         reponame: 'ps3commander'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
     - name: Router Hack
-      id: goTime
-      uses: actions/checkout@gh-pages
-      run: |
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        git config --global user.name "${{ github.actor }}"
-        git branch 
-        ln -s index.html 404.html
-        git add -A 404.html
-        git commit -m 'simLink index 404'
-        git push
+      id: Router-Hack
+      uses: xRealNeon/VuePagesAction@1.0.0
+      with:
+        username: 'zosky'
+        reponame: 'ps3commander'
+        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
+  router_hack:
+    need: build_vue
+    runs-on: ubuntu-latest
+    name: Router Hack
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@gh-pages
+      - name: Make simLink
+        run: ln -s index.html 404.html
+      - name: Commit
+        run: git commit -m 'simLink index 404'
+      - name: Push
+        run: git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git master:gh-pages
