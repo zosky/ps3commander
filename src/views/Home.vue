@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col from-blue-100 to-blue-200 bg-gradient-to-r">
+  <div class="flex flex-col">
     <div
       class="flex flex-row flex-wrap justify-center items-center py-3"
       v-if="
@@ -12,20 +12,20 @@
           :game="game"
           :class="[
             'transform transition-transform',
-            'w-1/3 sm:w-1/6 -mr-5 hover:scale-110',
+            `w-1/${flexWidth.mobile} sm:w-1/${flexWidth.big} -mr-5 hover:scale-110`,
           ]"
           @click="$router.push({ name: 'game', params: { id: game.id } })"
         />
         <!-- desktopShelf -->
         <img
-          v-if="i % 6 == 5"
+          v-if="i % flexWidth.big == flexWidth.big - 1"
           src="/images/woodShelf.png"
           alt="shelf"
           class="col-span-full h-20 w-full px-7 -mt-16 hidden md:block"
         />
         <!-- mobile shelf -->
         <img
-          v-if="i % 3 == 2"
+          v-if="i % flexWidth.mobile == flexWidth.mobile - 1"
           src="/images/woodShelf.png"
           alt="shelf"
           class="col-span-full h-16 w-full pl-7 pr-3 -mt-12 visible sm:hidden"
@@ -39,62 +39,17 @@
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
 import gameCard from "@/components/gameCard.vue";
-import { useRoute } from "vue-router";
 export default {
   name: "Home",
   components: { gameCard },
   setup() {
     const dataStore = inject("$dataStore");
-    const route = useRoute();
+    dataStore.filters.flexWidth = { mobile: 3, big: 6 };
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       games: computed(() => dataStore.data?.theseGames),
+      flexWidth: computed(() => dataStore.filters.flexWidth),
     });
-
-    dataStore.data.theseGames = computed(() =>
-      route.name == "superHome"
-        ? dataStore?.data?.games
-            //users
-            ?.filter((G) => {
-              const tcN = route?.params?.name;
-              const tg = dataStore.data.gameTags.players[tcN];
-              return tcN ? tg.includes(G.id) : G;
-            })
-            //genres
-            ?.filter((G) =>
-              route.params?.genre ? G?.genre.includes(route.params?.genre) : G
-            )
-            //controllers
-            ?.filter((G) => {
-              const tc = route.params?.controller;
-              const tg = dataStore.data.gameTags.controllers[tc];
-              return tc ? tg.includes(G.id) : G;
-            })
-            //players
-            ?.filter((G) =>
-              route?.params?.players
-                ? G?.players == dataStore?.filters?.player
-                : G
-            )
-            // search
-            ?.filter((G) =>
-              dataStore.filters?.search
-                ? G.name
-                    .toLowerCase()
-                    .includes(dataStore.filters.search.toLowerCase())
-                : G
-            )
-        : dataStore.data.games
-            // search ALL (@home)
-            ?.filter((G) =>
-              dataStore.filters?.search
-                ? G.name
-                    .toLowerCase()
-                    .includes(dataStore.filters.search.toLowerCase())
-                : G
-            )
-    );
-
     return { ...toRefs(state) };
   },
 };

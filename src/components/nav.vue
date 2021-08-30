@@ -202,6 +202,34 @@
       />
       <DatabaseSearch v-else @click="showSearch = !showSearch" />
       <nav-bubble :value="games?.length?.toString()" :key="games?.length" />
+      <!-- zoom -->
+      <MagnifyPlus
+        :class="[
+          '-mr-3 ml-1',
+          filters?.flexWidth?.big == 6
+            ? 'sm:opacity-60'
+            : filters?.flexWidth?.mobile == 6
+            ? 'opacity-100 sm:opacity-100'
+            : '',
+        ]"
+        @click="
+          filters?.flexWidth?.big < 6 ? filters.flexWidth.big++ : '';
+          filters?.flexWidth?.mobile < 6 ? filters.flexWidth.mobile++ : '';
+        "
+      />
+      <MagnifyMinus
+        :class="[
+          filters?.flexWidth?.big == 1
+            ? 'sm:opacity-60'
+            : filters?.flexWidth?.mobile == 1
+            ? 'opacity-100 sm:opacity-100'
+            : '',
+        ]"
+        @click="
+          filters?.flexWidth?.big > 1 ? filters.flexWidth.big-- : '';
+          filters?.flexWidth?.mobile > 1 ? filters.flexWidth.mobile-- : '';
+        "
+      />
       <!-- floating ps3 status -->
       <ps3status />
     </div>
@@ -209,7 +237,7 @@
   <!-- MOBILE SEARCH ON SEPERATE ROW -->
   <div
     :class="[
-      'bg-gradient-to-l px-5',
+      'bg-gradient-to-r px-5',
       loading
         ? 'from-purple-400 to-purple-800'
         : ps3on
@@ -246,6 +274,8 @@ import {
   Backburger,
   GamepadVariant,
   Tag,
+  MagnifyPlus,
+  MagnifyMinus,
 } from "mdue";
 export default {
   name: "Nav",
@@ -260,6 +290,8 @@ export default {
     Backburger,
     GamepadVariant,
     Tag,
+    MagnifyPlus,
+    MagnifyMinus,
   },
   setup() {
     const dataStore = inject("$dataStore");

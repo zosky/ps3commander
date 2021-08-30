@@ -2,6 +2,7 @@
 import { reactive, computed } from "vue";
 import gamesList from "./ps3games.json";
 import gameTags from "./ps3tags.json";
+import { useRoute } from "vue-router";
 
 const data = reactive({
   API: "http://192.168.1.62:1880/myGames/ps3/status",
@@ -13,6 +14,44 @@ const data = reactive({
         g.name.toLowerCase().includes(filters?.search?.toLowerCase())
       );
     } else return data.gamesList;
+  }),
+  theseGames: computed(() => {
+    const route = useRoute();
+    return route.name == "superHome"
+      ? data?.games
+          //users
+          ?.filter((G) => {
+            const tcN = route?.params?.name;
+            const tg = data.gameTags.players[tcN];
+            return tcN ? tg.includes(G.id) : G;
+          })
+          //genres
+          ?.filter((G) =>
+            route.params?.genre ? G?.genre.includes(route.params?.genre) : G
+          )
+          //controllers
+          ?.filter((G) => {
+            const tc = route.params?.controller;
+            const tg = data.gameTags.controllers[tc];
+            return tc ? tg.includes(G.id) : G;
+          })
+          //players
+          ?.filter((G) =>
+            route?.params?.players ? G?.players == filters?.player : G
+          )
+          // search
+          ?.filter((G) =>
+            filters?.search
+              ? G.name.toLowerCase().includes(filters.search.toLowerCase())
+              : G
+          )
+      : data.games
+          // search ALL (@home)
+          ?.filter((G) =>
+            filters?.search
+              ? G.name.toLowerCase().includes(filters.search.toLowerCase())
+              : G
+          );
   }),
 });
 
