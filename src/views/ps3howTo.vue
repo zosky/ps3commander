@@ -28,6 +28,10 @@
                 Structure:gamesList.json<br />
                 <em> hint: try skyScraper to get assets and meta </em>
               </summary>
+              <details>
+                <summary>use nodeRed to make json from xml</summary>
+                <pre class="p-4 bg-blue-300" v-text="nrXmlJSON" />
+              </details>
               <div class="grid grid-cols-2">
                 <pre class="bg-blue-200 p-3 overflow-x-scroll">{{
                   jsonGame
@@ -216,7 +220,8 @@
 <script>
 import { computed, reactive, toRefs, inject } from "vue";
 import nodeRedApiPng from "/src/assets/screens/nodeRed-api.png";
-import nrFlow from "@/assets/nodeRed-flow.json";
+import nrXmlJSON from "/src/assets/nodeRed/xml-to-json.json";
+import nrFlow from "@/assets/nodeRed/api.json";
 export default {
   name: "ps3howTo",
   setup() {
@@ -225,6 +230,7 @@ export default {
       DEV: process.env.NODE_ENV == "development",
       nodeRedApiPng: nodeRedApiPng,
       nrFlow: nrFlow,
+      nrXmlJSON: nrXmlJSON,
       thisIX: 0,
       maxIX: computed(() => dataStore?.data?.games?.length),
       jsonGame: computed(() => dataStore?.data?.games[state.thisIX]),

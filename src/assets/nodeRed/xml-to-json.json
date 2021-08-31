@@ -1,0 +1,136 @@
+[
+    {
+        "id": "e6085aff.f6edb8",
+        "type": "tab",
+        "label": "snes-xml>json",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "cff943f9.b41f4",
+        "type": "inject",
+        "z": "e6085aff.f6edb8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 215,
+        "y": 180,
+        "wires": [
+            [
+                "d4d72ba.87630d8"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "96d78bd6.0c6f58",
+        "type": "file",
+        "z": "e6085aff.f6edb8",
+        "name": ">snes.json",
+        "filename": "Documents/my-apps/ps3commander/src/store/snesGame.json",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [
+                "b5e3464e.ace8c8"
+            ]
+        ]
+    },
+    {
+        "id": "d4d72ba.87630d8",
+        "type": "file in",
+        "z": "e6085aff.f6edb8",
+        "name": "ss.xml",
+        "filename": "Documents/my-apps/ps3commander/public/images/gamelist.snes.xml",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "2a67966d.df822a"
+            ]
+        ]
+    },
+    {
+        "id": "2a67966d.df822a",
+        "type": "xml",
+        "z": "e6085aff.f6edb8",
+        "name": "convert",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "6847951f.a1806c"
+            ]
+        ]
+    },
+    {
+        "id": "b5e3464e.ace8c8",
+        "type": "debug",
+        "z": "e6085aff.f6edb8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 815,
+        "y": 180,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "6847951f.a1806c",
+        "type": "change",
+        "z": "e6085aff.f6edb8",
+        "name": "clean",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.gameList.game ~>|$|{\t    \"name\": name[0],\t    \"cover\": cover[0].$substringAfter($,'media/'),\t    \"image\":image[0].$substringAfter($,'media/'),\t    \"marquee\": marquee[0],\t    \"video\": video[0],\t    \"rating\": rating[0],\t    \"desc\": desc[0],\t    \"releasedate\": releasedate[0],\t    \"developer\": developer[0],\t    \"publisher\": publisher[0],\t    \"genre\": genre[0].$split(',').$trim(),\t    \"players\": players[0]\t},[\"path\"]|",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 180,
+        "wires": [
+            [
+                "96d78bd6.0c6f58"
+            ]
+        ]
+    }
+]
