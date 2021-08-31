@@ -17,16 +17,19 @@
           class="transform transition-transform -mr-5 hover:scale-110"
           @click="$router.push({ name: 'game', params: { id: game.id } })"
         />
-        <!-- desktopShelf -->
+        <!-- desktopShelf OR LAST -->
         <img
-          v-if="i % flexWidth.big == flexWidth.big - 1"
+          v-if="i % flexWidth.big == flexWidth.big - 1 || i + 1 == games.length"
           :src="shelf"
           alt="shelf"
           class="col-span-full h-20 w-full -mt-16 hidden sm:block"
         />
-        <!-- mobile shelf -->
+        <!-- mobile shelf OR-->
         <img
-          v-if="i % flexWidth.mobile == flexWidth.mobile - 1"
+          v-if="
+            i % flexWidth.mobile == flexWidth.mobile - 1 ||
+            i + 1 == games.length
+          "
           :src="shelf"
           alt="shelf"
           class="col-span-full h-16 w-full pl-7 pr-3 -mt-12 visible sm:hidden"
