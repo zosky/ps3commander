@@ -22,7 +22,7 @@
         i="ps3"
         :class="[
           'relative z-20 h-20 w-auto',
-          '-mt-8 -mb-10 mr-10',
+          '-mt-5 -mb-10 mr-14 -ml-3',
           'cursor-pointer select-none',
           'transform transition-all origin-top-left',
           'hover:scale-110',
@@ -31,7 +31,7 @@
         @click="$router.push('/')"
       />
     </div>
-    <div id="logoPlaceHolder" class="pr-20" />
+    <div id="logoPlaceHolder" class="pr-32 sm:pr-20" />
     <div
       class="
         flex flex-row
@@ -207,9 +207,9 @@
       <DatabaseSearch v-else @click="showSearch = !showSearch" />
       <nav-bubble :value="games?.length?.toString()" :key="games?.length" />
       <!-- zoom -->
-      <MagnifyPlus
+      <DotsGrid
         :class="[
-          '-mr-3 ml-1',
+          '-mr-2 ml-1',
           filters?.flexWidth?.big == 6
             ? 'sm:opacity-60'
             : filters?.flexWidth?.mobile == 6
@@ -221,7 +221,7 @@
           filters?.flexWidth?.mobile < 6 ? filters.flexWidth.mobile++ : '';
         "
       />
-      <MagnifyMinus
+      <ViewGrid
         :class="[
           filters?.flexWidth?.big == 1
             ? 'sm:opacity-60'
@@ -278,8 +278,8 @@ import {
   Backburger,
   GamepadVariant,
   Tag,
-  MagnifyPlus,
-  MagnifyMinus,
+  ViewGrid,
+  DotsGrid,
 } from "mdue";
 export default {
   name: "Nav",
@@ -294,8 +294,8 @@ export default {
     Backburger,
     GamepadVariant,
     Tag,
-    MagnifyPlus,
-    MagnifyMinus,
+    ViewGrid,
+    DotsGrid,
   },
   setup() {
     const dataStore = inject("$dataStore");
