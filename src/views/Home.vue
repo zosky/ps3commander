@@ -2,9 +2,9 @@
   <div class="flex flex-col">
     <div
       :class="[
-        'grid justify-center items-center py-3 w-5/6 sm:w-11/12',
-        `grid-cols-${flexWidth.mobile}`,
-        `sm:grid-cols-${flexWidth.big} mx-auto`,
+        'grid justify-center items-center py-3 w-5/6 sm:w-11/12 mx-auto',
+        gridCols(flexWidth.mobile),
+        gridCols(flexWidth.big, 'sm'),
       ]"
       v-if="
         $route.matched[$route.matched.length - 1].components.default.name ==
@@ -51,6 +51,8 @@ export default {
       shelf: `${process.env.VUE_APP_IMG_BASE}woodShelf.png`,
       games: computed(() => dataStore.data?.theseGames),
       flexWidth: computed(() => dataStore.filters.flexWidth),
+      gridCols: (num, classifier) =>
+        `${classifier ? classifier + ":" : ""}grid-cols-${num}`,
     });
     return { ...toRefs(state) };
   },
