@@ -23,20 +23,3 @@ jobs:
         git commit -m '404 router hack'
         git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git master:gh-pages
       shell: bash
-
-  # router_hack:
-  #   # needs: build_vue
-  #   runs-on: ubuntu-latest
-  #   name: Router Hack
-  #   steps:
-  #     - name: Checkout Repo
-  #       uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
-      
-  #     - name: Make simLink
-  #       run: ln -s index.html 404.html
-  #     - name: Commit
-  #       run: git commit -m 'simLink index 404'
-  #     - name: Push
-  #       run: git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git master:gh-pages
