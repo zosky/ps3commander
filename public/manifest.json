@@ -1,0 +1,13 @@
+{
+    "short_name": "ps3Commander",
+    "name": "ps3commander",
+    "icons": [
+        {
+            "src": "images/ps3-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone"
+}
