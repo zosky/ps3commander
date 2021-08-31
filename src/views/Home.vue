@@ -1,7 +1,11 @@
 <template>
   <div class="flex flex-col">
     <div
-      class="flex flex-row flex-wrap justify-center items-center py-3"
+      :class="[
+        'grid justify-center items-center py-3 w-5/6 sm:w-11/12',
+        `grid-cols-${flexWidth.mobile}`,
+        `sm:grid-cols-${flexWidth.big} mx-auto`,
+      ]"
       v-if="
         $route.matched[$route.matched.length - 1].components.default.name ==
         'Home'
@@ -10,10 +14,7 @@
       <template v-for="(game, i) in games" :key="game.id">
         <game-card
           :game="game"
-          :class="[
-            'transform transition-transform',
-            `w-1/${flexWidth.mobile} sm:w-1/${flexWidth.big} -mr-5 hover:scale-110`,
-          ]"
+          class="transform transition-transform -mr-5 hover:scale-110"
           @click="$router.push({ name: 'game', params: { id: game.id } })"
         />
         <!-- desktopShelf -->
@@ -21,7 +22,7 @@
           v-if="i % flexWidth.big == flexWidth.big - 1"
           :src="shelf"
           alt="shelf"
-          class="col-span-full h-20 w-full px-7 -mt-16 hidden md:block"
+          class="col-span-full h-20 w-full -mt-16 hidden sm:block"
         />
         <!-- mobile shelf -->
         <img
