@@ -3,10 +3,42 @@ handRolled controller v4(?) - vue3 spa ...
  - data backed in as json extracted from my local gamesDB
  - *(Doc:comingSoon)* ps3-API / nodeRed-webManMod-_inTheMiddle-ware_
 
+# TODO
+- extend on/off awareness with WAN/LAN 
+  - fetch.catch(error) => WAN/LAN 
 # changeLog
-- 21.08.30 - MTP release
+- 21.08.30 - MTP release - 2ad893a: cleanup deploy experimentation
   - deploy to `gh-pages` w/ `.github/workflows/deploy.yml`
-  - noNeed to roll my own [[props](https://github.com/marketplace/actions/vue-to-github-pages)]
+  - noNeed to roll my own
+    - added 2nd step to simLink `index.html` -> `404.html`
+    - and requested xRealNeon/VuePagesAction/pull/4 to bake it in
+  - fix zoom(in|out) 
+    - CAUSE: missing `grid-col-#` after compile 
+    - FIX: tailwind safewords to keep `"(sm:)grid-cols-${<7}"` 
+  - fix [img/api] paths with env vars
+  - <details><summary>block WAN w/apache2 proxy in -`newsPI:default-ssl.conf`</summary>
+
+      ``` 
+        ProxyPass /ps3commanderAPI "http://LOCAL-IP:PORT/API/PATH"
+        ProxyPassReverse /ps3commanderAPI "http://LOCAL-IP:PORT/API/PATH"
+        <Proxy *>
+            Order deny,allow
+            Deny from all
+            Require ip 192.168.1.0/24
+            Satisfy Any
+        </proxy>
+      ```
+      </details>
+
+  - moment povided globally
+  - nav dropdown layout fixed
+  - 8d5277b: NEW superHome route with all params …
+    - 1 path + all :props? optional
+    - `"/u=:name?/g=:genre?/c=:controller?/p=:players?"`
+  - 87e1be4: global search fixed
+  - b79b243: bg on whole app body
+  - fb8e649: current nav item hilighted & mobile search
+  - caa3541: howTo - make/fork your own app/(NR)api
 - 21.08.29 - v1b ~complete
   - ps3Status [componenet|vue] 
     - ps3:[on|off] as nav color + bottom-right
