@@ -90,6 +90,10 @@ const getters = reactive({
         filters.loading = false;
         data.status = DATA;
         if (DATA.on && !data?.drives) getters.postData("drives", "drives");
+      })
+      .catch(() => {
+        filters.loading = false;
+        data.WAN = true;
       });
   },
   postData: (actionSTR, dataKEY, extraData) => {
@@ -107,6 +111,10 @@ const getters = reactive({
       })
       .then((DATA) => {
         if (dataKEY) data[dataKEY] = DATA;
+      })
+      .catch(() => {
+        filters.loading = false;
+        data.WAN = true;
       });
   },
 });
