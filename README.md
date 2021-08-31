@@ -4,6 +4,10 @@ handRolled controller v4(?) - vue3 spa ...
  - *(Doc:comingSoon)* ps3-API / nodeRed-webManMod-_inTheMiddle-ware_
 
 # changeLog
+- 21.08.31 - snes release
+  - controller added to topNav ... sets `filters.console` 
+  - added it as a prop on `superHome` too
+  - fixed the long-long reloads (onDev-only): game says so in its path
 - 21.08.30 - MTP release 
   - LAN/WAN awareness - purple/indigo
     - `@click.middle` to refresh

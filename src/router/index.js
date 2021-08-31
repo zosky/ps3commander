@@ -8,7 +8,7 @@ const routes = [
     component: Home,
     children: [
       {
-        path: ":id",
+        path: "game/:id",
         name: "game",
         component: () =>
           import(/* webpackChunkName: "game" */ "@/views/game.vue"),
@@ -16,7 +16,7 @@ const routes = [
     ],
   },
   {
-    path: "/u=:name?/g=:genre?/c=:controller?/p=:players?",
+    path: "/:console?/:name?/:genre?/:controller?/:players?",
     name: "superHome",
     component: Home,
   },

@@ -17,18 +17,42 @@
         : 'from-yellow-400 to-yellow-800',
     ]"
   >
-    <div class="overflow-visible z-20 fixed">
+    <div
+      class="overflow-visible z-20 fixed"
+      @click="
+        $router.push({
+          name: 'superHome',
+          params: { console: filters.viewMode },
+        })
+      "
+    >
       <myIcons
         i="ps3"
         :class="[
-          'relative z-20 h-16 sm:h-20 w-auto',
-          '-mt-5 -mb-10 mr-14 sm:-ml-3 -ml-1',
+          'absolute h-16 sm:h-20 w-auto',
+          '-mt-4 -mb-10 mr-14 sm:-ml-3 -ml-1',
           'cursor-pointer select-none',
           'transform transition-all origin-top-left',
           'hover:scale-110',
+          '-rotate-6',
+          filters.viewMode == 'ps3' ? 'z-20' : 'z-10 scale-95 opacity-75',
           { 'animate-pulse': loading },
         ]"
-        @click="$router.push('/')"
+        @click="filters.viewMode = 'ps3'"
+      />
+      <myIcons
+        i="snes"
+        :class="[
+          'absolute p-2 sm:h-20 h-16',
+          '-mt-4 -mb-5 mr-14 sm:-ml-3 -ml-1',
+          'left-10 -rotate-6',
+          'cursor-pointer select-none',
+          'transform transition-all origin-top-left',
+          'hover:scale-110',
+          filters.viewMode == 'snes' ? 'z-20' : 'z-10 scale-95 opacity-75 ',
+          { 'animate-pulse': loading },
+        ]"
+        @click="filters.viewMode = 'snes'"
       />
     </div>
     <div id="logoPlaceHolder" class="pr-20" />
@@ -60,6 +84,7 @@
               $router.push({
                 name: 'superHome',
                 params: {
+                  console: filters.viewMode,
                   name: `${u == $route?.params?.name ? '' : u}`,
                   genre: $route?.params?.genre,
                   players: $route?.params?.players,
@@ -94,6 +119,7 @@
               $router.push({
                 name: 'superHome',
                 params: {
+                  console: filters.viewMode,
                   controller: `${c == $route?.params?.controller ? '' : c}`,
                   name: $route?.params?.name,
                   genre: $route?.params?.genre,
@@ -118,6 +144,7 @@
             $router.push({
               name: 'superHome',
               params: {
+                console: filters.viewMode,
                 genre: `${e == $route?.params?.genre ? '' : e}`,
                 name: $route?.params?.name,
                 controller: $route?.params?.controller,
@@ -157,6 +184,7 @@
             $router.push({
               name: 'superHome',
               params: {
+                console: filters.viewMode,
                 players: `${e == $route?.params?.players ? '' : e}`,
                 name: $route?.params?.name,
                 genre: $route?.params?.genre,
