@@ -3,11 +3,14 @@ handRolled controller v4(?) - vue3 spa ...
  - data backed in as json extracted from my local gamesDB
  - *(Doc:comingSoon)* ps3-API / nodeRed-webManMod-_inTheMiddle-ware_
 
-# TODO
-- extend on/off awareness with WAN/LAN 
-  - fetch.catch(error) => WAN/LAN 
 # changeLog
-- 21.08.30 - MTP release - 2ad893a: cleanup deploy experimentation
+- 21.08.30 - MTP release 
+  - LAN/WAN awareness - purple/indigo
+    - `@click.middle` to refresh
+  - nav layout improved with *punchOut* controller logo
+  - howTo improvements
+    - use html5 `details>summary` rather then `@click` and state.showJson.{}
+  - 2ad893a: cleanup deploy experimentation
   - deploy to `gh-pages` w/ `.github/workflows/deploy.yml`
   - noNeed to roll my own
     - added 2nd step to simLink `index.html` -> `404.html`

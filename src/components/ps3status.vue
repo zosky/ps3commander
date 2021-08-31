@@ -2,7 +2,11 @@
   <div
     id="nowPlaying"
     :class="[
-      status?.on ? 'h-20 bg-purple-500' : 'h-12 bg-yellow-200',
+      status?.on
+        ? 'h-20 bg-purple-500'
+        : WAN
+        ? 'h-12 bg-indigo-500'
+        : 'h-12 bg-yellow-200',
       'fixed bottom-0 right-0 m-2 p-2',
       'text-green-200 bg-opacity-60',
       'flex flex-row justify-end align-bottom',
@@ -10,6 +14,7 @@
     ]"
     v-if="$route.name != 'ps3status'"
     @click="$router.push({ name: 'ps3status' })"
+    @click.middle="getData()"
   >
     <img
       v-if="status?.disk?.id"
@@ -47,8 +52,9 @@
           <ServerNetwork v-if="drives?.netfs" class="text-purple-200 text-sm" />
           <ServerNetworkOff v-else class="text-red-400 text-sm" />
         </div>
+        <LanDisconnect v-if="!loading && WAN" class="text-green-200" />
         <Ethernet
-          v-if="!loading"
+          v-else-if="!loading"
           :class="status?.on ? 'text-purple-200' : 'text-red-400'"
           @click="getData()"
         />
@@ -69,6 +75,7 @@ import {
   ServerNetworkOff,
   Reload,
   Lock,
+  LanDisconnect,
 } from "mdue";
 export default {
   name: "ps3status",
@@ -82,15 +89,16 @@ export default {
     ServerNetworkOff,
     Reload,
     Lock,
+    LanDisconnect,
   },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
       IMGdir: process.env.VUE_APP_IMG_BASE,
-      API: dataStore.data.API,
       loading: computed(() => dataStore.filters?.loading),
       status: computed(() => dataStore.data?.status),
       drives: computed(() => dataStore.data?.drives),
+      WAN: computed(() => dataStore.data?.WAN),
       getData: dataStore.getters.getData,
     });
     if (!dataStore.data?.status) dataStore.getters.getData();

@@ -1,0 +1,1233 @@
+[
+    {
+        "id": "2b873668.7e882a",
+        "type": "subflow",
+        "name": "CORS",
+        "info": "a new central (sub-flow) \n- this way i don't litter all the flows with CORS.change\n- and i have 1 place to change them all\n\n## OPTIONAL INPUTs\n`method` default = 'POST, GET, OPTIONS'\n`origin` default = `here or desk`\n - if !orgin > look at `req.headers.origin`\n",
+        "category": "",
+        "in": [
+            {
+                "x": 320,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "175288f.f150977"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 770,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "175288f.f150977",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#FFAAAA",
+        "icon": "font-awesome/fa-unlock-alt",
+        "status": {
+            "x": 770,
+            "y": 285,
+            "wires": [
+                {
+                    "id": "69e3fcd2.6279b4",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "175288f.f150977",
+        "type": "change",
+        "z": "2b873668.7e882a",
+        "name": "Access-Control-Allow-Origin > host filter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\t 'Access-Control-Allow-Methods':\t methods?methods:'POST, GET, OPTIONS',\t 'Access-Control-Allow-Origin': \t origin?origin:\t (req.headers.origin in [ \t 'http://localhost:8080' ,\t 'http://localhost:8181' ,\t 'http://192.168.1.91:8080',\t 'http://192.168.1.91:8181',\t 'http://mintyelite:4000',\t 'http://mintyelite:5000',\t 'http://mintyelite:5050',\t 'https://mintyelite:4001',\t 'http://192.168.1.62:4000',\t 'http://192.168.1.62:5000',\t 'http://192.168.1.62:5050',\t 'https://192.168.1.62:4001'\t ] ? '*')\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 535,
+        "y": 240,
+        "wires": [
+            [
+                "69e3fcd2.6279b4"
+            ]
+        ],
+        "icon": "font-awesome/fa-unlock-alt"
+    },
+    {
+        "id": "69e3fcd2.6279b4",
+        "type": "change",
+        "z": "2b873668.7e882a",
+        "name": "status",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \t \"fill\": headers.\"Access-Control-Allow-Origin\" ?\"green\":\"red\", \t \"text\": req.headers.origin\t ?req.headers.origin.$substringAfter('://')\t .( $=\"localhost:8080\"\t ?\"VUE.dev\"\t : $ in [\"mintyelite:4000\", \"192.168.1.62:4000\"]?\"VUE.prod\"\t : $ \t )\t :headers.\"Access-Control-Allow-Origin\"\t ? '' : 'BLOCKED',\t \"shape\":\"dot\"\t}\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 635,
+        "y": 285,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b5f96100.282f9",
+        "type": "inject",
+        "z": "ede2087b.985298",
+        "name": "meta",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "12",
+        "topic": "du",
+        "payload": "",
+        "payloadType": "date",
+        "x": 255,
+        "y": 1665,
+        "wires": [
+            [
+                "19fd37cd.6a98d8"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "37a69b40.27b9c4",
+        "type": "http request",
+        "z": "ede2087b.985298",
+        "name": "mapi",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://ps3.lan/cpursx.ps3",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 390,
+        "y": 1665,
+        "wires": [
+            [
+                "d6a0dc.22d15f28"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "d6a0dc.22d15f28",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "raw.game",
+        "property": "payload",
+        "outproperty": "raw.game",
+        "tag": "#content h2 a",
+        "ret": "html",
+        "as": "single",
+        "x": 510,
+        "y": 1665,
+        "wires": [
+            [
+                "b81deb9a.f752a8"
+            ]
+        ]
+    },
+    {
+        "id": "5c042e61.fe2f2",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "scrape",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "raw . {\t \"on\": \t $$.statusCode in ['EHOSTUNREACH', 'ETIMEDOUT']\t ?false:true,\t \"playing\" : $exists(game[1])?\t ( $g:=game[0];\t $flowContext('games')[id=$g] ), \t \"disk\": $exists(disk[0])?\t ( $d:= disk[0].$match(/^([A-Z]{4}[0-9]{5}).*/).groups[0] ; \t $flowContext('games')[id=$d] ),\t \"temp\" : $join(temps, '')\t .$match(/CPU:\\W*(\\d*)&....;C.*RSX:\\W*(\\d*)&....;C.*MEM:\\W*([\\d,]*).*FAN SPEED:\\W*(\\d*).*/) \t .groups {\t \"cpu\": $[0].$number(),\t \"rsx\": $[1].$number(),\t \"mem\": $[2].$replace(',','').$number(),\t \"fanSpeed\": $[3].$number()\t }\t , \t \"user\": \t ( $u:=user.href\t .$split('/')[3]\t .$match(/.*([\\d])/)\t .groups[0]\t .$number() ;\t ){ \t \"id\" : $,\t \"name\": $=2?'marc'\t : $=3?'ben'\t : $=4?'mel'\t : $=6?'admin'\t : $=1?'no one',\t \"icon\": $=2?'memory'\t : $=3?'child_care'\t : $=4?'face'\t : $=6?'policy'\t : $=1?'lock'\t },\t \"time\": {\t \"power\": time.on.$match(/([\\d]*)d ([\\d]{2}):([\\d]{2}):([\\d]{2})/).groups ~> $join(':'),\t \"game\": time.game.$match(/([\\d]*)d ([\\d]{2}):([\\d]{2}):([\\d]{2})/,1).groups ~> $join(':'),\t \"seconds\": {\t \"power\": ( $x:= time.on.$match(/([\\d]*)d ([\\d]{2}):([\\d]{2}):([\\d]{2})/).groups.$number();\t $x[0]*60*60*24   $x[1]*60*60   $x[2]*60   $x[3] ),\t \"game\": ( $x:= time.game.$match(/([\\d]*)d ([\\d]{2}):([\\d]{2}):([\\d]{2})/).groups.$number();\t $count($x)=0?0:\t $x[0]*60*60*24   $x[1]*60*60   $x[2]*60   $x[3] )\t },\t \"gameARR\":\t $zip( \t [\"d\",\"h\",\"m\",\"s\"],\t time.game.$match(/([\\d]*)d ([\\d]{2}):([\\d]{2}):([\\d]{2})/).groups)\t .{ \"k\": $[0], \t \"v\":$[1]\t .($contains($, /0[\\d]/)\t ?$substring($, 1, 1)\t :$\t ).$number()\t },\t \"powerARR\": \t $zip( \t [\"d\",\"h\",\"m\",\"s\"],\t time.on.$match(/([\\d]*)d ([\\d]{2}):([\\d]{2}):([\\d]{2})/).groups)\t .{ \"k\": $[0], \t \"v\": $[1]\t .($contains($, /0[\\d]/)\t ?$substring($, 1, 1)\t :$\t ).$number()\t }\t }\t}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "delete",
+                "p": "statusCode",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 1815,
+        "wires": [
+            [
+                "ade0f582.c3f448",
+                "c748b419.d8f728",
+                "e44a8090.8bd9"
+            ]
+        ]
+    },
+    {
+        "id": "cd67e2fe.a2963",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "raw.time.on",
+        "property": "payload",
+        "outproperty": "raw.time.on",
+        "tag": "label[title='Startup'] < a",
+        "ret": "text",
+        "as": "single",
+        "x": 520,
+        "y": 1785,
+        "wires": [
+            [
+                "db621f06.f6a57"
+            ]
+        ]
+    },
+    {
+        "id": "34b326ef.80821a",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "raw.user",
+        "property": "payload",
+        "outproperty": "raw.user",
+        "tag": "label[title='Startup'] < a",
+        "ret": "attr",
+        "as": "single",
+        "x": 510,
+        "y": 1725,
+        "wires": [
+            [
+                "a644c2e9.2c6c5"
+            ]
+        ]
+    },
+    {
+        "id": "db621f06.f6a57",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "raw.time.game",
+        "property": "payload",
+        "outproperty": "raw.time.game",
+        "tag": "label[title='Play'] < b",
+        "ret": "text",
+        "as": "single",
+        "x": 530,
+        "y": 1815,
+        "wires": [
+            [
+                "5c042e61.fe2f2"
+            ]
+        ]
+    },
+    {
+        "id": "19fd37cd.6a98d8",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "timeOut 3",
+        "rules": [
+            {
+                "t": "set",
+                "p": "requestTimeout",
+                "pt": "msg",
+                "to": "3000",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 345,
+        "y": 1665,
+        "wires": [
+            [
+                "37a69b40.27b9c4"
+            ]
+        ],
+        "icon": "font-awesome/fa-clock-o",
+        "l": false
+    },
+    {
+        "id": "888ac7ca.b05568",
+        "type": "http in",
+        "z": "ede2087b.985298",
+        "name": "",
+        "url": "/myGames/ps3/status",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 350,
+        "y": 1620,
+        "wires": [
+            [
+                "52752ff2.312ae"
+            ]
+        ]
+    },
+    {
+        "id": "846d8fc.5440e7",
+        "type": "http response",
+        "z": "ede2087b.985298",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1080,
+        "y": 1830,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "33504de2.ce22f2",
+        "type": "http in",
+        "z": "ede2087b.985298",
+        "name": "",
+        "url": "/myGames/ps3/status",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 345,
+        "y": 1860,
+        "wires": [
+            [
+                "93517ad1.bbc2d8"
+            ]
+        ]
+    },
+    {
+        "id": "8d2580aa.0e3d8",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 630,
+        "y": 2025,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "8b752aad.bc6578",
+        "type": "http response",
+        "z": "ede2087b.985298",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 915,
+        "y": 1965,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "fcdfdcfb.61aec",
+        "type": "switch",
+        "z": "ede2087b.985298",
+        "name": "action",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "drives",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "play",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "user",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "quit",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 275,
+        "y": 1950,
+        "wires": [
+            [
+                "4fcf5540.d6349c"
+            ],
+            [
+                "817831a4.5294f"
+            ],
+            [
+                "f83a74e9.5492c8"
+            ],
+            [
+                "457eb8af.777998"
+            ]
+        ]
+    },
+    {
+        "id": "817831a4.5294f",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "play game",
+        "rules": [
+            {
+                "t": "set",
+                "p": "game",
+                "pt": "msg",
+                "to": "$flowContext('games')[id=$$.payload.id]",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'http://ps3.lan/'\t& 'mount.ps3/unmount;'\t& (\t game.ps3.file.$contains('game/NPUB') \t ? '/play.ps3?' & game.id\t : game.ps3.file\t)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 1965,
+        "wires": [
+            [
+                "8d2580aa.0e3d8",
+                "e96c7f52.ddb69"
+            ]
+        ]
+    },
+    {
+        "id": "f83a74e9.5492c8",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "changeUser",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'http://ps3.lan'\t&'/browser.ps3$focus_category user 0.0'\t&';/browser.ps3$focus_index 2 '\t&( payload.name.(\t $='marc'?0\t :$='ben'?1\t :$='mel'?2 \t) )\t&';/wait.ps3?1;/pad.ps3?cross'\t&';/wait.ps3?1;/pad.ps3?cross' \t&';/wait.ps3?2;'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 1995,
+        "wires": [
+            [
+                "8d2580aa.0e3d8",
+                "e96c7f52.ddb69"
+            ]
+        ]
+    },
+    {
+        "id": "6e5e21ff.16035",
+        "type": "http request",
+        "z": "ede2087b.985298",
+        "name": "ps3CMD",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "basic",
+        "x": 810,
+        "y": 1965,
+        "wires": [
+            [
+                "8b752aad.bc6578",
+                "340a5767.f7e6f8"
+            ]
+        ]
+    },
+    {
+        "id": "e96c7f52.ddb69",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "prep",
+        "rules": [
+            {
+                "t": "set",
+                "p": "timeout",
+                "pt": "msg",
+                "to": "15000",
+                "tot": "num"
+            },
+            {
+                "t": "delete",
+                "p": "payload",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 665,
+        "y": 1965,
+        "wires": [
+            [
+                "6e5e21ff.16035"
+            ]
+        ]
+    },
+    {
+        "id": "340a5767.f7e6f8",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 915,
+        "y": 1935,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "457eb8af.777998",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "quit",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'http://ps3.lan'\t&'/pad.ps3?psbtn;/wait.ps3?3'\t&';/browser.ps3$focus_segment_index seg_gameexit 0;/wait.ps3?1'\t&';/pad.ps3?cross;/wait.ps3?1;/pad.ps3?left'\t&';/pad.ps3?cross;/wait.ps3?4'\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 2025,
+        "wires": [
+            [
+                "8d2580aa.0e3d8",
+                "e96c7f52.ddb69"
+            ]
+        ]
+    },
+    {
+        "id": "b81deb9a.f752a8",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "raw.disk",
+        "property": "payload",
+        "outproperty": "raw.disk",
+        "tag": "a[href^='/mount.ps3/']",
+        "ret": "text",
+        "as": "single",
+        "x": 510,
+        "y": 1695,
+        "wires": [
+            [
+                "34b326ef.80821a"
+            ]
+        ]
+    },
+    {
+        "id": "c748b419.d8f728",
+        "type": "switch",
+        "z": "ede2087b.985298",
+        "name": "if http",
+        "property": "http",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 1800,
+        "wires": [
+            [
+                "a6a56f75.c5386",
+                "c9d83bec.4cc8d8"
+            ]
+        ]
+    },
+    {
+        "id": "ade0f582.c3f448",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "mqtt*",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.on\t?'ps3/info'\t:'ps3/power'",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.on\t ?payload.{\t \"playing\": $exists(playing)?playing.id:'',\t \"disk\": $exists(disk)?disk.id:'',\t \"img\": { \"game\": playing.images.cover ? \"http://192.168.1.62:1880/myGamesDB-img-ps3/\" & playing.images.cover : '',\t \"disk\": ( disk.images.cover = playing.images.cover ) ? '' :\t \"http://192.168.1.62:1880/myGamesDB-img-ps3/\" & disk.images.cover\t },\t \"temp\": temp.cpu?temp ,\t \"user\": user,\t \"time\": time ~> | $ | {\t },[\"gameARR\",\"powerARR\"] |\t }\t :'OFF'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 830,
+        "y": 1860,
+        "wires": [
+            [
+                "5545b570.a9d00c",
+                "866d5c53.c95cb"
+            ]
+        ],
+        "info": " if \n - payload.on=false\n - topic = `ps3/power`\n - payload = `OFF`\n - else (power=on)\n - topic = `ps3/info`\n - payload = `{json}`\n - ex: `{\"playing\":\"BLUS30947\",\"disk\":\"BLUS30947\",\"temp\":{\"cpu\":63,\"rsx\":67,\"mem\":1204,\"hddGBfree\":77,\"fanSpeed\":37},\"user\":{\"id\":2,\"name\":\"marc\",\"icon\":\"memory\"},\"time\":{\"power\":\"0:04:09:48\",\"game\":\"0:04:07:18\",\"seconds\":{\"power\":14988,\"game\":14838}}}`"
+    },
+    {
+        "id": "aa23f2e1.c2a3c",
+        "type": "link out",
+        "z": "ede2087b.985298",
+        "name": "ps3 status - repeat",
+        "links": [
+            "acdf35aa.0ae3a8"
+        ],
+        "x": 1080,
+        "y": 1725,
+        "wires": []
+    },
+    {
+        "id": "acdf35aa.0ae3a8",
+        "type": "link in",
+        "z": "ede2087b.985298",
+        "name": "ps3 status - in",
+        "links": [
+            "aa23f2e1.c2a3c"
+        ],
+        "x": 300,
+        "y": 1665,
+        "wires": [
+            [
+                "19fd37cd.6a98d8"
+            ]
+        ]
+    },
+    {
+        "id": "5545b570.a9d00c",
+        "type": "link out",
+        "z": "ede2087b.985298",
+        "name": "mqtt > ps3/(power/info) > ( off | {json} )",
+        "links": [
+            "122dfcde.d4ee03"
+        ],
+        "x": 1080,
+        "y": 1905,
+        "wires": []
+    },
+    {
+        "id": "866d5c53.c95cb",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1080,
+        "y": 1860,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "b9e6a60c.914278",
+        "type": "switch",
+        "z": "ede2087b.985298",
+        "name": "if on",
+        "property": "payload.on",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 1755,
+        "wires": [
+            [
+                "9c4f5ef0.515f3",
+                "3806c823.e282d8",
+                "954424d4.f59048"
+            ],
+            [
+                "aa52561b.55b358",
+                "22b94067.f51b6"
+            ]
+        ]
+    },
+    {
+        "id": "3806c823.e282d8",
+        "type": "link out",
+        "z": "ede2087b.985298",
+        "name": "du",
+        "links": [
+            "1c507e6b.f43872"
+        ],
+        "x": 1080,
+        "y": 1665,
+        "wires": []
+    },
+    {
+        "id": "9c4f5ef0.515f3",
+        "type": "trigger",
+        "z": "ede2087b.985298",
+        "name": "on/15m",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "15",
+        "extend": true,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "outputs": 1,
+        "x": 1020,
+        "y": 1710,
+        "wires": [
+            [
+                "aa23f2e1.c2a3c",
+                "309fc9d4.c82106"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "aa52561b.55b358",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 930,
+        "y": 1770,
+        "wires": [
+            [
+                "9c4f5ef0.515f3"
+            ]
+        ],
+        "icon": "font-awesome/fa-refresh",
+        "l": false
+    },
+    {
+        "id": "22b94067.f51b6",
+        "type": "trigger",
+        "z": "ede2087b.985298",
+        "name": "off/1h",
+        "op1": "",
+        "op2": "0",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "1",
+        "extend": true,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "outputs": 1,
+        "x": 1020,
+        "y": 1755,
+        "wires": [
+            [
+                "aa23f2e1.c2a3c",
+                "9cf19a9.2debc68"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "954424d4.f59048",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "reset",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 930,
+        "y": 1695,
+        "wires": [
+            [
+                "22b94067.f51b6"
+            ]
+        ],
+        "icon": "font-awesome/fa-refresh",
+        "l": false
+    },
+    {
+        "id": "9cf19a9.2debc68",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1080,
+        "y": 1755,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "309fc9d4.c82106",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1080,
+        "y": 1695,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "a644c2e9.2c6c5",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "raw.temps",
+        "property": "payload",
+        "outproperty": "raw.temps",
+        "tag": "#content a.s",
+        "ret": "html",
+        "as": "single",
+        "x": 510,
+        "y": 1755,
+        "wires": [
+            [
+                "cd67e2fe.a2963"
+            ]
+        ]
+    },
+    {
+        "id": "8462f74d.ca80d8",
+        "type": "catch",
+        "z": "ede2087b.985298",
+        "name": "",
+        "scope": [
+            "af252bd3.089918",
+            "37a69b40.27b9c4"
+        ],
+        "uncaught": false,
+        "x": 330,
+        "y": 1725,
+        "wires": [
+            [
+                "21e11836.c4bf08"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "21e11836.c4bf08",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 375,
+        "y": 1725,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "52752ff2.312ae",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "http",
+        "rules": [
+            {
+                "t": "set",
+                "p": "http",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 1620,
+        "wires": [
+            [
+                "19fd37cd.6a98d8"
+            ]
+        ],
+        "icon": "node-red/white-globe.svg",
+        "l": false,
+        "info": "set msg.http=true to seperate reKicks from requests (that should reach the out node)"
+    },
+    {
+        "id": "a6a56f75.c5386",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1080,
+        "y": 1800,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "e44a8090.8bd9",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "!http",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "http",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 1755,
+        "wires": [
+            [
+                "b9e6a60c.914278"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "c9d83bec.4cc8d8",
+        "type": "subflow:2b873668.7e882a",
+        "z": "ede2087b.985298",
+        "name": "",
+        "x": 990,
+        "y": 1830,
+        "wires": [
+            [
+                "846d8fc.5440e7"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "4fcf5540.d6349c",
+        "type": "http request",
+        "z": "ede2087b.985298",
+        "name": "ps3",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://ps3.lan/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 435,
+        "y": 1920,
+        "wires": [
+            [
+                "2777a12c.77559e"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "2777a12c.77559e",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "du",
+        "property": "payload",
+        "outproperty": "hdd.ext.du",
+        "tag": "a[href=\"/dev_ntfs0\"] < td   td div a",
+        "ret": "attr",
+        "as": "single",
+        "x": 515,
+        "y": 1920,
+        "wires": [
+            [
+                "90fb5eca.0600b"
+            ]
+        ]
+    },
+    {
+        "id": "90fb5eca.0600b",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "hdd.int.du",
+        "property": "payload",
+        "outproperty": "hdd.int.du",
+        "tag": "a[href=\"/dev_hdd0\"] < td   td div a",
+        "ret": "attr",
+        "as": "single",
+        "x": 585,
+        "y": 1920,
+        "wires": [
+            [
+                "10bc5b03.a5f845"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "10bc5b03.a5f845",
+        "type": "html",
+        "z": "ede2087b.985298",
+        "name": "netFS",
+        "property": "payload",
+        "outproperty": "netfs",
+        "tag": "a[href=\"/net0\"]",
+        "ret": "text",
+        "as": "single",
+        "x": 630,
+        "y": 1920,
+        "wires": [
+            [
+                "5bb6137a.70920c"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "52b71a91.2af6a4",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 1935,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "2ae40f92.ae8b6",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "output",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": " hdd ~> | $.* | {\t \"free\": \t du.title\t .$match(/free \\(([0-9,]*) b/).groups[0]\t .$replace(',','')\t .$number()\t / $power(1000, 3) ~> $round() ,\t \"size\": \t du.title\t .$match(/\\(([0-9,]*) b\\)$/).groups[0]\t .$replace(',','')\t .$number() \t / $power(1000, 3) ~> $round() \t},[\"du\"] |\t ~> | $.* | {\t \"percent\": 100 - ( free * 100 / size ).$round()\t} |",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload.netfs",
+                "pt": "msg",
+                "to": "$exists(netfs[0]) ? nfs : false",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 855,
+        "y": 1920,
+        "wires": [
+            [
+                "52b71a91.2af6a4",
+                "c9d83bec.4cc8d8"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "139e188c.4c5947",
+        "type": "debug",
+        "z": "ede2087b.985298",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload.action",
+        "statusType": "msg",
+        "x": 540,
+        "y": 1860,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "93517ad1.bbc2d8",
+        "type": "json",
+        "z": "ede2087b.985298",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 495,
+        "y": 1860,
+        "wires": [
+            [
+                "fcdfdcfb.61aec",
+                "139e188c.4c5947"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "5bb6137a.70920c",
+        "type": "exec",
+        "z": "ede2087b.985298",
+        "command": "df /nfs/mb/media/zosky/cb4/afterDark/ | tail -1",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "du netFS",
+        "x": 720,
+        "y": 1920,
+        "wires": [
+            [
+                "6131d512.a5ed7c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6131d512.a5ed7c",
+        "type": "change",
+        "z": "ede2087b.985298",
+        "name": "inject",
+        "rules": [
+            {
+                "t": "set",
+                "p": "nfs",
+                "pt": "msg",
+                "to": "payload.$split(' ')[$]{\t 'free': $round($number($[3])/(1024*1024) ),\t 'used': $round($number($[2])/(1024*1024) ),\t 'size': $round($number($[1])/(1024*1024) ),\t 'percent': $round($number($[2])*100/$number($[1]))\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 1920,
+        "wires": [
+            [
+                "2ae40f92.ae8b6"
+            ]
+        ],
+        "l": false
+    }
+]

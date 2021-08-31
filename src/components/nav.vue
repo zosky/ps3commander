@@ -4,23 +4,33 @@
     :class="[
       'p-4 flex flex-row justify-between items-center',
       'bg-gradient-to-r',
-      'shadow-lg',
       'overflow-x-scroll overflow-y-visible',
       'sticky top-0 z-10',
+      'sm:shadow-lg',
+      { 'shadow-lg': showSearch },
       loading
         ? 'from-purple-400 to-purple-800'
         : ps3on
         ? 'from-blue-400 to-blue-800'
+        : WAN
+        ? 'from-indigo-400 to-indigo-800'
         : 'from-yellow-400 to-yellow-800',
     ]"
   >
-    <div class="flex flex-row">
+    <div class="overflow-visible z-20 fixed">
       <myIcons
         i="ps3"
-        class="w-10 h-auto mr-5 cursor-pointer"
+        :class="[
+          'relative z-20 h-20 w-auto',
+          '-mt-8 -mb-10 mr-10',
+          'cursor-pointer select-none',
+          'transform transition-all origin-top-left',
+          'hover:scale-110',
+        ]"
         @click="$router.push('/')"
       />
     </div>
+    <div id="logoPlaceHolder" class="pr-20" />
     <div
       class="
         flex flex-row
@@ -55,7 +65,7 @@
               $router.push({
                 name: 'superHome',
                 params: {
-                  name: u,
+                  name: `${u == $route?.params?.name ? '' : u}`,
                   genre: $route?.params?.genre,
                   players: $route?.params?.players,
                   controller: $route?.params?.controller,
@@ -89,7 +99,7 @@
               $router.push({
                 name: 'superHome',
                 params: {
-                  controller: c,
+                  controller: `${c == $route?.params?.controller ? '' : c}`,
                   name: $route?.params?.name,
                   genre: $route?.params?.genre,
                   players: $route?.params?.players,
@@ -113,7 +123,7 @@
             $router.push({
               name: 'superHome',
               params: {
-                genre: e,
+                genre: `${e == $route?.params?.genre ? '' : e}`,
                 name: $route?.params?.name,
                 controller: $route?.params?.controller,
                 players: $route?.params?.players,
@@ -152,7 +162,7 @@
             $router.push({
               name: 'superHome',
               params: {
-                players: e,
+                players: `${e == $route?.params?.players ? '' : e}`,
                 name: $route?.params?.name,
                 genre: $route?.params?.genre,
                 controller: $route?.params?.controller,
@@ -180,19 +190,12 @@
       <input
         type="search"
         v-model="filters.search"
-        class="
-          ring ring-blue-300
-          px-3
-          mx-2
-          hidden
-          sm:block
-          rounded-3xl
-          max-w-xs
-          text-lg
-          bg-opacity-75 bg-blue-400
-          placeholder-blue-100
-        "
-        :placeholder="`search`"
+        placeholder="search"
+        :class="[
+          'px-3 mx-2 hidden sm:block',
+          'ring ring-blue-300 rounded-3xl max-w-xs text-lg',
+          'bg-opacity-75 bg-blue-400 placeholder-blue-100',
+        ]"
       />
       <!-- mobile seach show/hide -->
       <DatabaseSearchOutline
@@ -305,6 +308,7 @@ export default {
       users: computed(() => dataStore.data.gameTags.players),
       loading: computed(() => dataStore.filters?.loading),
       ps3on: computed(() => dataStore.data?.status?.on),
+      WAN: computed(() => dataStore.data?.WAN),
       filters: dataStore.filters,
       showSearch: false,
       showGenres: false,
