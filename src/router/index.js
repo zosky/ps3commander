@@ -27,10 +27,10 @@ const routes = [
       import(/* webpackChunkName: "ps3" */ "@/views/ps3status.vue"),
   },
   {
-    path: "/ps3/howTo",
+    path: "/howTo",
     name: "ps3howTo",
     component: () =>
-      import(/* webpackChunkName: "ps3" */ "@/views/ps3howTo.vue"),
+      import(/* webpackChunkName: "util" */ "@/views/ps3howTo.vue"),
   },
 ];
 

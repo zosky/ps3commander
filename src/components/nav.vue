@@ -26,6 +26,7 @@
           'cursor-pointer select-none',
           'transform transition-all origin-top-left',
           'hover:scale-110',
+          { 'animate-pulse': loading },
         ]"
         @click="$router.push('/')"
       />

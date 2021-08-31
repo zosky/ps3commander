@@ -83,7 +83,7 @@ const filters = reactive({
 
 const getters = reactive({
   getData: () => {
-    filters.loading = true;
+    [filters.loading, data.WAN] = [true, false]; // reset loading/WAN-detect
     fetch(data.API)
       .then((res) => res.json())
       .then((DATA) => {

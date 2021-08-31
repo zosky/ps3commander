@@ -1,18 +1,26 @@
 <template>
   <div class="p-3 m-2">
-    <div class="text-lg font-bold">easy as 1, 2, 3, 4...</div>
+    <div class="text-lg font-bold border-b border-blue-300">
+      easy as 1, 2, 3, 4...
+    </div>
     <ol type="1" class="list-decimal p-3 pt-0 ml-2">
-      <li>
-        smash a ps3
+      <li class="pt-2">
+        <span class="text-blue-800 font-serif border-b border-blue-200">
+          smash a ps3
+        </span>
         <ul class="ml-2">
           <li>
-            <span>this is pretty useless without one running webManMod</span>
+            <span
+              >the rest is pretty useless without one running webManMod</span
+            >
           </li>
           <li>ask google, then continue</li>
         </ul>
       </li>
-      <li>
-        make json files and assets:
+      <li class="pt-2">
+        <span class="text-blue-800 font-serif border-b border-blue-200">
+          get meta (and assets), make json:
+        </span>
         <ul class="ml-2">
           <li>
             <details>
@@ -76,9 +84,7 @@
             <details>
               <summary>
                 Structure:navData.json
-                <br /><em>
-                  hint: try jq to make it make it match to needed structure
-                </em>
+                <br /><em> hint: try jq to make it make it match </em>
               </summary>
               <pre class="bg-blue-200 p-3">
 {
@@ -98,76 +104,96 @@
           </li>
         </ul>
       </li>
-      <li>
-        roll the backEnd
+      <li class="pt-2">
+        <span class="text-blue-800 font-serif border-b border-blue-200">
+          roll the backEnd
+        </span>
         <ul class="ml-2">
           <li>
-            using your weapon of choice: make an API endPoint
-
-            <ul class="ml-2">
-              <li>
-                <details>
-                  <summary v-text="`GET response`" />
-                  <pre>
+            make an API endPoint using your weapon of choice
+            <details>
+              <summary v-text="`GET response example`" />
+              <pre>
 {
     "on":[true|false],
     "temp":{},
     "user":{"name","icon"},
     "time":{ "seconds":{ "power":0, "game":0 }}
 }
-                  </pre>
-                </details>
-              </li>
+                  </pre
+              >
+            </details>
+            <details>
+              <summary>
+                <span class="text-blue-900">TODO(doc):</span> POST:{action:HDD}
+              </summary>
+            </details>
+            <details>
+              <summary>
+                <span class="text-blue-900">TODO(doc):</span>
+                POST:{action:mount,id:diskID}
+              </summary>
+            </details>
+            <details>
+              <summary>
+                <span class="text-blue-900">TODO(doc):</span>
+                POST:{action:user,name:name}
+              </summary>
+            </details>
+            <details>
+              <summary>hint: check out my node-red flow<em /></summary>
+              <div class="text-blue-800">
+                <ul class="ml-2">
+                  <li>wMM@ps3 should be @ <span>http://ps3.lan/</span></li>
+                  <li>
+                    CORS subflow <span>need adjusting</span> for
+                    <span>CORS headers</span>
+                  </li>
+                  <li>
+                    some links (like to smartHome w/mqtt) are
+                    <span>also not included</span>
+                  </li>
+                </ul>
+              </div>
+              <img
+                :src="nodeRedApiPng"
+                alt="apiScreenshot"
+                class="mix-blend-multiply pb-2"
+              />
+              <details>
+                <summary>flow.JSON</summary>
+                <pre
+                  v-text="nrFlow"
+                  class="bg-blue-300 p-2 overflow-scroll h-80"
+                />
+              </details>
+            </details>
 
-              <li>
-                <details>
-                  <summary>hint: check out my node-red flow<em /></summary>
-                  <div class="text-blue-800">
-                    <ul class="ml-2">
-                      <li>wMM@ps3 should be @ <span>http://ps3.lan/</span></li>
-                      <li>
-                        CORS subflow <span>need adjusting</span> for
-                        <span>CORS headers</span>
-                      </li>
-                      <li>
-                        some links (like to smartHome w/mqtt) are
-                        <span>also not included</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <img
-                    :src="nodeRedApiPng"
-                    alt="apiScreenshot"
-                    class="mix-blend-multiply pb-2"
-                  />
-                  <details>
-                    <summary>flow.JSON</summary>
-                    <pre
-                      v-text="nrFlow"
-                      class="bg-blue-300 p-2 overflow-scroll h-80"
-                    />
-                  </details>
-                </details>
-              </li>
-            </ul>
-          </li>
+            <details>
+              <summary>
+                <span>lock it down to LAN only</span>
+                (/aka: <em>be here</em> )
+              </summary>
 
-          <li>
-            <span> TODO(doc): </span>
-            POST:{action:HDD}
-          </li>
-          <li>
-            <span> TODO(doc): </span>
-            POST:{action:mount,id:diskID}
-          </li>
-          <li>
-            <span> TODO(doc): </span>
-            POST:{action:user,name:name}
+              <div>hint: proxy with apach2</div>
+              <pre class="bg-blue-200 p-3">
+  ProxyPass /ps3commanderAPI "http://LOCAL-IP:PORT/API/PATH"
+  ProxyPassReverse /ps3commanderAPI "http://LOCAL-IP:PORT/API/PATH"
+  &lt;proxy%3E Proxy *>
+      Order deny,allow
+      Deny from all
+      Require ip 192.168.1.0/24
+      Satisfy Any
+  &lt;/proxy></pre
+              >
+            </details>
           </li>
         </ul>
       </li>
-      <li>
-        make the app
+      <li class="pt-2">
+        <span class="text-blue-800 font-serif border-b border-blue-200">
+          make the app
+        </span>
         <ul class="ml-2 list-disc">
           <li>fork the repo</li>
           <li>
@@ -214,6 +240,12 @@ ul {
   font-size: 0.75rem;
 }
 ul span {
+  font-weight: bold;
+}
+
+ol > li::marker {
+  list-style-position: outside;
+  color: rgb(30, 64, 175); /* Change the color */
   font-weight: bold;
 }
 </style>

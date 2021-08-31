@@ -8,19 +8,26 @@
         'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
         loading
           ? 'animate-bounce text-purple-500 bg-purple-100'
+          : WAN
+          ? 'text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300'
           : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
       ]"
       @click="getStatus()"
     >
-      <Ethernet class="text-9xl" />
-      <span v-if="loading">checking again... </span>
-      <span v-else>is the system off ? </span>
+      <Refresh v-if="loading" class="text-9xl" />
+      <LanDisconnect v-else-if="WAN" class="text-9xl" />
+      <Ethernet v-else class="text-9xl" />
+      <span v-if="loading">checking again...</span>
+      <span v-else-if="WAN">API blocked?</span>
+      <span v-else>system off ?</span>
     </div>
     <div
       :class="[
         'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
         loading
           ? 'animate-bounce text-purple-500 bg-purple-100'
+          : WAN
+          ? 'text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300'
           : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
       ]"
       @click="$router.push({ name: 'ps3howTo' })"
@@ -264,6 +271,8 @@ import {
   Reload,
   Lock,
   HelpRhombusOutline,
+  Refresh,
+  LanDisconnect,
 } from "mdue";
 export default {
   name: "ps3status",
@@ -281,6 +290,8 @@ export default {
     Reload,
     Eject,
     HelpRhombusOutline,
+    Refresh,
+    LanDisconnect,
     // HarddiskRemove,
     // ServerNetworkOff,
     // Reload,
@@ -290,6 +301,7 @@ export default {
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       IMGdir: process.env.VUE_APP_IMG_BASE,
+      WAN: computed(() => dataStore.data?.WAN),
       status: computed(() => dataStore.data?.status),
       drives: computed(() => dataStore.data?.drives),
       g: dataStore?.data?.games,
