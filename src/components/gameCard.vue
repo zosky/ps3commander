@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img :src="IMG" :alt="game?.id" class="w-full h-full" />
+    <img :src="IMG" :alt="game?.id" class="min-w-full min-h-full gameCard" />
     <div
       :class="[
         'fixed h-0  w-0 bottom-8 right-8',
@@ -33,3 +33,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+img.gameCard {
+  aspect-ratio: 8/11;
+}
+</style>
