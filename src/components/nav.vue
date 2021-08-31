@@ -21,8 +21,8 @@
       <myIcons
         i="ps3"
         :class="[
-          'relative z-20 h-20 w-auto',
-          '-mt-5 -mb-10 mr-14 -ml-3',
+          'relative z-20 h-16 sm:h-20 w-auto',
+          '-mt-5 -mb-10 mr-14 sm:-ml-3 -ml-1',
           'cursor-pointer select-none',
           'transform transition-all origin-top-left',
           'hover:scale-110',
@@ -31,7 +31,7 @@
         @click="$router.push('/')"
       />
     </div>
-    <div id="logoPlaceHolder" class="pr-32 sm:pr-20" />
+    <div id="logoPlaceHolder" class="pr-20" />
     <div
       class="
         flex flex-row
@@ -41,12 +41,6 @@
         text-3xl text-blue-300
       "
     >
-      <!-- notHome: back -->
-      <Backburger
-        v-if="$route.name != 'Home'"
-        class="cursor-pointer"
-        @click="$router.go(-1)"
-      />
       <div
         :class="[
           'flex flex-row justify-around items-center',
@@ -275,7 +269,6 @@ import family from "./family.vue";
 import {
   DatabaseSearch,
   DatabaseSearchOutline,
-  Backburger,
   GamepadVariant,
   Tag,
   ViewGrid,
@@ -291,7 +284,6 @@ export default {
     family,
     DatabaseSearch,
     DatabaseSearchOutline,
-    Backburger,
     GamepadVariant,
     Tag,
     ViewGrid,
