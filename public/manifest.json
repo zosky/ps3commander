@@ -1,5 +1,5 @@
 {
-    "short_name": "ps3Commander",
+    "short_name": "ps3commander",
     "name": "ps3commander",
     "icons": [
         {
@@ -8,6 +8,6 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/ps3Commander/",
+    "start_url": "/ps3commander/",
     "display": "standalone"
 }
