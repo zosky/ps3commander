@@ -29,4 +29,3 @@ git log --pretty=format:'{%n
     | awk 'BEGIN { print("[") } { print($0) } END { print("]") }' \
     > src/store/gitLog.json
 git add src/store/gitLog.json
-git commit --amend -C HEAD --no-verify
