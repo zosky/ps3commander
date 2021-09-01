@@ -20,28 +20,27 @@
   </div>
 </template>
 <script>
-import { reactive, toRefs, inject } from "vue";
 import { DiscPlayer, ServerNetwork, Application } from "mdue";
 export default {
   name: "game",
-  props: { game: { type: Object, default: () => {} } },
+  props: {
+    ps3: { type: Boolean, default: true },
+    game: { type: Object, default: () => {} },
+  },
   components: { DiscPlayer, ServerNetwork, Application },
   setup(props) {
-    const dataStore = inject("$dataStore");
-    const state = reactive({
-      viewMode: dataStore.filters.viewMode,
-      snesMode: dataStore.filters.viewMode == "snes",
-      ps3Mode: dataStore.filters.viewMode == "ps3",
+    const state = {
+      ps3Mode: props.ps3,
+      viewMode: props.ps3 ? "ps3" : "snes",
       hdd: props.game?.ps3?.info == "/dev_ntfs/PS3ISO",
       netfs: props.game?.ps3?.info == "/net0/PS3ISO",
       app: props.game?.name.includes("PSN"),
-      IMG: `${process.env.VUE_APP_IMG_BASE}${
-        dataStore.filters.viewMode == "ps3"
+      IMG:
+        process.env.VUE_APP_IMG_BASE + props.ps3
           ? props?.game?.images?.cover
-          : props?.game?.cover
-      }`,
-    });
-    return { ...toRefs(state) };
+          : props?.game?.cover,
+    };
+    return { ...state };
   },
 };
 </script>

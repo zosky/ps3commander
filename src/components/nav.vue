@@ -17,15 +17,7 @@
         : 'from-yellow-400 to-yellow-800',
     ]"
   >
-    <div
-      class="overflow-visible z-20 fixed"
-      @click="
-        $router.push({
-          name: 'superHome',
-          params: { console: filters.viewMode },
-        })
-      "
-    >
+    <div class="overflow-visible z-20 fixed">
       <myIcons
         i="ps3"
         :class="[
@@ -35,10 +27,16 @@
           'transform transition-all origin-top-left',
           'hover:scale-110',
           '-rotate-6',
-          filters.viewMode == 'ps3' ? 'z-20' : 'z-10 scale-95 opacity-75',
+          filters.viewMode == 'ps3' ? 'z-20' : 'z-10 scale-95',
           { 'animate-pulse': loading },
         ]"
-        @click="filters.viewMode = 'ps3'"
+        @click="
+          filters.viewMode = 'ps3';
+          $router.push({
+            name: 'superHome',
+            params: { console: filters.viewMode },
+          });
+        "
       />
       <myIcons
         i="snes"
@@ -49,10 +47,16 @@
           'cursor-pointer select-none',
           'transform transition-all origin-top-left',
           'hover:scale-110',
-          filters.viewMode == 'snes' ? 'z-20' : 'z-10 scale-95 opacity-75 ',
+          filters.viewMode == 'snes' ? 'z-20' : 'z-10 scale-95 ',
           { 'animate-pulse': loading },
         ]"
-        @click="filters.viewMode = 'snes'"
+        @click="
+          filters.viewMode = 'snes';
+          $router.push({
+            name: 'superHome',
+            params: { console: filters.viewMode },
+          });
+        "
       />
     </div>
     <div id="logoPlaceHolder" class="pr-20" />
@@ -66,6 +70,7 @@
       "
     >
       <div
+        v-if="filters.viewMode == 'ps3'"
         :class="[
           'flex flex-row justify-around items-center',
           'px-2 mx-2 text-blue-200',
@@ -99,6 +104,7 @@
 
       <!-- contollers -->
       <div
+        v-if="filters.viewMode == 'ps3'"
         :class="[
           'flex flex-row justify-around items-center',
           'px-2 mx-2 text-blue-400 -my-2',

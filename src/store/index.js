@@ -13,49 +13,25 @@ const data = reactive({
   gameTags: gameTags,
   theseGames: computed(() => {
     const route = useRoute();
-    return filters.viewMode == "ps3"
-      ? route.name == "superHome"
-        ? data?.games
-            //users
-            ?.filter((G) => {
-              const tcN = route?.params?.name;
-              const tg = data.gameTags.players[tcN];
-              return tcN ? tg.includes(G.id) : G;
-            })
-            //genres
-            ?.filter((G) =>
-              route.params?.genre ? G?.genre.includes(route.params?.genre) : G
-            )
-            //controllers
-            ?.filter((G) => {
-              const tc = route.params?.controller;
-              const tg = data.gameTags.controllers[tc];
-              return tc ? tg.includes(G.id) : G;
-            })
-            //players
-            ?.filter((G) =>
-              route?.params?.players ? G?.players == filters?.player : G
-            )
-            // search
-            ?.filter((G) =>
-              filters?.search
-                ? G.name.toLowerCase().includes(filters.search.toLowerCase())
-                : G
-            )
-        : data.games
-            // search ALL (@home)
-            ?.filter((G) =>
-              filters?.search
-                ? G.name.toLowerCase().includes(filters.search.toLowerCase())
-                : G
-            )
-      : data.gamesListSNES
-          // search ALL (@snes)
-          ?.filter((G) =>
-            filters?.search
-              ? G.name.toLowerCase().includes(filters.search.toLowerCase())
-              : G
-          );
+    const v = filters.viewMode;
+    let dataARR = v == "snes" ? gamesListSNES : gamesList;
+
+    const userName = route?.params?.name;
+    const userGames = data.gameTags.players[userName];
+    const genre = route.params?.genre;
+    const controller = route.params?.controller;
+    const conList = data.gameTags.controllers[controller];
+    const players = route?.params?.players;
+    const search = filters?.search?.toLowerCase();
+
+    if (userName) dataARR = dataARR.filter((G) => userGames.includes(G.id));
+    if (genre) dataARR = dataARR.filter((G) => G?.genre.includes(genre));
+    if (players) dataARR = dataARR.filter((G) => G?.players == players);
+    if (controller) dataARR = dataARR.filter((G) => conList.includes(G.id));
+    if (search)
+      dataARR = dataARR.filter((G) => G.name.toLowerCase().includes(search));
+
+    return dataARR;
   }),
 });
 

@@ -15,6 +15,7 @@
       <template v-for="(game, i) in games" :key="game.id">
         <game-card
           :game="game"
+          :ps3="ps3Mode"
           :class="ps3Mode ? '-mr-5' : '-mr-44'"
           class="transform transition-transform hover:scale-110"
           @click="$router.push({ name: 'game', params: { id: game.id } })"
