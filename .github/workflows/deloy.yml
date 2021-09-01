@@ -8,8 +8,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: make a fresh gitLog.json
-      run: scripts/gitLog.sh
     - name: Build and Deploy
       id: Build-Vue
       uses: xRealNeon/VuePagesAction@1.0.0
@@ -25,6 +23,6 @@ jobs:
         cd dist
         ln -s index.html 404.html
         git add 404.html
-        git commit --amend -C HEAD
+        git commit -m '404 router hack'
         git push https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git master:gh-pages
       shell: bash
