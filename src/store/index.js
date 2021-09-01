@@ -13,13 +13,13 @@ const data = reactive({
   gameTags: gameTags,
   theseGames: computed(() => {
     const route = useRoute();
-    const v = filters.viewMode;
+    const v = filters?.viewMode;
     let dataARR = v == "snes" ? gamesListSNES : gamesList;
 
     const userName = route?.params?.name;
     const userGames = data.gameTags.players[userName];
-    const genre = route.params?.genre;
-    const controller = route.params?.controller;
+    const genre = route?.params?.genre;
+    const controller = route?.params?.controller;
     const conList = data.gameTags.controllers[controller];
     const players = route?.params?.players;
     const search = filters?.search?.toLowerCase();
@@ -66,6 +66,28 @@ const filters = reactive({
   apps: data.games.filter((g) => g.name.includes("PSN")),
   users: Object.keys(data.gameTags.players),
   controllers: Object.keys(data.gameTags.controllers),
+  snes: {
+    genres: data?.gamesListSNES
+      ?.reduce((acc, g) => {
+        if (g.genre)
+          g.genre
+            .filter((G) => !G.includes("google_ad_section_start"))
+            .forEach((genre) => {
+              if (!acc.includes(genre)) acc.push(genre);
+            });
+        return acc;
+      }, [])
+      ?.sort(),
+    players: data.gamesListSNES
+      .reduce(
+        (acc, g) => {
+          if (g.players && !acc.includes(g.players)) acc.push(g.players);
+          return acc;
+        },
+        ["all"]
+      )
+      ?.sort(),
+  },
 });
 
 const getters = reactive({
