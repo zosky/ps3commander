@@ -3,6 +3,16 @@ handRolled controller v4(?) - vue3 spa ...
  - data backed in as json extracted from my local gamesDB
  - *(Doc:comingSoon)* ps3-API / nodeRed-webManMod-_inTheMiddle-ware_
 
+# TODO
+- all ps3 games list
+- decouple media from build - move to skyScraper subModule
+- decouple from nodeRed-API - hook wMM direct
+- decouple from myDB - hook to skyScraper output (need xml>json)
+- decouple from data.json - hardCoded at build time 
+  - make local browser-data ?
+  - node-red API ?
+  - wMM direct ?
+- audit: (app)db VS ps3
 # changeLog
 - 21.08.31 - snes release
   - controller added to topNav ... sets `filters.console` 
@@ -55,13 +65,13 @@ handRolled controller v4(?) - vue3 spa ...
 - 21.08.21 - list/drill/(auto)nav
 
 # obligatory screenshots
-<img src="src/assets/screens/screen1.png?raw=true" style="width: 30%;">
-<img src="src/assets/screens/screen2.png?raw=true" style="width: 30%;">
-<img src="src/assets/screens/screen3.png?raw=true" style="width: 30%;">
-
-| powerOff | powerOn |
-|:--:|:--:|
-|![powerOff](src/assets/screens/ps3statusOff.png?raw=true)|![powerOff](src/assets/screens/ps3status.png?raw=true)|
+| home | dropDown filters | gameInfo |
+|:--:|:--:|:--:|
+|![home](src/assets/screens/screen1.png?raw=true)|![dp](src/assets/screens/screen2.png?raw=true)|![game](src/assets/screens/screen3.png?raw=true)
+| snes | gitLog | status:offline |
+|![snes](src/assets/screens/snes.png?raw=true) |![gitLog](src/assets/screens/gitLog.png?raw=true)|![ps3offline](src/assets/screens/info-offline.png?raw=true)|
+| powerOff | powerOn:playing | WAN | 
+|![powerOff](src/assets/screens/ps3statusOff.png?raw=true)|![powerOff](src/assets/screens/ps3status.png?raw=true)|![powerOff](src/assets/screens/ps3statusWAN.png?raw=true)|
 
 API:
 <img src="src/assets/screens/nodeRed-api.png?raw=true" style="width: 100%;">
