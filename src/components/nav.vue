@@ -74,7 +74,7 @@
         v-if="filters.viewMode == 'ps3'"
         :class="[
           'flex flex-row justify-around items-center',
-          'px-2 mx-2 text-blue-200 pl-4',
+          'px-2 mx-2 text-blue-200 pl-2',
         ]"
       >
         <span class="text-lg hidden sm:block pr-1">
@@ -82,12 +82,24 @@
         </span>
         <HomeAccount
           v-if="filters.myList"
-          @click="filters.myList = false"
-          class="text-3xl transition-all transform text-blue-600 scale-125"
+          @click="filters.myList = !filters.myList"
+          class="text-3xl transition-all transform scale-125 text-blue-600"
         />
         <Earth
           v-else
-          @click="filters.myList = true"
+          class="text-3xl transition-all transform"
+          @click="filters.myList = !filters.myList"
+        />
+
+        <SkipBackwardOutline
+          @click="filters?.pager?.p ? filters.pager.p-- : ''"
+          class="text-3xl transition-all transform ml-2"
+        />
+        <span @click="filters.pager.p = 0">{{
+          filters?.pager?.p ? filters?.pager?.p + 1 : "1"
+        }}</span>
+        <SkipForwardOutline
+          @click="filters.pager.p++"
           class="text-3xl transition-all transform"
         />
       </div>
@@ -264,7 +276,11 @@
         @click="showSearch = !showSearch"
       />
       <DatabaseSearch v-else @click="showSearch = !showSearch" />
-      <nav-bubble :value="games?.length?.toString()" :key="games?.length" />
+      <nav-bubble
+        :value="games?.length?.toString()"
+        :key="games?.length"
+        class="transform rotate-45"
+      />
       <!-- zoom -->
       <DotsGrid
         :class="[
@@ -340,6 +356,8 @@ import {
   DotsGrid,
   HomeAccount,
   Earth,
+  SkipForwardOutline,
+  SkipBackwardOutline,
 } from "mdue";
 export default {
   name: "Nav",
@@ -357,6 +375,8 @@ export default {
     DotsGrid,
     HomeAccount,
     Earth,
+    SkipForwardOutline,
+    SkipBackwardOutline,
   },
   setup() {
     const dataStore = inject("$dataStore");

@@ -55,13 +55,19 @@ export default {
     const route = useRoute();
     const dataStore = inject("$dataStore");
     dataStore.filters.flexWidth = { mobile: 3, big: 6 };
+    dataStore.filters.pager = { p: 0, pp: 100 };
     if (route?.params?.console)
       dataStore.filters.viewMode = route?.params?.console;
 
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       shelf: `${process.env.VUE_APP_IMG_BASE}woodShelf.png`,
-      games: computed(() => dataStore.data?.theseGames?.slice(0, 100)),
+      games: computed(() =>
+        dataStore.data?.theseGames?.slice(
+          dataStore.filters.pager.p * dataStore.filters.pager.pp,
+          (dataStore.filters.pager.p + 1) * dataStore.filters.pager.pp
+        )
+      ),
       flexWidth: computed(() => dataStore.filters.flexWidth),
       ps3Mode: computed(() => dataStore?.filters?.viewMode == "ps3"),
       myList: computed(() => dataStore?.filters?.myList),
