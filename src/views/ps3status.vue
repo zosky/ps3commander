@@ -34,7 +34,20 @@
     >
       <HelpRhombusOutline class="text-9xl" />
       <span>how this works... </span>
-      <!-- <span v-else>is the system off ? </span> -->
+    </div>
+    <div
+      :class="[
+        'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
+        loading
+          ? 'animate-bounce text-purple-500 bg-purple-100'
+          : WAN
+          ? 'text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300'
+          : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
+      ]"
+      @click="$router.push({ name: 'gitLog' })"
+    >
+      <CodeBracesBox class="text-9xl" />
+      <span>git<em>-auto-</em>log</span>
     </div>
   </div>
   <div v-else class="flex flex-row flex-wrap w-full p-4 gap-x-4 gap-y-2">
@@ -267,12 +280,12 @@ import {
   ServerNetwork,
   FlaskEmptyOutline,
   Eject,
-  //   ServerNetworkOff,
   Reload,
   Lock,
   HelpRhombusOutline,
   Refresh,
   LanDisconnect,
+  CodeBracesBox,
 } from "mdue";
 export default {
   name: "ps3status",
@@ -292,9 +305,7 @@ export default {
     HelpRhombusOutline,
     Refresh,
     LanDisconnect,
-    // HarddiskRemove,
-    // ServerNetworkOff,
-    // Reload,
+    CodeBracesBox,
   },
   setup() {
     const dataStore = inject("$dataStore");

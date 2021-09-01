@@ -17,11 +17,9 @@ git log --pretty=format:'{%n
 ^^^^signer_key^^^^: ^^^^%GK^^^^,%n  
 ^^^^author^^^^: {%n    
   ^^^^name^^^^: ^^^^%aN^^^^,%n
-  ^^^^email^^^^: ^^^^%aE^^^^,%n
   ^^^^date^^^^: ^^^^%aD^^^^%n },%n
 ^^^^commiter^^^^: {%n
   ^^^^name^^^^: ^^^^%cN^^^^,%n
-  ^^^^email^^^^: ^^^^%cE^^^^,%n
   ^^^^date^^^^: ^^^^%cD^^^^%n
 }%n},' \
     | sed 's/"/\\"/g' \

@@ -17,6 +17,8 @@ jobs:
         gitname: zoskyCI
         gitemail: zoskyCI@noReply.com
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged  
+    - name: make a fresh gitLog.json
+      run: scripts/gitLog.sh
     ## merged upstream w/ https://github.com/xRealNeon/VuePagesAction/pull/4 (but not happening yet?)
     - name: RouterHack SimLink
       run: |

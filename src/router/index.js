@@ -32,6 +32,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "util" */ "@/views/ps3howTo.vue"),
   },
+  {
+    path: "/gitLog",
+    name: "gitLog",
+    component: () =>
+      import(/* webpackChunkName: "util" */ "@/views/gitLog.vue"),
+  },
 ];
 
 const router = createRouter({
