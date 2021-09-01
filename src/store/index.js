@@ -101,6 +101,7 @@ const getters = reactive({
       .then((res) => res.json())
       .then((DATA) => {
         filters.loading = false;
+        filters.myList = true;
         data.status = DATA;
         if (DATA.on && !data?.drives) getters.postData("drives", "drives");
       })
