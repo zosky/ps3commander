@@ -140,7 +140,9 @@
 
       <!-- genre dropDown -->
       <nav-dropdown
-        :list="filters.genres"
+        :list="
+          filters.viewMode == 'snes' ? filters.snes.genres : filters.genres
+        "
         v-if="showGenres"
         @mouseleave="showGenres = false"
         @thisOne="
@@ -174,14 +176,19 @@
         ]"
       />
       <nav-bubble
-        :value="filters.genres.length.toString()"
+        :value="
+          filters.viewMode == 'snes'
+            ? filters.snes.genres.length.toString()
+            : filters.genres.length.toString()
+        "
         :key="filters.genres.length"
       />
       <!-- player count + bubble -->
       <nav-dropdown
-        class=""
-        :list="filters?.players"
         v-if="showPlayer"
+        :list="
+          filters.viewMode == 'snes' ? filters.snes.players : filters?.players
+        "
         @mouseleave="showPlayer = false"
         @thisOne="
           (e) => {
@@ -211,7 +218,7 @@
         @click="showPlayer = !showPlayer"
       />
       <nav-bubble
-        :value="filters?.players[filters?.player]"
+        :value="$route?.params?.players ? $route?.params?.players : '-'"
         :key="filters?.player"
         @mouseleave="filters.showPlayer = false"
       />
