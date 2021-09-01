@@ -382,7 +382,6 @@ export default {
     const dataStore = inject("$dataStore");
     dataStore.filters.search = null;
     dataStore.filters.player = null;
-    dataStore.filters.player = null;
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       games: computed(() => dataStore.data?.theseGames),

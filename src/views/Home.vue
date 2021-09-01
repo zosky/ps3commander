@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, inject, computed } from "vue";
+import { reactive, toRefs, inject, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import gameCard from "@/components/gameCard.vue";
 export default {
@@ -72,6 +72,11 @@ export default {
       ps3Mode: computed(() => dataStore?.filters?.viewMode == "ps3"),
       myList: computed(() => dataStore?.filters?.myList),
     });
+
+    watchEffect(() => {
+      if (dataStore.filters.search) dataStore.filters.pager.p = 0;
+    });
+
     return { ...toRefs(state) };
   },
 };
