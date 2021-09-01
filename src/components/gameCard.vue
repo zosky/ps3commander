@@ -35,10 +35,9 @@ export default {
       hdd: props.game?.ps3?.info == "/dev_ntfs/PS3ISO",
       netfs: props.game?.ps3?.info == "/net0/PS3ISO",
       app: props.game?.name.includes("PSN"),
-      IMG:
-        process.env.VUE_APP_IMG_BASE + props.ps3
-          ? props?.game?.images?.cover
-          : props?.game?.cover,
+      IMG: `${process.env.VUE_APP_IMG_BASE}${
+        props.ps3 ? props?.game?.images?.cover : props?.game?.cover
+      }`,
     };
     return { ...state };
   },
