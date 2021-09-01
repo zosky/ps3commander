@@ -16,8 +16,9 @@
         <game-card
           :game="game"
           :ps3="ps3Mode"
-          :class="ps3Mode ? '-mr-5' : '-mr-44'"
-          class="transform transition-transform hover:scale-110"
+          :myList="myList"
+          :class="[ps3Mode ? '-mr-5' : '-mr-44', { 'pr-6': !myList }]"
+          class="transform transition-transform hover:scale-110 z-10"
           @click="$router.push({ name: 'game', params: { id: game.id } })"
         />
         <!-- desktopShelf OR LAST -->
@@ -60,9 +61,10 @@ export default {
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       shelf: `${process.env.VUE_APP_IMG_BASE}woodShelf.png`,
-      games: computed(() => dataStore.data?.theseGames),
+      games: computed(() => dataStore.data?.theseGames?.slice(0, 100)),
       flexWidth: computed(() => dataStore.filters.flexWidth),
       ps3Mode: computed(() => dataStore?.filters?.viewMode == "ps3"),
+      myList: computed(() => dataStore?.filters?.myList),
     });
     return { ...toRefs(state) };
   },

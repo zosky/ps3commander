@@ -1,6 +1,7 @@
 // fakeStore used by most all vues
 import { reactive, computed } from "vue";
 import gamesList from "./ps3games.json";
+import gamesListALL from "./ps3all.json";
 import gameTags from "./ps3tags.json";
 import gamesListSNES from "./snes.json";
 import { useRoute } from "vue-router";
@@ -14,7 +15,9 @@ const data = reactive({
   theseGames: computed(() => {
     const route = useRoute();
     const v = filters?.viewMode;
-    let dataARR = v == "snes" ? gamesListSNES : gamesList;
+    const myList = filters?.myList;
+    let dataARR =
+      v == "snes" ? gamesListSNES : myList ? gamesList : gamesListALL;
 
     const userName = route?.params?.name;
     const userGames = data.gameTags.players[userName];
@@ -38,6 +41,7 @@ const data = reactive({
 const filters = reactive({
   /* filters: watched by display function */
   viewMode: "ps3",
+  myList: false,
   players: data.games
     .reduce(
       (acc, g) => {

@@ -3,10 +3,18 @@
     <img
       :src="IMG"
       :alt="game?.id"
-      :class="[viewMode, 'min-w-full min-h-full']"
+      :class="[
+        'min-w-full min-h-full',
+        `${viewMode}${!myList ? 'ALL' : ''}`,
+        {
+          'mt-4 sm:mt-8 mb-4 rounded-lg ring-2 ring-blue-400 border-l-4 sm:border-l-8 border-blue-600 border-b-4':
+            !myList,
+        },
+      ]"
+      :style="!myList ? 'transform:perspective(60em) rotateY(20deg)' : ''"
     />
     <div
-      v-if="ps3Mode"
+      v-if="ps3Mode && myList"
       :class="[
         'fixed h-0  w-0 bottom-8 right-8',
         'overflow-visible text-blue-500',
@@ -25,6 +33,7 @@ export default {
   name: "game",
   props: {
     ps3: { type: Boolean, default: true },
+    myList: { type: Boolean, default: true },
     game: { type: Object, default: () => {} },
   },
   components: { DiscPlayer, ServerNetwork, Application },
@@ -35,8 +44,11 @@ export default {
       hdd: props.game?.ps3?.info == "/dev_ntfs/PS3ISO",
       netfs: props.game?.ps3?.info == "/net0/PS3ISO",
       app: props.game?.name.includes("PSN"),
-      IMG: `${process.env.VUE_APP_IMG_BASE}${
-        props.ps3 ? props?.game?.images?.cover : props?.game?.cover
+      IMG: `${
+        !props.myList
+          ? props?.game?.img
+          : process.env.VUE_APP_IMG_BASE +
+            (props.ps3 ? props?.game?.images?.cover : props?.game?.cover)
       }`,
     };
     return { ...state };
@@ -45,6 +57,9 @@ export default {
 </script>
 <style scoped>
 img.ps3 {
+  aspect-ratio: 8/11;
+}
+img.ps3ALL {
   aspect-ratio: 8/11;
 }
 img.snes {

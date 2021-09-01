@@ -5,7 +5,7 @@
       'p-4 flex flex-row justify-between items-center',
       'bg-gradient-to-r',
       'overflow-x-scroll overflow-y-visible',
-      'sticky top-0 z-10',
+      'sticky top-0 z-20',
       'sm:shadow-lg',
       { 'shadow-lg': showSearch },
       loading
@@ -39,6 +39,7 @@
         "
       />
       <myIcons
+        v-if="myList"
         i="snes"
         :class="[
           'absolute p-2 sm:h-20 h-16',
@@ -73,6 +74,27 @@
         v-if="filters.viewMode == 'ps3'"
         :class="[
           'flex flex-row justify-around items-center',
+          'px-2 mx-2 text-blue-200 pl-4',
+        ]"
+      >
+        <span class="text-lg hidden sm:block pr-1">
+          {{ filters.myList ? "collected" : "all" }}
+        </span>
+        <HomeAccount
+          v-if="filters.myList"
+          @click="filters.myList = false"
+          class="text-3xl transition-all transform text-blue-600 scale-125"
+        />
+        <Earth
+          v-else
+          @click="filters.myList = true"
+          class="text-3xl transition-all transform"
+        />
+      </div>
+      <div
+        v-if="filters.viewMode == 'ps3' && filters.myList"
+        :class="[
+          'flex flex-row justify-around items-center',
           'px-2 mx-2 text-blue-200',
         ]"
       >
@@ -104,7 +126,7 @@
 
       <!-- contollers -->
       <div
-        v-if="filters.viewMode == 'ps3'"
+        v-if="filters.viewMode == 'ps3' && filters.myList"
         :class="[
           'flex flex-row justify-around items-center',
           'px-2 mx-2 text-blue-400 -my-2',
@@ -165,63 +187,65 @@
       <!-- @thisOne="(e) => (filters.genre = e)" -->
 
       <!-- genre button+bubble -->
-      <Tag
-        class="text-2xl"
-        @click="showGenres = !showGenres"
-        :class="[
-          'transition-all transform',
-          {
-            'text-blue-600 scale-125 ': $route.params?.genre,
-          },
-        ]"
-      />
-      <nav-bubble
-        :value="
-          filters.viewMode == 'snes'
-            ? filters.snes.genres.length.toString()
-            : filters.genres.length.toString()
-        "
-        :key="filters.genres.length"
-      />
-      <!-- player count + bubble -->
-      <nav-dropdown
-        v-if="showPlayer"
-        :list="
-          filters.viewMode == 'snes' ? filters.snes.players : filters?.players
-        "
-        @mouseleave="showPlayer = false"
-        @thisOne="
-          (e) => {
-            filters.player = e;
-            showPlayer = false;
-            $router.push({
-              name: 'superHome',
-              params: {
-                console: filters.viewMode,
-                players: `${e == $route?.params?.players ? '' : e}`,
-                name: $route?.params?.name,
-                genre: $route?.params?.genre,
-                controller: $route?.params?.controller,
-              },
-            });
-          }
-        "
-      />
-      <GamepadVariant
-        class="text-3xl"
-        :class="[
-          'transition-all transform',
-          {
-            'text-blue-600 scale-125 ': $route?.params?.players,
-          },
-        ]"
-        @click="showPlayer = !showPlayer"
-      />
-      <nav-bubble
-        :value="$route?.params?.players ? $route?.params?.players : '-'"
-        :key="filters?.player"
-        @mouseleave="filters.showPlayer = false"
-      />
+      <template v-if="filters.myList">
+        <Tag
+          class="text-2xl"
+          @click="showGenres = !showGenres"
+          :class="[
+            'transition-all transform',
+            {
+              'text-blue-600 scale-125 ': $route.params?.genre,
+            },
+          ]"
+        />
+        <nav-bubble
+          :value="
+            filters.viewMode == 'snes'
+              ? filters.snes.genres.length.toString()
+              : filters.genres.length.toString()
+          "
+          :key="filters.genres.length"
+        />
+        <!-- player count + bubble -->
+        <nav-dropdown
+          v-if="showPlayer"
+          :list="
+            filters.viewMode == 'snes' ? filters.snes.players : filters?.players
+          "
+          @mouseleave="showPlayer = false"
+          @thisOne="
+            (e) => {
+              filters.player = e;
+              showPlayer = false;
+              $router.push({
+                name: 'superHome',
+                params: {
+                  console: filters.viewMode,
+                  players: `${e == $route?.params?.players ? '' : e}`,
+                  name: $route?.params?.name,
+                  genre: $route?.params?.genre,
+                  controller: $route?.params?.controller,
+                },
+              });
+            }
+          "
+        />
+        <GamepadVariant
+          class="text-3xl"
+          :class="[
+            'transition-all transform',
+            {
+              'text-blue-600 scale-125 ': $route?.params?.players,
+            },
+          ]"
+          @click="showPlayer = !showPlayer"
+        />
+        <nav-bubble
+          :value="$route?.params?.players ? $route?.params?.players : '-'"
+          :key="filters?.player"
+          @mouseleave="filters.showPlayer = false"
+        />
+      </template>
       <!-- search DESKTOP + count + bubble -->
       <input
         type="search"
@@ -314,6 +338,8 @@ import {
   Tag,
   ViewGrid,
   DotsGrid,
+  HomeAccount,
+  Earth,
 } from "mdue";
 export default {
   name: "Nav",
@@ -329,6 +355,8 @@ export default {
     Tag,
     ViewGrid,
     DotsGrid,
+    HomeAccount,
+    Earth,
   },
   setup() {
     const dataStore = inject("$dataStore");
@@ -341,6 +369,7 @@ export default {
       controllers: computed(() => dataStore.data.gameTags.controllers),
       users: computed(() => dataStore.data.gameTags.players),
       loading: computed(() => dataStore.filters?.loading),
+      myList: computed(() => dataStore.filters?.myList),
       ps3on: computed(() => dataStore.data?.status?.on),
       WAN: computed(() => dataStore.data?.WAN),
       filters: dataStore.filters,
