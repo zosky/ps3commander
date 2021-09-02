@@ -1230,4 +1230,37 @@ export default {
     transform: matrix(0.410556, 0, 0, 0.430556, 285.41, 338.862);
   }
 }
+
+/* start w/hover */
+#ps3.home #rect3238 {
+  fill: blue !important;
+  stroke: aqua !important;
+  opacity: 0.8;
+}
+#ps3.home #text2438 {
+  fill: aqua !important;
+}
+#ps3 #rect3238:hover {
+  fill: yellow !important;
+  stroke: orange !important;
+  opacity: 0.8;
+}
+/* powerLEDs: p1-4 > blink if loading | off if off | (default = p1 on)*/
+#ps3.loading #rect3389,
+#ps3.loading #rect3387,
+#ps3.loading #rect3385,
+#ps3.loading #rect3383 {
+  animation: powerBlink 1s infinite ease-in-out;
+}
+#ps3.off #rect3389 {
+  fill: black !important;
+}
+@keyframes powerBlink {
+  from {
+    fill: red;
+  }
+  to {
+    fill: black;
+  }
+}
 </style>

@@ -9,8 +9,12 @@
         'transform transition-all origin-top-left',
         'hover:scale-110',
         '-rotate-6',
+        ps3powerLEDs,
         filters.viewMode == 'ps3' ? 'z-20' : 'z-10 scale-95',
-        { 'animate-pulse': loading },
+        $route?.matched?.[$route?.matched?.length - 1]?.components?.default
+          ?.name == 'Home'
+          ? 'home'
+          : '',
       ]"
       @click="
         filters.viewMode = 'ps3';
@@ -55,6 +59,9 @@ export default {
     const state = reactive({
       loading: computed(() => dataStore.filters?.loading),
       myList: computed(() => dataStore.filters?.myList),
+      ps3powerLEDs: computed(() =>
+        state.loading ? "loading" : dataStore?.data?.status?.on ? "on" : "off"
+      ),
       filters: dataStore.filters,
     });
     return { ...toRefs(state) };

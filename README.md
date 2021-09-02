@@ -72,6 +72,8 @@ handRolled controller v4(?) - vue3 spa ...
 |![snes](src/assets/screens/snes.png?raw=true) |![gitLog](src/assets/screens/gitLog.png?raw=true)|![ps3offline](src/assets/screens/info-offline.png?raw=true)|
 | powerOff | powerOn:playing | WAN | 
 |![powerOff](src/assets/screens/ps3statusOff.png?raw=true)|![powerOff](src/assets/screens/ps3status.png?raw=true)|![powerOff](src/assets/screens/ps3statusWAN.png?raw=true)|
+|animated masteHHead|||
+|![animatedSVG](src/assets/screens/controllerAnimated.gif?raw=true)|||
 
 API:
 <img src="src/assets/screens/nodeRed-api.png?raw=true" style="width: 100%;">
