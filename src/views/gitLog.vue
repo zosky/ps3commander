@@ -7,7 +7,7 @@
         :class="[
           'text-xl font-bold text-blue-700',
           'border-b border-blue-300',
-          'px-4 pt-6',
+          'px-4 sm:pt-6',
         ]"
       >
         git<em>-auto-</em>commit-log
@@ -19,10 +19,10 @@
       :class="[
         'table-row justify-between hover:bg-blue-300 hover:text-blue-600',
         { 'bg-blue-200': ix % 2 },
-        { 'text-blue-600 text-lg': 0 == ix % 10 },
+        { 'text-blue-600 text-base sm:text-lg': 0 == ix % 10 },
       ]"
     >
-      <div class="table-cell text-right font-serif pl-3">
+      <div class="table-cell text-right font-serif pl-3 whitespace-nowrap">
         {{
           0 != ix % 10
             ? $moment(commit.author.date).from($moment())
@@ -32,8 +32,8 @@
       <div class="table-cell font-mono font-light text-blue-400 px-3 text-sm">
         {{ commit.abbreviated_commit }}
       </div>
-      <div class="table-cell font-bold pr-3">
-        {{ commit.subject }}
+      <div class="table-cell font-bold pr-3 text-xs sm:text-lg">
+        {{ commit.subject.replaceAll("|", " | ") }}
       </div>
     </div>
   </div>
