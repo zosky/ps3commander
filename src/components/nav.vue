@@ -18,8 +18,8 @@
     ]"
   >
     <nav-mastheads class="overflow-visible z-20 fixed" />
-
     <div id="logoPlaceHolder" class="pr-20" />
+
     <div
       class="
         flex flex-row
@@ -293,11 +293,11 @@
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
 import ps3status from "./ps3status.vue";
-import navMastheads from "./navMastheads.vue";
-import navBubble from "./navBubble.vue";
-import navFavs from "./navFavs.vue";
-import navPager from "./navPager.vue";
-import navDropdown from "./navDropdown.vue";
+import navMastheads from "./nav/mastheads.vue";
+import navDropdown from "./nav/dropdown.vue";
+import navBubble from "./nav/bubble.vue";
+import navPager from "./nav/pager.vue";
+import navFavs from "./nav/favs.vue";
 import myIcons from "./svgIcons.vue";
 import family from "./family.vue";
 import {

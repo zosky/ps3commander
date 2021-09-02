@@ -14,7 +14,7 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import navBubble from "./navBubble.vue";
+import navBubble from "./bubble.vue";
 import { StarCircle, StarCircleOutline } from "mdue";
 export default {
   name: "myFavs",

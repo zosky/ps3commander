@@ -46,7 +46,7 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import myIcons from "./svgIcons.vue";
+import myIcons from "../svgIcons.vue";
 export default {
   name: "navMastheads",
   components: { myIcons },
