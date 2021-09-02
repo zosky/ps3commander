@@ -3,23 +3,11 @@
     <img
       :src="IMG"
       :alt="game?.id"
-      :class="[
-        'min-w-full min-h-full',
-        `${viewMode}${!myList ? 'ALL' : ''}`,
-        {
-          'mt-4 sm:mt-8 mb-4 ring-2 border-l-4 sm:border-l-8 border-b-4 rounded-xl rounded-l-3xl':
-            !myList,
-        },
-        !myList
-          ? fav
-            ? 'ring-blue-400 border-blue-600'
-            : 'ring-blue-200 border-blue-300'
-          : '',
-      ]"
+      :class="['min-w-full min-h-full', viewMode, notMyList, isFav]"
       :style="!myList ? 'transform:perspective(60em) rotateY(20deg)' : ''"
     />
     <div
-      v-if="ps3Mode"
+      v-if="ps3"
       :class="[
         'fixed h-0  w-0 bottom-8 right-8',
         'overflow-visible ',
@@ -47,9 +35,9 @@ import {
 export default {
   name: "game",
   props: {
+    game: { type: Object, default: () => {} },
     ps3: { type: Boolean, default: true },
     myList: { type: Boolean, default: true },
-    game: { type: Object, default: () => {} },
     fav: { type: Boolean, default: false },
   },
   components: {
@@ -62,11 +50,7 @@ export default {
   },
   setup(props) {
     const state = {
-      ps3Mode: props.ps3,
-      viewMode: props.ps3 ? "ps3" : "snes",
-      hdd: props.game?.ps3?.info == "/dev_ntfs/PS3ISO",
-      netfs: props.game?.ps3?.info == "/net0/PS3ISO",
-      app: props.game?.name.includes("PSN"),
+      viewMode: `${props.ps3 ? "ps3" : "snes"}${!props.myList ? "ALL" : ""}`,
       IMG: `${
         process.env.VUE_APP_IMG_BASE +
         (!props.myList
@@ -79,13 +63,21 @@ export default {
         ? props.fav
           ? "StarCheck"
           : "StarCheckOutline"
-        : state.hdd
+        : props.game?.ps3?.info == "/dev_ntfs/PS3ISO"
         ? "DiscPlayer"
-        : state.netfs
+        : props.game?.ps3?.info == "/net0/PS3ISO"
         ? "ServerNetwork"
-        : state.app
+        : props.game?.name?.includes("PSN")
         ? "Application"
         : "HelpRhombusOutline",
+      notMyList: !props.myList
+        ? "mt-4 sm:mt-8 mb-4 ring-2 border-l-4 sm:border-l-8 border-b-4 rounded-xl rounded-l-3xl"
+        : "",
+      isFav: !props.myList
+        ? props.fav
+          ? "ring-blue-400 border-blue-600"
+          : "ring-blue-200 border-blue-300"
+        : "",
     };
     return { ...state };
   },
