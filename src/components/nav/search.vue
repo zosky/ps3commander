@@ -1,29 +1,29 @@
 <template>
-  <input
-    v-if="!mobile"
-    type="search"
-    v-model="filters.search"
-    placeholder="search"
-    :class="[
-      'px-3 mx-2 hidden sm:block',
-      'ring ring-blue-300 rounded-3xl max-w-xs text-lg',
-      'bg-opacity-75 bg-blue-400 placeholder-blue-100',
-    ]"
-  />
-  <nav-bubble :value="games?.length?.toString()" :key="games?.length" />
+  <template v-if="!mobile">
+    <input
+      type="search"
+      v-model="filters.search"
+      placeholder="search"
+      :class="[
+        'px-3 mx-2 hidden sm:block',
+        'ring ring-blue-300 rounded-3xl max-w-xs text-lg',
+        'bg-opacity-75 bg-blue-400 placeholder-blue-100',
+      ]"
+    />
 
-  <!-- mobile seach show/hide -->
-  <DatabaseSearchOutline
-    v-if="!showSearch"
-    class="sm:hidden"
-    @click="showSearch = !showSearch"
-  />
-  <DatabaseSearch v-else @click="showSearch = !showSearch" />
-
+    <!-- mobile seach show/hide -->
+    <DatabaseSearchOutline
+      v-if="!showSearch"
+      class="sm:hidden"
+      @click="filters.showSearch = !filters?.showSearch"
+    />
+    <DatabaseSearch v-else @click="filters.showSearch = !filters?.showSearch" />
+    <nav-bubble :value="games?.length?.toString()" :key="games?.length" />
+  </template>
   <div
     v-if="mobile && showSearch"
     :class="[
-      'bg-gradient-to-r px-5',
+      'flex flex-col bg-gradient-to-r px-5 shadow-lg',
       loading
         ? 'from-purple-400 to-purple-800'
         : ps3on
@@ -55,8 +55,9 @@ export default {
   components: { navBubble, DatabaseSearchOutline, DatabaseSearch },
   setup() {
     const dataStore = inject("$dataStore");
+    if (!dataStore.filters?.showSearch) dataStore.filters.showSearch = false;
     const state = reactive({
-      showSearch: false,
+      showSearch: computed(() => dataStore.filters?.showSearch),
       loading: computed(() => dataStore.filters?.loading),
       ps3on: computed(() => dataStore.data?.status?.on),
       games: computed(() => dataStore.data?.theseGames),

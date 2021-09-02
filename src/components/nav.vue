@@ -8,8 +8,8 @@
       navThemeColor,
     ]"
   >
-    <nav-mastheads class="overflow-visible z-20 fixed" />
-    <div id="logoPlaceHolder" class="pr-32" />
+    <nav-mastheads class="overflow-visible z-20 fixed top-7" />
+    <div id="logoPlaceHolder" class="pr-40" />
     <div
       :class="[
         'flex flex-row gap-1  justify-around  items-center',

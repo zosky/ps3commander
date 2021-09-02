@@ -1,52 +1,29 @@
 <template>
   <div
     v-if="status?.on != true"
-    class="flex flex-row w-full p-8 gap-2 mt-20 cursor-pointer"
+    class="
+      flex flex-row flex-wrap
+      w-full
+      p-4
+      gap-3
+      cursor-pointer
+      sm:justify-center
+    "
   >
-    <div
-      :class="[
-        'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
-        loading
-          ? 'animate-bounce text-purple-500 bg-purple-100'
-          : WAN
-          ? 'text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300'
-          : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
-      ]"
-      @click="getStatus()"
-    >
-      <Refresh v-if="loading" class="text-9xl" />
-      <LanDisconnect v-else-if="WAN" class="text-9xl" />
-      <Ethernet v-else class="text-9xl" />
-      <span v-if="loading">checking again...</span>
-      <span v-else-if="WAN">API blocked?</span>
-      <span v-else>system off ?</span>
+    <div :class="bubbleCSS" @click="getStatus()">
+      <Refresh v-if="loading" class="text-6xl sm:text-9xl" />
+      <LanDisconnect v-else-if="WAN" class="text-6xl sm:text-9xl" />
+      <Ethernet v-else class="text-6xl sm:text-9xl text-center" />
+      <div v-if="loading">checking again...</div>
+      <div v-else-if="WAN">API blocked?</div>
+      <div v-else class="self-center">system off ?</div>
     </div>
-    <div
-      :class="[
-        'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
-        loading
-          ? 'animate-bounce text-purple-500 bg-purple-100'
-          : WAN
-          ? 'text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300'
-          : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
-      ]"
-      @click="$router.push({ name: 'ps3howTo' })"
-    >
-      <HelpRhombusOutline class="text-9xl" />
-      <span>how this works... </span>
+    <div :class="bubbleCSS" @click="$router.push({ name: 'ps3howTo' })">
+      <HelpRhombusOutline class="text-6xl sm:text-9xl" />
+      <span>how this works</span>
     </div>
-    <div
-      :class="[
-        'p-6 shadow-xl mx-auto rounded-xl text-center transition-all',
-        loading
-          ? 'animate-bounce text-purple-500 bg-purple-100'
-          : WAN
-          ? 'text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300'
-          : 'text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300',
-      ]"
-      @click="$router.push({ name: 'gitLog' })"
-    >
-      <CodeBracesBox class="text-9xl" />
+    <div :class="bubbleCSS" @click="$router.push({ name: 'gitLog' })">
+      <CodeBracesBox class="text-6xl sm:text-9xl" />
       <span>git<em>-auto-</em>log</span>
     </div>
   </div>
@@ -62,6 +39,7 @@
         rounded-2xl
         shadow-lg
         justify-center
+        sm:justify-around
       "
     >
       <div class="border-b text-blue-500 border-blue-300 w-full px-2 h-10 pt-4">
@@ -333,6 +311,17 @@ export default {
         dataStore.getters.postData("user", null, { name: u });
         state.getStatus;
       },
+      bubbleCSS: computed(() => {
+        return [
+          "p-3 shadow-xl mx-auto sm:mx-0 rounded-xl text-center transition-all w-full sm:max-w-min",
+          "flex flex-row gap-1 justify-start align-middle items-center",
+          state.loading
+            ? "animate-pulse text-purple-500 bg-purple-100"
+            : state.WAN
+            ? "text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300"
+            : "text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300",
+        ];
+      }),
     });
     return { ...toRefs(state) };
   },

@@ -6,7 +6,7 @@
         ? 'h-20 bg-purple-500'
         : WAN
         ? 'h-12 bg-indigo-500'
-        : 'h-12 bg-yellow-200',
+        : 'h-8 bg-yellow-200',
       'fixed bottom-0 right-0 m-2 p-2',
       'text-green-200 bg-opacity-60',
       'flex flex-row justify-end align-bottom',
@@ -21,12 +21,6 @@
       :src="`${IMGdir}wheels/${status.disk.id}.png`"
       :alt="status.disk.name"
     />
-    <!-- <div class="text-xs -mt-5 pb-2 pr-2 self-end animate-pulse">
-        now playing
-      </div> -->
-    <!-- <div class="text-purple-200 font-light font-mono text-xs self-center pb-1">
-      running for
-    </div> -->
     <div class="flex flex-col w-1/2 justify-end place-items-end">
       <timer
         v-if="status?.on"
@@ -44,8 +38,6 @@
           class="X-mr-2 text-purple-200"
           @click="$router.push({ name: 'ps3status' })"
         />
-        <!-- <div v-else>{{ status?.user?.icon }}
-      {{ status?.user?.name }}</div> -->
         <div v-if="status?.on" class="X-mr-1 Xml-1">
           <Harddisk v-if="drives?.ext?.free" class="text-purple-200 text-sm" />
           <HarddiskRemove v-else class="text-red-400 text-sm" />
