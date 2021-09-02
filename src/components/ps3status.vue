@@ -6,11 +6,12 @@
         ? 'h-20 bg-purple-500'
         : WAN
         ? 'h-12 bg-indigo-500'
-        : 'h-8 bg-yellow-200',
+        : 'h-12 w-12 bg-yellow-200',
       'fixed bottom-0 right-0 m-2 p-2',
       'text-green-200 bg-opacity-60',
       'flex flex-row justify-end align-bottom',
       'rounded-xl font-bold cursor-pointer shadow-lg',
+      'z-20',
     ]"
     v-if="$route.name != 'ps3status'"
     @click="$router.push({ name: 'ps3status' })"
@@ -47,7 +48,7 @@
         <LanDisconnect v-if="!loading && WAN" class="text-green-200" />
         <Ethernet
           v-else-if="!loading"
-          :class="status?.on ? 'text-purple-200' : 'text-red-400'"
+          :class="status?.on ? 'text-purple-200' : 'text-red-400 h-8 w-auto'"
           @click="getData()"
         />
         <Reload class="animate-spin text-purple-200" v-if="loading" />
