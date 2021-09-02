@@ -2,15 +2,11 @@
   <span class="text-lg hidden sm:block pr-1">
     {{ filters.myList ? "collected" : "all" }}
   </span>
-  <HomeAccount
-    v-if="filters.myList"
+  <component
+    :is="filters.myList ? 'HomeAccount' : 'Earth'"
     @click="filters.myList = !filters.myList"
-    class="text-3xl transition-all transform scale-125 text-blue-600"
-  />
-  <Earth
-    v-else
-    class="text-3xl transition-all transform"
-    @click="filters.myList = !filters.myList"
+    class="text-3xl transition-all"
+    :class="{ 'transform scale-125 text-blue-600': filters.myList }"
   />
 </template>
 

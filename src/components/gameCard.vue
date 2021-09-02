@@ -27,11 +27,11 @@
         fav ? 'text-indigo-500' : 'text-blue-500',
       ]"
     >
-      <StarCheck v-if="!myList && fav" class="h-10 w-10 relative right-10" />
-      <StarCheckOutline v-else-if="!myList" class="h-10 relative right-5" />
-      <DiscPlayer v-else-if="hdd" class="h-10 relative" />
-      <ServerNetwork v-else-if="netfs" class="h-10 relative" />
-      <Application v-else-if="app" class="h-10 relative" />
+      <component
+        :is="thisIcon"
+        :class="fav ? (!myList ? 'right-10 w-10' : 'right-5') : ''"
+        class="relative h-10"
+      />
     </div>
   </div>
 </template>
@@ -42,6 +42,7 @@ import {
   Application,
   StarCheckOutline,
   StarCheck,
+  HelpRhombusOutline,
 } from "mdue";
 export default {
   name: "game",
@@ -57,6 +58,7 @@ export default {
     Application,
     StarCheckOutline,
     StarCheck,
+    HelpRhombusOutline,
   },
   setup(props) {
     const state = {
@@ -73,6 +75,17 @@ export default {
           ? props?.game?.images?.cover
           : props?.game?.cover)
       }`,
+      thisIcon: !props.myList
+        ? props.fav
+          ? "StarCheck"
+          : "StarCheckOutline"
+        : state.hdd
+        ? "DiscPlayer"
+        : state.netfs
+        ? "ServerNetwork"
+        : state.app
+        ? "Application"
+        : "HelpRhombusOutline",
     };
     return { ...state };
   },

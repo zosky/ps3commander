@@ -1,15 +1,26 @@
 <template>
-  <AccountChild v-if="u == 'ben'" />
-  <Face v-else-if="u == 'mel'" />
-  <Memory v-else-if="u == 'marc'" />
-  <HomeModern v-else-if="u == 'family'" />
+  <component :is="xRefIcon" />
 </template>
 
 <script>
-import { AccountChild, HomeModern, Face, Memory } from "mdue";
+import { AccountChild, HomeModern, Face, Memory, HelpCircle } from "mdue";
 export default {
   name: "familySVGs",
-  props: { u: { type: String, default: "marc" } },
-  components: { AccountChild, HomeModern, Face, Memory },
+  props: { u: { type: String, default: "error" } },
+  components: { AccountChild, HomeModern, Face, Memory, HelpCircle },
+  data(props) {
+    return {
+      xRefIcon:
+        props.u == "ben"
+          ? "AccountChild"
+          : props.u == "mel"
+          ? "Face"
+          : props.u == "marc"
+          ? "Memory"
+          : props.u == "family"
+          ? "HomeModern"
+          : "HelpCircle",
+    };
+  },
 };
 </script>
