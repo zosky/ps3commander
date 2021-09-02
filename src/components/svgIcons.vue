@@ -35,7 +35,12 @@
     </g>
   </svg>
 
-  <svg v-else-if="i == 'ps3'" viewBox="0 0 242 151">
+  <svg
+    id="ps3"
+    v-else-if="i == 'ps3'"
+    viewBox="0 0 242 151"
+    :class="{ animate: animate }"
+  >
     <g transform="translate(-260.34243,-473.69226)" id="layer1">
       <path
         id="rect3225"
@@ -1163,6 +1168,66 @@
 <script>
 export default {
   name: "svgIcons",
-  props: { i: { type: String, default: "move" } },
+  props: {
+    i: { type: String, default: "move" },
+    animate: { type: Boolean, default: true },
+  },
 };
 </script>
+<style scoped>
+#ps3.animate #path3210 {
+  animation: wiggleLeft 8s infinite ease-in-out;
+}
+#ps3.animate #path3293 {
+  animation: wiggleRight 8s infinite 2s ease-in-out;
+}
+
+@keyframes wiggleLeft {
+  0%,
+  20%,
+  50%,
+  64%,
+  100% {
+    transform: matrix(0.430556, 0, 0, 0.420556, 215.345, 338.862);
+  }
+  5%,
+  33%,
+  74% {
+    transform: matrix(0.450556, 0, 0, 0.430556, 215.345, 338.862);
+  }
+  18%,
+  29%,
+  58%,
+  94% {
+    transform: matrix(0.410556, 0, 0, 0.410556, 215.345, 338.862);
+  }
+  14%,
+  90% {
+    transform: matrix(0.430556, 0, 0, 0.430556, 215.345, 338.862);
+  }
+}
+@keyframes wiggleRight {
+  0%,
+  20%,
+  50%,
+  64%,
+  100% {
+    transform: matrix(0.430556, 0, 0, 0.430556, 285.41, 338.862);
+  }
+  5%,
+  33%,
+  74% {
+    transform: matrix(0.420556, 0, 0, 0.420556, 285.41, 338.862);
+  }
+  18%,
+  29%,
+  58%,
+  94% {
+    transform: matrix(0.440556, 0, 0, 0.440556, 285.41, 338.862);
+  }
+  14%,
+  90% {
+    transform: matrix(0.410556, 0, 0, 0.430556, 285.41, 338.862);
+  }
+}
+</style>
