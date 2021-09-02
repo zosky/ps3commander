@@ -32,7 +32,7 @@ const data = reactive({
       dataARR = dataARR.filter((G) => filters?.myFavs?.includes(G.id));
     else {
       // LAN: myNav
-      if (userName) dataARR = dataARR.filter((G) => userGames.includes(G.id));
+      if (userName) dataARR = dataARR.filter((G) => userGames?.includes(G.id));
       if (genre) dataARR = dataARR.filter((G) => G?.genre.includes(genre));
       if (players) dataARR = dataARR.filter((G) => G?.players == players);
       if (controller) dataARR = dataARR.filter((G) => conList.includes(G.id));
