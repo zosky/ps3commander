@@ -33,7 +33,11 @@
         {{ commit.abbreviated_commit }}
       </div>
       <div class="table-cell font-bold pr-3 text-xs sm:text-lg">
-        {{ commit.subject.replaceAll("|", " | ") }}
+        {{
+          commit.subject
+            .replaceAll("|", " |")
+            .replaceAll("github.com:zosky/", "")
+        }}
       </div>
     </div>
   </div>
