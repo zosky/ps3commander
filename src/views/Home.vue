@@ -17,9 +17,14 @@
           :game="game"
           :ps3="ps3Mode"
           :myList="myList"
+          :fav="myFavs?.includes(game.id)"
           :class="[ps3Mode ? '-mr-5' : '-mr-44', { 'pr-6': !myList }]"
           class="transform transition-transform hover:scale-110 z-10"
-          @click="$router.push({ name: 'game', params: { id: game.id } })"
+          @click="
+            myList
+              ? $router.push({ name: 'game', params: { id: game.id } })
+              : changeFav(game)
+          "
         />
         <!-- desktopShelf OR LAST -->
         <img
@@ -58,7 +63,9 @@ export default {
     dataStore.filters.pager = { p: 0, pp: 100 };
     if (route?.params?.console)
       dataStore.filters.viewMode = route?.params?.console;
-
+    // WAN LIST // if favs - favsMode - else init ARR
+    if (dataStore?.filters?.myFavs?.length) dataStore.filters.viewFavs = true;
+    else dataStore.filters.myFavs = [];
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       shelf: `${process.env.VUE_APP_IMG_BASE}woodShelf.png`,
@@ -71,6 +78,16 @@ export default {
       flexWidth: computed(() => dataStore.filters.flexWidth),
       ps3Mode: computed(() => dataStore?.filters?.viewMode == "ps3"),
       myList: computed(() => dataStore?.filters?.myList),
+      myFavs: computed(() => dataStore?.filters?.myFavs, []),
+      changeFav: (game) => {
+        if (!dataStore.filters.viewFavs) {
+          if (state.myFavs?.includes(game.id)) {
+            const ix = state.myFavs?.indexOf(game.id);
+            dataStore.filters.myFavs.splice(ix, 1);
+          } else dataStore.filters.myFavs?.push(game.id);
+          localStorage.setItem("myFavs", JSON.stringify(state.myFavs));
+        }
+      },
     });
 
     watchEffect(() => {

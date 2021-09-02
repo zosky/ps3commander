@@ -27,10 +27,17 @@ const data = reactive({
     const players = route?.params?.players;
     const search = filters?.search?.toLowerCase();
 
-    if (userName) dataARR = dataARR.filter((G) => userGames.includes(G.id));
-    if (genre) dataARR = dataARR.filter((G) => G?.genre.includes(genre));
-    if (players) dataARR = dataARR.filter((G) => G?.players == players);
-    if (controller) dataARR = dataARR.filter((G) => conList.includes(G.id));
+    // WAN: favorites if in favView
+    if (!myList && filters?.viewFavs)
+      dataARR = dataARR.filter((G) => filters?.myFavs?.includes(G.id));
+    else {
+      // LAN: myNav
+      if (userName) dataARR = dataARR.filter((G) => userGames.includes(G.id));
+      if (genre) dataARR = dataARR.filter((G) => G?.genre.includes(genre));
+      if (players) dataARR = dataARR.filter((G) => G?.players == players);
+      if (controller) dataARR = dataARR.filter((G) => conList.includes(G.id));
+    }
+    // ALL: search
     if (search)
       dataARR = dataARR.filter((G) => G.name.toLowerCase().includes(search));
 
@@ -92,6 +99,7 @@ const filters = reactive({
       )
       ?.sort(),
   },
+  myFavs: JSON.parse(localStorage.getItem("myFavs")),
 });
 
 const getters = reactive({

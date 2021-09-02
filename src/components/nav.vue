@@ -91,17 +91,8 @@
           @click="filters.myList = !filters.myList"
         />
 
-        <SkipBackwardOutline
-          @click="filters?.pager?.p ? filters.pager.p-- : ''"
-          class="text-3xl transition-all transform ml-2"
-        />
-        <span @click="filters.pager.p = 0">{{
-          filters?.pager?.p ? filters?.pager?.p + 1 : "1"
-        }}</span>
-        <SkipForwardOutline
-          @click="filters.pager.p++"
-          class="text-3xl transition-all transform"
-        />
+        <nav-favs v-if="!myList" />
+        <nav-pager />
       </div>
       <div
         v-if="filters.viewMode == 'ps3' && filters.myList"
@@ -344,6 +335,8 @@
 import { reactive, toRefs, inject, computed } from "vue";
 import ps3status from "./ps3status.vue";
 import navBubble from "./navBubble.vue";
+import navFavs from "./navFavs.vue";
+import navPager from "./navPager.vue";
 import navDropdown from "./navDropdown.vue";
 import myIcons from "./svgIcons.vue";
 import family from "./family.vue";
@@ -356,8 +349,6 @@ import {
   DotsGrid,
   HomeAccount,
   Earth,
-  SkipForwardOutline,
-  SkipBackwardOutline,
 } from "mdue";
 export default {
   name: "Nav",
@@ -365,6 +356,8 @@ export default {
     ps3status,
     navBubble,
     navDropdown,
+    navFavs,
+    navPager,
     myIcons,
     family,
     DatabaseSearch,
@@ -375,8 +368,6 @@ export default {
     DotsGrid,
     HomeAccount,
     Earth,
-    SkipForwardOutline,
-    SkipBackwardOutline,
   },
   setup() {
     const dataStore = inject("$dataStore");
