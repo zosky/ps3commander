@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import gitLogJson from "@/store/gitLog.json";
+import gitLogJson from "@/store/data/gitLog.json";
 export default {
   name: "gitLog",
   setup() {

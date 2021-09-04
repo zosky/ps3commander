@@ -17,7 +17,6 @@
         'text-3xl text-blue-300',
       ]"
     >
-      <nav-gametdb />
       <nav-lan-wan />
       <nav-favs v-if="!myList" />
       <nav-pager />
@@ -27,8 +26,9 @@
         <nav-genres />
         <nav-player-count />
       </template>
-      <nav-search />
       <nav-zoom />
+      <nav-search />
+      <nav-gametdb />
     </div>
   </div>
   <nav-search :mobile="true" />

@@ -1,10 +1,10 @@
 // fakeStore used by most all vues
 import { reactive, computed } from "vue";
-import gamesList from "./ps3games.json";
-import gamesListALL from "./ps3all.json";
-import gameTags from "./ps3tags.json";
-import gamesListSNES from "./snes.json";
-import gamesTDB from "./gametdb.json";
+import gamesList from "./data/ps3games.json";
+import gamesListALL from "./data/ps3all.json";
+import gameTags from "./data/ps3tags.json";
+import gamesListSNES from "./data/snes.json";
+import gamesTDB from "./data/gametdb.json";
 import { useRoute } from "vue-router";
 
 const data = reactive({
@@ -46,7 +46,7 @@ const data = reactive({
       if (controller) dataARR = dataARR.filter((G) => conList.includes(G.id));
     }
     // ALL: search
-    if (search)
+    if (search?.length > 2)
       dataARR = dataARR.filter((G) => G.name.toLowerCase().includes(search));
 
     return dataARR;

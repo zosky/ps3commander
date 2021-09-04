@@ -3,7 +3,7 @@
     <input
       type="search"
       v-model="filters.search"
-      placeholder="search"
+      placeholder="min 3 letters"
       :class="[
         'px-3 mx-2 hidden sm:block',
         'ring ring-blue-300 rounded-3xl max-w-xs text-lg',
@@ -33,7 +33,7 @@
   >
     <input
       type="search"
-      placeholder="search"
+      placeholder="min 3 letters"
       v-model="filters.search"
       :class="[
         'px-3 my-3 mx-2 self-center',

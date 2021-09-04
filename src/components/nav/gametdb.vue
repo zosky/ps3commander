@@ -12,13 +12,14 @@
       text-xs
       font-light
       text-center
+      ml-2
     "
   >
-    covers from
+    data from
   </div>
   <my-icons
     i="gameTDB"
-    class="h-10 transform transition-transform hover:scale-110 origin-top"
+    class="h-8 transform transition-transform hover:scale-110 origin-top"
     @click="$router.push({ name: 'superHome', params: { console: 'gametdb' } })"
   />
 </template>
