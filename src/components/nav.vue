@@ -17,6 +17,7 @@
         'text-3xl text-blue-300',
       ]"
     >
+      <nav-gametdb />
       <nav-lan-wan />
       <nav-favs v-if="!myList" />
       <nav-pager />
@@ -42,6 +43,7 @@ import navPlayerCount from "./nav/players.vue";
 import navControllers from "./nav/controllers.vue";
 import navMastheads from "./nav/mastheads.vue";
 import navWarnings from "./nav/warnings.vue";
+import navGametdb from "./nav/gametdb.vue";
 import navSearch from "./nav/search.vue";
 import navLanWan from "./nav/lanwan.vue";
 import navFamily from "./nav/family.vue";
@@ -57,6 +59,7 @@ export default {
     navControllers,
     navMastheads,
     navWarnings,
+    navGametdb,
     navSearch,
     navLanWan,
     navFamily,
