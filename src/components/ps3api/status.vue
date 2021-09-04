@@ -13,7 +13,7 @@
       'rounded-xl font-bold cursor-pointer shadow-lg',
       'z-20',
     ]"
-    v-if="$route.name != 'ps3status'"
+    v-if="!['ps3status', 'admin'].includes($route.name)"
     @click="$router.push({ name: 'ps3status' })"
     @click.middle="getData()"
   >

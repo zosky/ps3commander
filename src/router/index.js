@@ -16,17 +16,31 @@ const routes = [
     ],
   },
   {
-    path: "/status/:api?",
+    path: "/admin/:api?",
+    name: "admin",
+    component: () =>
+      import(/* webpackChunkName: "admin" */ "@/views/admin.vue"),
+    children: [
+      {
+        name: "howTo",
+        path: "how/to",
+        component: () =>
+          import(/* webpackChunkName: "admin" */ "@/views/adminHowTo.vue"),
+      },
+    ],
+  },
+  {
+    path: "/ps3api/:api?",
     name: "ps3status",
     component: () =>
       import(/* webpackChunkName: "ps3" */ "@/views/ps3status.vue"),
   },
-  {
-    path: "/howTo",
-    name: "ps3howTo",
-    component: () =>
-      import(/* webpackChunkName: "util" */ "@/views/ps3howTo.vue"),
-  },
+  // {
+  //   path: "/howTo",
+  //   name: "ps3howTo",
+  //   component: () =>
+  //     import(/* webpackChunkName: "util" */ "@/views/ps3howTo.vue"),
+  // },
   {
     path: "/gitLog",
     name: "gitLog",

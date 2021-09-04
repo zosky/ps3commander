@@ -10,7 +10,7 @@
     </warning>
     <warning
       v-if="!haveAPI"
-      @click="$router.push({ name: 'ps3status', params: { api: 'edit' } })"
+      @click="$router.push({ name: 'admin', params: { api: 'edit' } })"
     >
       <template #icon><svg-icon i="ps3" class="loading h-20" /></template>
       <template #default>API url missing</template>

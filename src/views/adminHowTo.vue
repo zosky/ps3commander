@@ -6,6 +6,15 @@
     <ol type="1" class="list-decimal p-3 pt-0 ml-2">
       <li class="pt-2">
         <span class="text-blue-800 font-serif border-b border-blue-200">
+          browse and favorite any ps3 games
+        </span>
+        <ul class="ml-2">
+          <li>smash the logo in the left</li>
+          <li>ask google, then continue</li>
+        </ul>
+      </li>
+      <li class="pt-2">
+        <span class="text-blue-800 font-serif border-b border-blue-200">
           smash a ps3
         </span>
         <ul class="ml-2">
@@ -223,7 +232,7 @@ import nodeRedApiPng from "/src/assets/screens/nodeRed-api.png";
 import nrXmlJSON from "/src/assets/nodeRed/xml-to-json.json";
 import nrFlow from "@/assets/nodeRed/api.json";
 export default {
-  name: "ps3howTo",
+  name: "howTo",
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({

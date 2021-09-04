@@ -1,34 +1,18 @@
 <template>
-  <div
-    v-if="status?.on != true"
-    class="
-      flex flex-row flex-wrap
-      w-full
-      p-4
-      gap-3
-      cursor-pointer
-      sm:justify-center
-    "
-  >
-    <div :class="bubbleCSS" @click="getStatus">
-      <component
-        :is="loading ? 'Refresh' : WAN ? 'LanDisconnect' : 'Ethernet'"
-        class="text-6xl sm:text-9xl"
-      />
-      <div
-        v-text="loading ? 'checking now' : WAN ? 'API error' : 'system off?'"
-      />
-    </div>
-    <div :class="bubbleCSS" @click="$router.push({ name: 'ps3howTo' })">
-      <HelpRhombusOutline class="text-6xl sm:text-9xl" />
-      <span>how this works</span>
-    </div>
-    <div :class="bubbleCSS" @click="$router.push({ name: 'gitLog' })">
-      <CodeBracesBox class="text-6xl sm:text-9xl" />
-      <span>git<em>-auto-</em>log</span>
-    </div>
-
-    <ps3-api-url :class="bubbleCSS" />
+  <div v-if="!status?.on" class="w-10/12 mx-auto p-7 max-w-5xl">
+    <my-svg i="ps3" class="loading" />
+    <DatabaseEditOutline
+      class="
+        absolute
+        right-7
+        top-14
+        w-20
+        text-9xl text-blue-600
+        hover:text-purple-500
+      "
+      :class="{ 'animate-pulse': !status?.on }"
+      @click="$router.push({ name: 'admin' })"
+    />
   </div>
   <div v-else class="flex flex-row flex-wrap w-full p-4 gap-x-4 gap-y-2">
     <div
@@ -252,10 +236,12 @@
 import { reactive, toRefs, inject, computed } from "vue";
 import SvgPie from "@/components/svgPie.vue";
 import familySVGs from "@/components/family.vue";
-import timer from "@/components/ps3timer.vue";
-import ps3ApiUrl from "@/components/ps3apiURL.vue";
+import timer from "@/components/ps3api/timer.vue";
+import mySvg from "@/components/svgIcons.vue";
+// import ps3ApiUrl from "@/components/ps3api/apiURL.vue";
+// import ps3ApiDemo from "@/components/ps3api/demo.vue";
 import {
-  Ethernet,
+  // Ethernet,
   Harddisk,
   GamepadVariantOutline,
   Memory,
@@ -264,31 +250,35 @@ import {
   Eject,
   Reload,
   Lock,
-  HelpRhombusOutline,
-  Refresh,
-  LanDisconnect,
-  CodeBracesBox,
+  // HelpRhombusOutline,
+  DatabaseEditOutline,
+  // Refresh,
+  // LanDisconnect,
+  // CodeBracesBox,
 } from "mdue";
 export default {
   name: "ps3status",
   components: {
+    mySvg,
     SvgPie,
     timer,
     familySVGs,
-    ps3ApiUrl,
+    // ps3ApiUrl,
+    // ps3ApiDemo,
     Memory,
     Harddisk,
     ServerNetwork,
     GamepadVariantOutline,
     FlaskEmptyOutline,
-    Ethernet,
+    // Ethernet,
     Lock,
     Reload,
     Eject,
-    HelpRhombusOutline,
-    Refresh,
-    LanDisconnect,
-    CodeBracesBox,
+    // HelpRhombusOutline,
+    DatabaseEditOutline,
+    // Refresh,
+    // LanDisconnect,
+    // CodeBracesBox,
   },
   setup() {
     const dataStore = inject("$dataStore");
@@ -298,6 +288,7 @@ export default {
       WAN: computed(() => dataStore.data?.WAN),
       status: computed(() => dataStore.data?.status),
       drives: computed(() => dataStore.data?.drives),
+      demoMode: computed(() => dataStore.data.API == "demo"),
       g: dataStore?.data?.games,
       games: {
         internal: dataStore?.data?.games?.filter((g) =>
