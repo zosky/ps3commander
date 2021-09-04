@@ -16,12 +16,7 @@ const routes = [
     ],
   },
   {
-    path: "/:console?/:name?/:genre?/:controller?/:players?",
-    name: "superHome",
-    component: Home,
-  },
-  {
-    path: "/ps3/status/:api?",
+    path: "/status/:api?",
     name: "ps3status",
     component: () =>
       import(/* webpackChunkName: "ps3" */ "@/views/ps3status.vue"),
@@ -37,6 +32,11 @@ const routes = [
     name: "gitLog",
     component: () =>
       import(/* webpackChunkName: "util" */ "@/views/gitLog.vue"),
+  },
+  {
+    path: "/:console?/:name?/:genre?/:controller?/:players?",
+    name: "superHome",
+    component: Home,
   },
 ];
 
