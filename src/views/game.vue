@@ -96,17 +96,17 @@
         "
       >
         {{ game?.players ? game?.players : "?" }}
-        <svg-icons
+        <my-svg
           v-if="controllers?.move"
           i="move"
           class="w-20 h-20 -ml-10 -mr-4 fill-current"
         />
-        <svg-icons
+        <my-svg
           v-else-if="controllers?.guitar"
           i="guitar"
           class="w-20 h-20 fill-current"
         />
-        <svg-icons v-else i="ps3" class="w-20 h-20" />
+        <my-svg v-else i="ps3" class="w-20 h-20" />
       </div>
     </div>
   </div>
@@ -116,13 +116,11 @@
 import { reactive, toRefs, inject, computed } from "vue";
 import { useRoute } from "vue-router";
 import { DiscPlayer, Backburger, ServerPlus, Application } from "mdue";
-import SvgIcons from "../components/svgIcons.vue";
 export default {
   name: "game",
   components: {
     DiscPlayer,
     Backburger,
-    SvgIcons,
     ServerPlus,
     Application,
   },

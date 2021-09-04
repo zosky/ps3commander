@@ -25,7 +25,7 @@
           'mt-40 -ml-5 -rotate-6 text-9xl text-center',
         ]"
       />
-      <my-icons i="ps3" class="off m-6 transform -rotate-6 mt-52 pb-2" />
+      <my-svg i="ps3" class="off m-6 transform -rotate-6 mt-52 pb-2" />
     </template>
     <div
       v-if="gametdb"
@@ -76,7 +76,6 @@
 </template>
 <script>
 import { toRefs, reactive } from "vue";
-import myIcons from "./svgIcons.vue";
 import {
   DiscPlayer,
   ServerNetwork,
@@ -98,7 +97,6 @@ export default {
     gametdb: { type: Boolean, default: false },
   },
   components: {
-    myIcons,
     DiscPlayer,
     ServerNetwork,
     Application,

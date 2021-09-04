@@ -6,7 +6,7 @@
     ]"
   >
     <template v-for="(gs, c) in controllers" :key="c">
-      <my-icons
+      <my-svg
         :i="c"
         class="h-10 fill-current"
         :class="[
@@ -36,11 +36,10 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import myIcons from "../svgIcons.vue";
 import navBubble from "./bubble.vue";
 export default {
   name: "navControllers",
-  components: { myIcons, navBubble },
+  components: { navBubble },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({

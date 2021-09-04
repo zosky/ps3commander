@@ -12,7 +12,7 @@
       v-if="!haveAPI"
       @click="$router.push({ name: 'admin', params: { api: 'edit' } })"
     >
-      <template #icon><svg-icon i="ps3" class="loading h-20" /></template>
+      <template #icon><my-svg i="ps3" class="loading h-20" /></template>
       <template #default>API url missing</template>
       <template #msg>
         <em> "you may be missing some of the benefits sterio can provide" </em>
@@ -25,10 +25,9 @@
 import { reactive, toRefs, inject, computed } from "vue";
 import { SelectionOff } from "mdue";
 import warning from "@/components/MSGtimeOut.vue";
-import SvgIcon from "@/components/svgIcons.vue";
 export default {
   name: "warnings",
-  components: { warning, SvgIcon, SelectionOff },
+  components: { warning, SelectionOff },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({

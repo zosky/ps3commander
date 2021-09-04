@@ -17,16 +17,14 @@
   >
     data from
   </div>
-  <my-icons
+  <my-svg
     i="gameTDB"
     class="h-8 transform transition-transform hover:scale-110 origin-top"
     @click="$router.push({ name: 'superHome', params: { console: 'gametdb' } })"
   />
 </template>
 <script>
-import myIcons from "../svgIcons.vue";
 export default {
   name: "gtdbCreds",
-  components: { myIcons },
 };
 </script>

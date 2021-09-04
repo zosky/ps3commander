@@ -1,6 +1,6 @@
 <template>
   <div>
-    <myIcons
+    <my-svg
       i="ps3"
       :class="[
         'absolute h-16 sm:h-20 w-auto',
@@ -25,7 +25,7 @@
         });
       "
     />
-    <myIcons
+    <my-svg
       v-if="myList"
       i="snes"
       :class="[
@@ -51,10 +51,8 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import myIcons from "../svgIcons.vue";
 export default {
   name: "navMastheads",
-  components: { myIcons },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({

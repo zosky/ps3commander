@@ -234,51 +234,33 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import SvgPie from "@/components/svgPie.vue";
 import familySVGs from "@/components/family.vue";
 import timer from "@/components/ps3api/timer.vue";
-import mySvg from "@/components/svgIcons.vue";
-// import ps3ApiUrl from "@/components/ps3api/apiURL.vue";
-// import ps3ApiDemo from "@/components/ps3api/demo.vue";
 import {
-  // Ethernet,
-  Harddisk,
   GamepadVariantOutline,
-  Memory,
-  ServerNetwork,
-  FlaskEmptyOutline,
-  Eject,
-  Reload,
-  Lock,
-  // HelpRhombusOutline,
   DatabaseEditOutline,
-  // Refresh,
-  // LanDisconnect,
-  // CodeBracesBox,
+  FlaskEmptyOutline,
+  ServerNetwork,
+  Harddisk,
+  Reload,
+  Memory,
+  Eject,
+  Lock,
 } from "mdue";
 export default {
   name: "ps3status",
   components: {
-    mySvg,
-    SvgPie,
     timer,
     familySVGs,
-    // ps3ApiUrl,
-    // ps3ApiDemo,
-    Memory,
-    Harddisk,
-    ServerNetwork,
     GamepadVariantOutline,
-    FlaskEmptyOutline,
-    // Ethernet,
-    Lock,
-    Reload,
-    Eject,
-    // HelpRhombusOutline,
     DatabaseEditOutline,
-    // Refresh,
-    // LanDisconnect,
-    // CodeBracesBox,
+    FlaskEmptyOutline,
+    ServerNetwork,
+    Harddisk,
+    Reload,
+    Memory,
+    Lock,
+    Eject,
   },
   setup() {
     const dataStore = inject("$dataStore");

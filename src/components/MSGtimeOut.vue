@@ -71,10 +71,9 @@
 <script>
 import { reactive, toRefs, watchEffect } from "vue";
 import { ApplicationSettings } from "mdue";
-import svgPie from "./svgPie.vue";
 export default {
   name: "warningMSG",
-  components: { svgPie, ApplicationSettings },
+  components: { ApplicationSettings },
   setup() {
     const state = reactive({
       timer: null,

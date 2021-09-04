@@ -16,19 +16,13 @@
         />
       </template>
     </div>
-    <!-- <div>{{ pTimeHU }}</div> -->
   </div>
 </template>
 
 <script>
 import { reactive, toRefs, inject, computed, watchEffect } from "vue";
-import svgPie from "@/components/svgPie.vue";
-// import { DiscPlayer, Backburger } from "mdue";
 export default {
   name: "ps3Timer",
-  components: {
-    svgPie,
-  },
   setup() {
     const dataStore = inject("$dataStore");
     const moment = inject("moment");
