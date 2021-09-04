@@ -21,7 +21,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/ps3/status",
+    path: "/ps3/status/:api?",
     name: "ps3status",
     component: () =>
       import(/* webpackChunkName: "ps3" */ "@/views/ps3status.vue"),

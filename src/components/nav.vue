@@ -32,6 +32,7 @@
   </div>
   <nav-search :mobile="true" />
   <ps3status />
+  <navWarnings />
 </template>
 
 <script>
@@ -40,6 +41,7 @@ import ps3status from "./ps3status.vue";
 import navPlayerCount from "./nav/players.vue";
 import navControllers from "./nav/controllers.vue";
 import navMastheads from "./nav/mastheads.vue";
+import navWarnings from "./nav/warnings.vue";
 import navSearch from "./nav/search.vue";
 import navLanWan from "./nav/lanwan.vue";
 import navFamily from "./nav/family.vue";
@@ -54,6 +56,7 @@ export default {
     navPlayerCount,
     navControllers,
     navMastheads,
+    navWarnings,
     navSearch,
     navLanWan,
     navFamily,
@@ -71,7 +74,9 @@ export default {
       loading: computed(() => dataStore.filters?.loading),
       myList: computed(() => dataStore.filters?.myList),
       ps3on: computed(() => dataStore.data?.status?.on),
-      ps3mode: computed(() => dataStore.filters.viewMode == "ps3"),
+      ps3mode: computed(() =>
+        ["ps3", "gametdb"].includes(dataStore.filters.viewMode)
+      ),
       filters: dataStore.filters,
       navThemeColor: computed(() =>
         state.loading

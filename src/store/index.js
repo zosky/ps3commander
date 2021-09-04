@@ -4,10 +4,12 @@ import gamesList from "./ps3games.json";
 import gamesListALL from "./ps3all.json";
 import gameTags from "./ps3tags.json";
 import gamesListSNES from "./snes.json";
+import gamesTDB from "./gametdb.json";
 import { useRoute } from "vue-router";
 
 const data = reactive({
-  API: process.env.VUE_APP_API,
+  // API: process.env.VUE_APP_API,
+  API: localStorage.getItem("APIurl"),
   games: gamesList,
   gamesList: gamesList,
   gamesListSNES: gamesListSNES,
@@ -17,7 +19,13 @@ const data = reactive({
     const v = filters?.viewMode;
     const myList = filters?.myList;
     let dataARR =
-      v == "snes" ? gamesListSNES : myList ? gamesList : gamesListALL;
+      v == "snes"
+        ? gamesListSNES
+        : v == "gametdb"
+        ? gamesTDB
+        : myList
+        ? gamesList
+        : gamesListALL;
 
     const userName = route?.params?.name;
     const userGames = data.gameTags.players[userName];
@@ -104,19 +112,22 @@ const filters = reactive({
 
 const getters = reactive({
   getData: () => {
-    [filters.loading, data.WAN] = [true, false]; // reset loading/WAN-detect
-    fetch(data.API)
-      .then((res) => res.json())
-      .then((DATA) => {
-        filters.loading = false;
-        filters.myList = true;
-        data.status = DATA;
-        if (DATA.on && !data?.drives) getters.postData("drives", "drives");
-      })
-      .catch(() => {
-        filters.loading = false;
-        data.WAN = true;
-      });
+    [filters.loading, data.WAN] = [false, true]; // reset loading/WAN-detect
+    if (data.API) {
+      [filters.loading, data.WAN] = [true, false]; // reset loading/WAN-detect
+      fetch(data.API)
+        .then((res) => res.json())
+        .then((DATA) => {
+          filters.loading = false;
+          // filters.myList = true;
+          data.status = DATA;
+          if (DATA.on && !data?.drives) getters.postData("drives", "drives");
+        })
+        .catch(() => {
+          filters.loading = false;
+          data.WAN = true;
+        });
+    }
   },
   postData: (actionSTR, dataKEY, extraData) => {
     filters.loading = true;

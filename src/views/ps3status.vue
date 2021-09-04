@@ -10,13 +10,14 @@
       sm:justify-center
     "
   >
-    <div :class="bubbleCSS" @click="getStatus()">
-      <Refresh v-if="loading" class="text-6xl sm:text-9xl" />
-      <LanDisconnect v-else-if="WAN" class="text-6xl sm:text-9xl" />
-      <Ethernet v-else class="text-6xl sm:text-9xl text-center" />
-      <div v-if="loading">checking again...</div>
-      <div v-else-if="WAN">API blocked?</div>
-      <div v-else class="self-center">system off ?</div>
+    <div :class="bubbleCSS" @click="getStatus">
+      <component
+        :is="loading ? 'Refresh' : WAN ? 'LanDisconnect' : 'Ethernet'"
+        class="text-6xl sm:text-9xl"
+      />
+      <div
+        v-text="loading ? 'checking now' : WAN ? 'API error' : 'system off?'"
+      />
     </div>
     <div :class="bubbleCSS" @click="$router.push({ name: 'ps3howTo' })">
       <HelpRhombusOutline class="text-6xl sm:text-9xl" />
@@ -26,6 +27,8 @@
       <CodeBracesBox class="text-6xl sm:text-9xl" />
       <span>git<em>-auto-</em>log</span>
     </div>
+
+    <ps3-api-url :class="bubbleCSS" />
   </div>
   <div v-else class="flex flex-row flex-wrap w-full p-4 gap-x-4 gap-y-2">
     <div
@@ -250,6 +253,7 @@ import { reactive, toRefs, inject, computed } from "vue";
 import SvgPie from "@/components/svgPie.vue";
 import familySVGs from "@/components/family.vue";
 import timer from "@/components/ps3timer.vue";
+import ps3ApiUrl from "@/components/ps3apiURL.vue";
 import {
   Ethernet,
   Harddisk,
@@ -271,6 +275,7 @@ export default {
     SvgPie,
     timer,
     familySVGs,
+    ps3ApiUrl,
     Memory,
     Harddisk,
     ServerNetwork,
