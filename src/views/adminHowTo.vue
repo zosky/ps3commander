@@ -4,13 +4,76 @@
       easy as 1, 2, 3, 4...
     </div>
     <ol type="1" class="list-decimal p-3 pt-0 ml-2">
+      <admin-li class="pt-2">
+        <template #title> browse and favorite some ps3 games </template>
+        <template #row>
+          <ul class="ml-2">
+            <admin-li>
+              <template #row>
+                smash
+                <my-svg i="gameTDB" class="h-4" />
+                @ top-right
+              </template>
+            </admin-li>
+            <admin-li>
+              <template #col>
+                <div class="flex flex-row">
+                  search, and click to add/rm (
+                  <StarCheck class="text-lg text-blue-500" /> /
+                  <StarCheckOutline class="text-lg text-blue-500" />) from your
+                  collection
+                </div>
+                <div class="transform scale-75 origin-left -my-1">
+                  or manually: set
+                  <b class="font-mono">
+                    localStorage.myFavs = ["diskID1","diskID2","diskID3",...]
+                  </b>
+                </div>
+              </template>
+            </admin-li>
+            <admin-li>
+              <template #row>
+                view only your favorites from the top (
+                <StarCircle class="text-lg text-blue-500" />/
+                <StarCircleOutline class="text-lg text-blue-500" />
+                )
+              </template>
+            </admin-li>
+            <admin-li>
+              <template #row>
+                toggle <b class="mx-0.5"> localList </b>mode [
+                <Earth class="text-lg text-blue-500" />
+                /
+                <HomeAccount class="text-lg text-blue-500" />
+                ] for additional filters
+              </template>
+              <template #col>
+                <span class="text-purple-500">
+                  TODO: allow customization here
+                </span>
+              </template>
+            </admin-li>
+            <admin-li class="text-purple-500">
+              <template #row>
+                <b>TODO: view games</b>
+              </template>
+            </admin-li>
+          </ul>
+        </template>
+      </admin-li>
+      <admin-li>
+        <template #title>smash a ps3 </template>
+        <template #row> theres not much to see here otherwise </template>
+      </admin-li>
       <li class="pt-2">
         <span class="text-blue-800 font-serif border-b border-blue-200">
-          browse and favorite any ps3 games
+          <b> you will need an API</b>
+          for this thing to do any <em>commendering</em>
         </span>
-        <ul class="ml-2">
-          <li>smash the logo in the left</li>
-          <li>ask google, then continue</li>
+
+        <ul class="list-disc ml-2">
+          <li>it should scrape webManMod html into JSON</li>
+          <li>and return a proper CORS header for this domain</li>
         </ul>
       </li>
       <li class="pt-2">
@@ -222,17 +285,56 @@
           <li>(ONCE:) set pages to branch=gh-pages and folder=/</li>
         </ul>
       </li>
+      <li>
+        <b>but i want it on my LAN:</b> go for it ...
+        <ul class="ml-2">
+          <li class="list-disc">clone the gh-pages branch (the last build)</li>
+          <li class="list-disc">
+            put it in <span class="font-mono">$WEBROOT/ps3commander/</span>
+          </li>
+          <li class="list-disc">
+            OR clone the main branch, then
+            <div class="font-mono font-normal mx-2">
+              <div>npm install</div>
+              <div>npm build</div>
+              <div>#deploy to local webServer</div>
+            </div>
+          </li>
+        </ul>
+      </li>
     </ol>
   </div>
 </template>
 
 <script>
 import { computed, reactive, toRefs, inject } from "vue";
+import adminLi from "../components/adminHowToLI.vue";
+import {
+  // DiscPlayer,
+  // ServerNetwork,
+  // Application,
+  StarCheckOutline,
+  StarCheck,
+  // HelpRhombusOutline,
+  StarCircle,
+  StarCircleOutline,
+  HomeAccount,
+  Earth,
+} from "mdue";
 import nodeRedApiPng from "/src/assets/screens/nodeRed-api.png";
 import nrXmlJSON from "/src/assets/nodeRed/xml-to-json.json";
 import nrFlow from "@/assets/nodeRed/api.json";
 export default {
   name: "howTo",
+  components: {
+    adminLi,
+    StarCircle,
+    StarCircleOutline,
+    StarCheckOutline,
+    StarCheck,
+    HomeAccount,
+    Earth,
+  },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
