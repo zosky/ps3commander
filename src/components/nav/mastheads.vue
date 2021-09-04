@@ -9,6 +9,7 @@
         'transform transition-all origin-top-left',
         'hover:scale-110',
         '-rotate-6',
+        { 'scale-150': loading },
         ps3powerLEDs,
         filters.viewMode == 'ps3' ? 'z-20' : 'z-10 scale-95',
         $route?.matched?.[$route?.matched?.length - 1]?.components?.default
