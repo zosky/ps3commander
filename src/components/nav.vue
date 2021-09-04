@@ -29,6 +29,7 @@
       <nav-zoom />
       <nav-search />
       <nav-gametdb />
+      <AlertRhombusOutline @click="$router.push({ name: '' })" v-if="!API" />
     </div>
   </div>
   <nav-search :mobile="true" />
@@ -38,7 +39,7 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import ps3status from "./ps3status.vue";
+import ps3status from "./ps3api/status.vue";
 import navPlayerCount from "./nav/players.vue";
 import navControllers from "./nav/controllers.vue";
 import navMastheads from "./nav/mastheads.vue";
@@ -51,6 +52,7 @@ import navGenres from "./nav/genres.vue";
 import navPager from "./nav/pager.vue";
 import navZoom from "./nav/zoom.vue";
 import navFavs from "./nav/favs.vue";
+import { AlertRhombusOutline } from "mdue";
 export default {
   name: "Nav",
   components: {
@@ -67,6 +69,7 @@ export default {
     navPager,
     navZoom,
     navFavs,
+    AlertRhombusOutline,
   },
   setup() {
     const dataStore = inject("$dataStore");
@@ -74,6 +77,7 @@ export default {
     dataStore.filters.player = null;
     const state = reactive({
       WAN: computed(() => dataStore.data?.WAN),
+      API: computed(() => dataStore.data?.API),
       loading: computed(() => dataStore.filters?.loading),
       myList: computed(() => dataStore.filters?.myList),
       ps3on: computed(() => dataStore.data?.status?.on),

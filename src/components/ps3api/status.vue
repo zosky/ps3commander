@@ -58,8 +58,8 @@
 </template>
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import timer from "./ps3timer.vue";
-import familySVGs from "./family.vue";
+import timer from "./timer.vue";
+import familySVGs from "../family.vue";
 import {
   Ethernet,
   Harddisk,
