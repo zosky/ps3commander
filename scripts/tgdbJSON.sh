@@ -27,9 +27,12 @@ mv ps3tdb.json ../src/store/gametdb.json
 ##### MEDIA
 wget 'https://www.gametdb.com/download.php?FTP=GameTDB-ps3_coverM-US-2021-09-01.zip' \
     -O GameTDB-ps3_coverM-US-2021-09-01.zip
-unzip GameTDB-ps3_coverM-US-2021-09-01.zip
+ unzip GameTDB-ps3_coverM-US-2021-09-01.zip
+wget 'https://www.gametdb.com/download.php?FTP=GameTDB-ps3_coverM-EN-2021-09-01.zip' \
+    -O GameTDB-ps3_coverM-EN-2021-09-01.zip
+ unzip GameTDB-ps3_coverM-EN-2021-09-01.zip
 mkdir -p ../public/images/gametdb/coverM
-mv ps3/coverM/US ../public/images/gametdb/coverM/
-cd ..
-git add public/images/gametdb/coverM/US/*
+cp ps3/coverM/US/* ../public/images/gametdb/
+cp ps3/coverM/EN/* ../public/images/gametdb/
+git add ../public/images/gametdb/*
 git commit -m "gametdb images"
