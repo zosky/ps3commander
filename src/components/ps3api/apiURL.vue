@@ -22,6 +22,17 @@
       >
         <b>demo</b>Mode
       </div>
+      <div
+        v-if="DEV"
+        @click="
+          API = APIdev;
+          editMode = false;
+          goTime();
+        "
+        class="ring-1 rounded-xl hover:bg-black hover:bg-opacity-10"
+      >
+        <b>DEV</b>Mode
+      </div>
     </div>
     <div v-else class="text-left" @click="editMode = !editMode">
       <div class="font-bold" v-text="`edit API url`" />
@@ -44,6 +55,7 @@ export default {
     const dataStore = inject("$dataStore");
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
+      APIdev: process.env.VUE_APP_API,
       IMGdir: process.env.VUE_APP_IMG_BASE,
       API: dataStore.data.API,
       api: computed(() => dataStore.data.API),
