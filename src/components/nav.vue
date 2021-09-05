@@ -89,7 +89,7 @@ export default {
         state.loading
           ? "to-purple-800 from-purple-400"
           : state.ps3on
-          ? "to-blue-800 from-blue-400"
+          ? "to-blue-800 from-blue-300"
           : state.WAN
           ? "to-indigo-800 from-indigo-400"
           : "to-yellow-800 from-yellow-400"

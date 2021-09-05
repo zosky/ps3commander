@@ -1,10 +1,10 @@
 <template>
   <component
     :is="filters?.viewFavs ? 'StarCircle' : 'StarCircleOutline'"
-    :class="
-      (`text-3xl transition-all transform`,
-      { 'text-blue-600': filters?.viewFavs })
-    "
+    :class="[
+      `text-3xl transition-all transform`,
+      { 'scale-110': filters?.viewFavs },
+    ]"
     @click="filters.viewFavs = !filters?.viewFavs"
   />
   <nav-bubble :value="`${myFavs}`" class="z-10" />

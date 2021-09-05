@@ -7,7 +7,7 @@
       :class="[
         'px-3 mx-2 hidden sm:block',
         'ring ring-blue-300 rounded-3xl max-w-xs text-lg',
-        'bg-opacity-75 bg-blue-400 placeholder-blue-100',
+        'bg-opacity-75 bg-blue-400 placeholder-blue-200',
       ]"
     />
 
