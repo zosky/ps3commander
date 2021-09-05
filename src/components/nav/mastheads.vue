@@ -18,7 +18,7 @@
           : '',
       ]"
       @click="
-        filters.viewMode = 'ps3';
+        filters.viewMode = 'gametdb';
         $router.push({
           name: 'superHome',
           params: { console: filters.viewMode },

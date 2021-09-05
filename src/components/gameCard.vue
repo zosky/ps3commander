@@ -50,7 +50,7 @@
       </div>
       <div v-if="game.dateY" v-text="game.dateY" />
       <component
-        v-if="!favView"
+        v-if="!favView && gametdb"
         :is="`StarCheck${!fav ? 'Outline' : ''}`"
         :class="fav ? 'text-6xl -top-10' : ''"
         class="text-4xl fixed -top-6 right-0"

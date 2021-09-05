@@ -48,7 +48,7 @@ const routes = [
       import(/* webpackChunkName: "util" */ "@/views/gitLog.vue"),
   },
   {
-    path: "/:console?/:name?/:genre?/:controller?/:players?",
+    path: "/games/:console?/:name?/:genre?/:controller?/:players?",
     name: "superHome",
     component: Home,
   },

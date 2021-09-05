@@ -55,7 +55,7 @@ const data = reactive({
 
 const filters = reactive({
   /* filters: watched by display function */
-  viewMode: "ps3",
+  viewMode: "gametdb",
   myList: false,
   players: data.games
     .reduce(
