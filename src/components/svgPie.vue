@@ -24,6 +24,7 @@
         {{ n }}
       </text>
       <text
+        v-if="labelD"
         x="85%"
         y="85%"
         font-size="40%"
@@ -47,6 +48,7 @@ export default {
     d: { type: Number, default: 100 },
     // size: { type: Number, default: 15 },
     label: { type: Boolean, default: true },
+    labelD: { type: Boolean, default: false },
     color: { type: String, default: "#d1201f" },
   },
 };

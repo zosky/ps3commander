@@ -2,7 +2,9 @@
   <div
     id="nowPlaying"
     :class="[
-      status?.on
+      loading
+        ? 'h-12 bg-purple-500'
+        : status?.on
         ? 'h-20 bg-purple-500'
         : WAN
         ? 'h-12 bg-indigo-500'
@@ -11,7 +13,8 @@
       'text-green-200 bg-opacity-60',
       'flex flex-row justify-end align-bottom',
       'rounded-xl font-bold cursor-pointer shadow-lg',
-      'z-20',
+      'z-20 transition transform',
+      { 'scale-150 origin-bottom-right': loading },
     ]"
     v-if="!['ps3status', 'admin'].includes($route.name)"
     @click="$router.push({ name: 'ps3status' })"
@@ -22,22 +25,22 @@
       :src="`${IMGdir}wheels/${status.disk.id}.png`"
       :alt="status.disk.name"
     />
-    <div class="flex flex-col w-1/2 justify-end place-items-end">
-      <timer
-        v-if="status?.on"
-        class="self-end transform scale-125 origin-right Xmx-4"
-      />
-      <div class="flex flex-row self-end">
+    <div
+      class="flex flex-col w-1/2 justify-end place-items-end pl-4"
+      v-if="status?.on && !loading"
+    >
+      <timer class="self-end origin-right Xmx-4 transform scale-150 pt-1" />
+      <div
+        class="flex flex-row self-end transform scale-150 origin-top-right pb-3"
+      >
         <Lock
           v-if="status?.user?.icon == 'lock'"
-          class="text-red-400 -mr-3"
-          @click="$router.push({ name: 'ps3status' })"
+          class="text-red-400 -mr-1 text-3xl"
         />
         <familySVGs
-          v-if="status?.user?.name"
+          v-else-if="status?.on"
           :u="status?.user?.name"
-          class="X-mr-2 text-purple-200"
-          @click="$router.push({ name: 'ps3status' })"
+          class="X-mr-2 text-purple-200 text-3xl"
         />
         <div v-if="status?.on" class="X-mr-1 Xml-1">
           <Harddisk v-if="drives?.ext?.free" class="text-purple-200 text-sm" />
@@ -48,12 +51,18 @@
         <LanDisconnect v-if="!loading && WAN" class="text-green-200" />
         <Ethernet
           v-else-if="!loading"
-          :class="status?.on ? 'text-purple-200' : 'text-red-400 h-8 w-auto'"
-          @click="getData()"
+          :class="[
+            status?.on
+              ? 'text-3xl text-purple-200'
+              : 'text-red-400 h-9 -mr-1.5 mt-1 w-9',
+          ]"
         />
-        <Reload class="animate-spin text-purple-200" v-if="loading" />
       </div>
     </div>
+    <Reload
+      class="animate-spin text-purple-500 text-3xl m-1 mb-2 w-10 h-10"
+      v-if="loading"
+    />
   </div>
 </template>
 <script>

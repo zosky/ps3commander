@@ -29,7 +29,6 @@ export default {
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       powerSec: dataStore.data?.status?.time?.seconds?.power,
-      pTimer: null,
       pTime: computed(() => {
         const x = dataStore.data?.status?.time?.seconds;
         return x ? moment.duration(x.power, "seconds") : null;
@@ -52,8 +51,8 @@ export default {
       }),
     });
     watchEffect(() => {
-      if (!state.pTimer)
-        state.pTimer = setInterval(
+      if (!dataStore.filters?.ps3tick)
+        dataStore.filters.ps3tick = setInterval(
           () => dataStore.data.status.time.seconds.power++,
           1000
         );
