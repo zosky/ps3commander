@@ -18,7 +18,7 @@
             ? 'LanDisconnect'
             : status?.on
             ? 'Ethernet'
-            : 'HelpRhombusOutline'
+            : 'PowerPlugOff'
         "
         class="text-6xl sm:text-9xl"
       />
@@ -81,6 +81,7 @@ import {
   Refresh,
   LanDisconnect,
   CodeBraces,
+  PowerPlugOff,
 } from "mdue";
 export default {
   name: "ps3status",
@@ -102,6 +103,7 @@ export default {
     Refresh,
     LanDisconnect,
     CodeBraces,
+    PowerPlugOff,
   },
   setup() {
     const dataStore = inject("$dataStore");
