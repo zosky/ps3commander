@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="status?.on != true"
     class="
       flex flex-row flex-wrap
       w-full
@@ -12,11 +11,29 @@
   >
     <div :class="bubbleCSS" @click="getStatus">
       <component
-        :is="loading ? 'Refresh' : WAN ? 'LanDisconnect' : 'Ethernet'"
+        :is="
+          loading
+            ? 'Refresh'
+            : WAN
+            ? 'LanDisconnect'
+            : status?.on
+            ? 'Ethernet'
+            : 'HelpRhombusOutline'
+        "
         class="text-6xl sm:text-9xl"
       />
       <div
-        v-text="loading ? 'checking now' : WAN ? 'API error' : 'system off?'"
+        v-text="
+          loading
+            ? 'checking now'
+            : WAN
+            ? 'API error'
+            : status?.on
+            ? 'ps3 ON'
+            : !status?.on
+            ? 'ps3 off'
+            : '???'
+        "
       />
     </div>
     <ps3-api-demo :class="bubbleCSS" v-if="demoMode" />
@@ -100,6 +117,8 @@ export default {
           "flex flex-row gap-1 justify-start align-middle items-center",
           state.loading
             ? "animate-pulse text-purple-500 bg-purple-100"
+            : state.status?.on
+            ? "text-blue-500 bg-blue-200 hover:text-blue-700 hover:bg-blue-300"
             : state.WAN
             ? "text-indigo-500 bg-indigo-200 hover:text-indigo-700 hover:bg-indigo-300"
             : "text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300",

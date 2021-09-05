@@ -1,7 +1,7 @@
 <template>
   <div class="p-3 m-2">
     <div class="text-lg font-bold border-b border-blue-300">
-      easy as 1, 2, 3, 4...
+      easy as 1, 2, 3...
     </div>
     <ol type="1" class="list-decimal p-3 pt-0 ml-2">
       <admin-li class="pt-2">
@@ -33,7 +33,7 @@
             </admin-li>
             <admin-li>
               <template #row>
-                view only your favorites from the top (
+                view your favorites from nav (
                 <StarCircle class="text-lg text-blue-500" />/
                 <StarCircleOutline class="text-lg text-blue-500" />
                 )
@@ -41,15 +41,15 @@
             </admin-li>
             <admin-li>
               <template #row>
-                toggle <b class="mx-0.5"> localList </b>mode [
+                toggle <b class="mx-0.5"> localNav </b>mode [
                 <Earth class="text-lg text-blue-500" />
                 /
                 <HomeAccount class="text-lg text-blue-500" />
-                ] for additional filters
+                ] for personalized filters
               </template>
               <template #col>
                 <span class="text-purple-500">
-                  TODO: allow customization here
+                  TODO: changing the personalized filters
                 </span>
               </template>
             </admin-li>
@@ -62,211 +62,191 @@
         </template>
       </admin-li>
       <admin-li>
-        <template #title>smash a ps3 </template>
-        <template #row> theres not much to see here otherwise </template>
-      </admin-li>
-      <li class="pt-2">
-        <span class="text-blue-800 font-serif border-b border-blue-200">
-          <b> you will need an API</b>
-          for this thing to do any <em>commendering</em>
-        </span>
-
-        <ul class="list-disc ml-2">
-          <li>it should scrape webManMod html into JSON</li>
-          <li>and return a proper CORS header for this domain</li>
-        </ul>
-      </li>
-      <li class="pt-2">
-        <span class="text-blue-800 font-serif border-b border-blue-200">
-          smash a ps3
-        </span>
-        <ul class="ml-2">
-          <li>
-            <span
-              >the rest is pretty useless without one running webManMod</span
-            >
-          </li>
-          <li>ask google, then continue</li>
-        </ul>
-      </li>
-      <li class="pt-2">
-        <span class="text-blue-800 font-serif border-b border-blue-200">
-          get meta (and assets), make json:
-        </span>
-        <ul class="ml-2">
-          <li>
-            <details>
-              <summary>
-                Structure:gamesList.json<br />
-                <em> hint: try skyScraper to get assets and meta </em>
-              </summary>
-              <details>
-                <summary>use nodeRed to make json from xml</summary>
-                <pre class="p-4 bg-blue-300" v-text="nrXmlJSON" />
-              </details>
-              <div class="grid grid-cols-2">
-                <pre class="bg-blue-200 p-3 overflow-x-scroll">{{
-                  jsonGame
-                }}</pre>
-                <div class="font-bold p-3 bg-blue-300 overflow-x-scroll">
-                  {
-                  <span class="block ml-3 font-bold"
-                    >"id": "unique-disk-id",</span
-                  >
-
-                  <span class="block ml-3 font-bold"
-                    >"name":"used to search",</span
-                  >
-                  <span class="block ml-3 italic">"video":"not-yet",</span>
-                  <span class="block ml-3 italic">"rating":"not-yet",</span>
-                  <span class="block ml-3 font-bold">"desc":"info....",</span>
-                  <span class="block ml-3 font-bold"
-                    >"date":"timeStamp used w/momentJS",</span
-                  >
-                  <span class="block ml-3 font-bold"
-                    >"developer":"gameInfo card",</span
-                  >
-                  <span class="block ml-3 font-bold"
-                    >"publisher": "gameInfo card",</span
-                  >
-                  <span class="block ml-3 font-bold"
-                    >"genre":"dropDown + gameInfo card",</span
-                  >
-                  <span class="block ml-3 font-bold"
-                    >"players":dropDown + gameInfo card",</span
-                  >
-                  <span class="block ml-3">"images": { </span>
-                  <span class="block ml-8 font-bold">
-                    "cover": "covers/{diskID}.png",</span
-                  >
-                  <span class="block ml-8 font-bold">
-                    "image":"screenshots/{diskID}.png",</span
-                  >
-                  <span class="block ml-8 font-bold">
-                    "marquee":wheel/{diskID}.png",</span
-                  >
-                  <span class="block ml-3">}, "ps3": { </span>
-                  <span class="block ml-8 font-bold">"info":"{isoPath}",</span>
-                  <span class="block ml-8 font-bold">"id":"{diskID}".</span>
-                  <span class="block ml-8 font-bold">"file":"{iso}".</span>
-                  <span class="block ml-3"> }</span>
-                  <span>}</span>
-                </div>
-              </div>
-            </details>
-          </li>
-
-          <li>
-            <details>
-              <summary>
-                Structure:navData.json
-                <br /><em> hint: try jq to make it make it match </em>
-              </summary>
-              <pre class="bg-blue-200 p-3">
+        <template #title>
+          for this app to do any <em>commendering</em><br />
+        </template>
+        <template #row>
+          <ul>
+            <li>
+              <b> you will need:</b>
+              <ul class="pl-4">
+                <li class="list-disc">a JB'd ps3</li>
+                <li class="list-disc">the amazing webManMod</li>
+                <li class="list-disc">
+                  and an API that can respond to this app
+                  <ul class="list-disc ml-2">
+                    <li>
+                      <details>
+                        <summary
+                          class="
+                            text-blue-800
+                            font-serif
+                            border-b border-blue-200
+                          "
+                        >
+                          listen for GET/POST - tell webManMod - respond w/JSON:
+                        </summary>
+                        <ul class="ml-2">
+                          <li>
+                            <details>
+                              <summary class="text-blue-900" v-text="`GET`" />
+                              <ul class="pl-2">
+                                <li class="list-disc">
+                                  <Ethernet
+                                    class="inline-block text-red-500 mb-1"
+                                  />
+                                  IF <b>(on=false)</b>: the rest is ignored
+                                </li>
+                                <li class="list-disc">
+                                  <LanDisconnect
+                                    class="inline-block text-blue-500"
+                                  />
+                                  IF <b>ERROR</b> (~403/404...) = WANmode
+                                </li>
+                                <li class="list-disc">
+                                  JSON:
+                                  <pre class="text-xs bg-blue-200 p-4">
 {
-    "players": {
-        "name1": ["gameID1","gameID2",...],
-        "name2": ["gameID2","gameID3","gameID3",...],
-        ...
+    "on": true,
+    "temp": {
+        "cpu": 66,
+        "rsx": 68,
+        "mem": 1900,
+        "fanSpeed": 30
     },
-    "controllers":{
-        "guitar": ["gameID1","gameID2",...],
-        "move": ["gameID3","gameID4",""gameID5",...],
+    "user": {
+        "id": 1,
+        "name": "no one",
+        "icon": "lock"
+    },
+    "time": {
+        "seconds": {
+            "power": 975,
+            "game": 0
+        }
     }
-}              
-          </pre
-              >
-            </details>
-          </li>
-        </ul>
-      </li>
-      <li class="pt-2">
-        <span class="text-blue-800 font-serif border-b border-blue-200">
-          roll the backEnd
-        </span>
-        <ul class="ml-2">
-          <li>
-            make an API endPoint using your weapon of choice
-            <details>
-              <summary v-text="`GET response example`" />
-              <pre>
+}</pre
+                                  >
+                                </li>
+                              </ul>
+                            </details>
+                          </li>
+                          <li>
+                            <details>
+                              <summary class="text-blue-900">
+                                POST:{action:"HDD"}
+                              </summary>
+                              Responde:
+                              <pre class="text-xs bg-blue-200 p-4">
 {
-    "on":[true|false],
-    "temp":{},
-    "user":{"name","icon"},
-    "time":{ "seconds":{ "power":0, "game":0 }}
-}
-                  </pre
-              >
-            </details>
-            <details>
-              <summary>
-                <span class="text-blue-900">TODO(doc):</span> POST:{action:HDD}
-              </summary>
-            </details>
-            <details>
-              <summary>
-                <span class="text-blue-900">TODO(doc):</span>
-                POST:{action:mount,id:diskID}
-              </summary>
-            </details>
-            <details>
-              <summary>
-                <span class="text-blue-900">TODO(doc):</span>
-                POST:{action:user,name:name}
-              </summary>
-            </details>
-            <details>
-              <summary>hint: check out my node-red flow<em /></summary>
-              <div class="text-blue-800">
-                <ul class="ml-2">
-                  <li>wMM@ps3 should be @ <span>http://ps3.lan/</span></li>
-                  <li>
-                    CORS subflow <span>need adjusting</span> for
-                    <span>CORS headers</span>
-                  </li>
-                  <li>
-                    some links (like to smartHome w/mqtt) are
-                    <span>also not included</span>
-                  </li>
-                </ul>
-              </div>
-              <img
-                :src="nodeRedApiPng"
-                alt="apiScreenshot"
-                class="mix-blend-multiply pb-2"
-              />
-              <details>
-                <summary>flow.JSON</summary>
-                <pre
-                  v-text="nrFlow"
-                  class="bg-blue-300 p-2 overflow-scroll h-80"
-                />
-              </details>
-            </details>
+  "ext": {
+    "free": 73,
+    "size": 1000,
+    "percent": 93
+  },
+  "int": {
+    "free": 61,
+    "size": 308,
+    "percent": 80
+  },
+  "netfs": {
+    "free": 49,
+    "used": 3618,
+    "size": 3667,
+    "percent": 99
+  }
+}</pre
+                              >
+                            </details>
+                          </li>
+                          <li>
+                            <details>
+                              <summary>
+                                <span class="text-blue-900">TODO(doc):</span>
+                                POST:{action:user,name:name}
+                              </summary>
+                            </details>
+                          </li>
+                          <li>
+                            <details>
+                              <summary>
+                                <span class="text-blue-900">TODO(doc):</span>
+                                POST:{action:mount,id:gameID}
+                              </summary>
+                            </details>
+                          </li>
 
-            <details>
-              <summary>
-                <span>lock it down to LAN only</span>
-                (/aka: <em>be here</em> )
-              </summary>
+                          <details>
+                            <summary>
+                              hint: check out my node-red flow<em />
+                            </summary>
+                            <div class="text-blue-800 pl-6">
+                              <ul class="">
+                                <li>
+                                  wMM@ps3 should be @
+                                  <span>http://ps3.lan/</span>
+                                </li>
+                                <li>
+                                  some link destinations (like mqtt flows) are
+                                  not in scope here
+                                </li>
+                              </ul>
+                            </div>
+                            <details class="ml-3">
+                              <summary>flow.JSON</summary>
+                              <pre
+                                v-text="nrFlow"
+                                class="bg-blue-300 p-2 overflow-scroll h-80"
+                              />
+                            </details>
+                            <img
+                              :src="nodeRedApiPng"
+                              alt="apiScreenshot"
+                              class="mix-blend-multiply pb-2"
+                            />
+                          </details>
+                        </ul>
+                      </details>
+                    </li>
+                    <li>
+                      plus return a CORS header for this domain:
+                      <b>{{ hostName }}</b>
+                    </li>
+                    <li>
+                      <details>
+                        <summary>
+                          <span>SUGGESTED: lock it down to LAN only</span>
+                          (/aka: <em>be here</em> )
+                        </summary>
 
-              <div>hint: proxy with apach2</div>
-              <pre class="bg-blue-200 p-3">
+                        <div>hint: proxy with apach2</div>
+                        <pre class="bg-blue-200 p-3">
   ProxyPass /ps3commanderAPI "http://LOCAL-IP:PORT/API/PATH"
   ProxyPassReverse /ps3commanderAPI "http://LOCAL-IP:PORT/API/PATH"
-  &lt;proxy%3E Proxy *>
+  &lt;Proxy *>
       Order deny,allow
       Deny from all
       Require ip 192.168.1.0/24
       Satisfy Any
   &lt;/proxy></pre
-              >
-            </details>
-          </li>
-        </ul>
-      </li>
-      <li class="pt-2">
+                        >
+                      </details>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              set your APIurl on /admin page <br /><em>["{{ APIurl }}"]</em>
+            </li>
+            <li>navigate to myCollection from eaither corner of the topNav</li>
+            <li>pick a game</li>
+            <li>mount</li>
+            <li>go play</li>
+          </ul>
+        </template>
+      </admin-li>
+      <!-- <li class="pt-2">
         <span class="text-blue-800 font-serif border-b border-blue-200">
           make the app
         </span>
@@ -284,8 +264,8 @@
           <li>push > github action will build and publish gh-pages</li>
           <li>(ONCE:) set pages to branch=gh-pages and folder=/</li>
         </ul>
-      </li>
-      <li>
+      </li> -->
+      <!-- <li>
         <b>but i want it on my LAN:</b> go for it ...
         <ul class="ml-2">
           <li class="list-disc">clone the gh-pages branch (the last build)</li>
@@ -301,7 +281,19 @@
             </div>
           </li>
         </ul>
-      </li>
+      </li> -->
+      <admin-li>
+        <template #title
+          >OR clone the
+          <a
+            href="https://github.com/zosky/ps3commander"
+            target="_blank"
+            class="underline"
+            >git repo</a
+          >
+          and make it your own</template
+        >
+      </admin-li>
     </ol>
   </div>
 </template>
@@ -319,7 +311,9 @@ import {
   StarCircle,
   StarCircleOutline,
   HomeAccount,
+  LanDisconnect,
   Earth,
+  Ethernet,
 } from "mdue";
 import nodeRedApiPng from "/src/assets/screens/nodeRed-api.png";
 import nrXmlJSON from "/src/assets/nodeRed/xml-to-json.json";
@@ -334,6 +328,8 @@ export default {
     StarCheck,
     HomeAccount,
     Earth,
+    LanDisconnect,
+    Ethernet,
   },
   setup() {
     const dataStore = inject("$dataStore");
@@ -345,6 +341,8 @@ export default {
       thisIX: 0,
       maxIX: computed(() => dataStore?.data?.games?.length),
       jsonGame: computed(() => dataStore?.data?.games[state.thisIX]),
+      hostName: window.location.hostname,
+      APIurl: computed(() => dataStore.data?.API, "not set yet"),
     });
     return { ...toRefs(state) };
   },
