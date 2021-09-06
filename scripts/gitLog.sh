@@ -27,5 +27,5 @@ git log --pretty=format:'{%n
     | sed "$ s/,$//" \
     | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g' \
     | awk 'BEGIN { print("[") } { print($0) } END { print("]") }' \
-    > src/store/gitLog.json
+    > src/store/data/gitLog.json
 echo NEW LOG DONE

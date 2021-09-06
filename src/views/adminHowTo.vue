@@ -10,9 +10,9 @@
           <ul class="ml-2">
             <admin-li>
               <template #row>
-                smash
+                smash <my-svg i="ps3" class="h-4 px-1" /> or
                 <my-svg i="gameTDB" class="h-4" />
-                @ top-right
+                in eaither top corner
               </template>
             </admin-li>
             <admin-li>
@@ -64,8 +64,11 @@
       <admin-li>
         <template #title>
           for this app to do any <em>commendering</em><br />
+          <div class="text-sm leading-none">
+            like get your console's status, your users, and mount your disks...
+          </div>
         </template>
-        <template #row>
+        <template #col>
           <ul>
             <li>
               <b> you will need:</b>
@@ -237,61 +240,35 @@
               </ul>
             </li>
             <li>
-              set your APIurl on /admin page <br /><em>["{{ APIurl }}"]</em>
+              set your APIurl
+              <em v-if="APIurl && APIurl != 'demo'">["{{ APIurl }}"]</em>
             </li>
-            <li>navigate to myCollection from eaither corner of the topNav</li>
-            <li>pick a game</li>
-            <li>mount</li>
-            <li>go play</li>
+            <li
+              v-if="APIurl != 'demo'"
+              class="text-blue-500 cursor-pointer"
+              @click="gogoDemo()"
+            >
+              <span>or try demo mode</span> (APIurl=demo)
+            </li>
           </ul>
         </template>
       </admin-li>
-      <!-- <li class="pt-2">
-        <span class="text-blue-800 font-serif border-b border-blue-200">
-          make the app
-        </span>
-        <ul class="ml-2 list-disc">
-          <li>fork the repo</li>
-          <li>
-            add json from step one to
-            <span>/src/store/[list|data].json</span>
-          </li>
-          <li>
-            add assets (f/skyScraper) to
-            <span>/public/images/*/[gameID].png</span>
-          </li>
-          <li>set vars in .env.[PROD|DEV]</li>
-          <li>push > github action will build and publish gh-pages</li>
-          <li>(ONCE:) set pages to branch=gh-pages and folder=/</li>
-        </ul>
-      </li> -->
-      <!-- <li>
-        <b>but i want it on my LAN:</b> go for it ...
-        <ul class="ml-2">
-          <li class="list-disc">clone the gh-pages branch (the last build)</li>
-          <li class="list-disc">
-            put it in <span class="font-mono">$WEBROOT/ps3commander/</span>
-          </li>
-          <li class="list-disc">
-            OR clone the main branch, then
-            <div class="font-mono font-normal mx-2">
-              <div>npm install</div>
-              <div>npm build</div>
-              <div>#deploy to local webServer</div>
-            </div>
-          </li>
-        </ul>
-      </li> -->
       <admin-li>
         <template #title
-          >OR clone the
-          <a
-            href="https://github.com/zosky/ps3commander"
-            target="_blank"
-            class="underline"
-            >git repo</a
-          >
-          and make it your own</template
+          >if you want to host this app locally, look under the hood, or
+          contribute</template
+        >
+        <template #row>
+          <span class="text-sm"
+            >clone the
+            <a
+              href="https://github.com/zosky/ps3commander"
+              target="_blank"
+              class="underline px-1 text-blue-600"
+              >git repo</a
+            >
+            and make it more awesome
+          </span></template
         >
       </admin-li>
     </ol>
@@ -342,7 +319,11 @@ export default {
       maxIX: computed(() => dataStore?.data?.games?.length),
       jsonGame: computed(() => dataStore?.data?.games[state.thisIX]),
       hostName: window.location.hostname,
-      APIurl: computed(() => dataStore.data?.API, "not set yet"),
+      APIurl: computed(
+        () => dataStore.data?.API && dataStore.data?.API,
+        "not set yet"
+      ),
+      gogoDemo: () => (dataStore.data.API = "demo"),
     });
     return { ...toRefs(state) };
   },
