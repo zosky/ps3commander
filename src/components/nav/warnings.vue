@@ -22,7 +22,7 @@
         <em> "you may be missing some of the benefits sterio can provide" </em>
       </template>
     </warning>
-    <div class="flex flex-row text-blue-500">
+    <div class="flex flex-row text-blue-500" v-if="demoMode">
       <MessageSettingsOutline
         :class="[
           'w-20 h-20 p-2 inline-block self-center shadow-md',
@@ -52,7 +52,7 @@ export default {
     const state = reactive({
       haveFavs: computed(() => dataStore?.filters?.myFavs?.length),
       haveAPI: computed(() => dataStore.data.API),
-      demoMode: computed(() => state.haveAPI == "demo"),
+      demoMode: computed(() => dataStore.data.API == "demo"),
       viewAll: () => (dataStore.filters.viewFavs = false),
     });
     return { ...toRefs(state) };

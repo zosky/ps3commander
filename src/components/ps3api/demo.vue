@@ -7,9 +7,9 @@
       class="hover:bg-blue-300 w-full rounded-full px-5"
       :class="[
         {
-          'text-red-600': b == 'close',
-          'bg-purple-300': WAN && b == 'wan',
           'opacity-30': WAN && b == 'power',
+          'bg-purple-300': WAN && b == 'wan',
+          'text-red-600': b == 'close',
         },
       ]"
       @click="buttonSmash(b)"
@@ -34,12 +34,15 @@ export default {
               ? state.powerON
               : state.powerOFF)
           : b == "close"
-          ? state.DEV
-            ? (dataStore.data.API = process.env.VUE_APP_API)
-            : (dataStore.data.API = null)
+          ? state.demoOver()
           : b == "wan"
           ? (dataStore.data.WAN = !dataStore.data.WAN)
           : "",
+      demoOver: () => {
+        dataStore.data.API = state.DEV ? process.env.VUE_APP_API : null;
+        localStorage.setItem("APIurl", dataStore.data.API);
+        dataStore.getters.getData();
+      },
       buttons: ["power", "wan", "close"],
       powerOFF: { on: false },
       powerON: {

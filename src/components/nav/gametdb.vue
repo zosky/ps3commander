@@ -7,12 +7,11 @@
       origin-bottom-left
       translate-x-full
       leading-none
-      mt-1
       -mr-1
       text-xs
       font-light
       text-center
-      ml-2
+      scale-75
     "
   >
     data from
