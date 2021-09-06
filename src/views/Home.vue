@@ -69,8 +69,7 @@ export default {
     if (route?.params?.console)
       dataStore.filters.viewMode = route?.params?.console;
     // WAN LIST // if favs - favsMode - else init ARR
-    if (dataStore?.filters?.myFavs?.length) dataStore.filters.viewFavs = true;
-    else dataStore.filters.myFavs = [];
+    if (!dataStore?.filters?.myFavs?.length) dataStore.filters.myFavs = [];
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       shelf: `${process.env.VUE_APP_IMG_BASE}woodShelf.png`,

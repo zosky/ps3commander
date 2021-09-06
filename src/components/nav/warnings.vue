@@ -5,8 +5,12 @@
       'gap-x-12 gap-y-2 justify-center my-2',
     ]"
   >
-    <warning v-if="!haveFavs">
+    <warning v-if="!haveFavs" @click="viewAll()">
       <template #icon><SelectionOff /></template>
+      <template #msg
+        >showing the top 20 f/metecritic.<br />
+        <em>this msg will self-destruct</em></template
+      >
     </warning>
     <warning
       v-if="!haveAPI"
@@ -18,21 +22,38 @@
         <em> "you may be missing some of the benefits sterio can provide" </em>
       </template>
     </warning>
+    <div class="flex flex-row text-blue-500">
+      <MessageSettingsOutline
+        :class="[
+          'w-20 h-20 p-2 inline-block self-center shadow-md',
+          'rounded-l-xl bg-blue-200 ring-1',
+        ]"
+      />
+      <ps3demo-mode
+        :class="[
+          'min-w-max px-1 shadow-md',
+          'ring-1 rounded-xl bg-blue-200 text-center',
+        ]"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import { SelectionOff } from "mdue";
+import { SelectionOff, MessageSettingsOutline } from "mdue";
 import warning from "@/components/MSGtimeOut.vue";
+import ps3demoMode from "../ps3api/demo.vue";
 export default {
   name: "warnings",
-  components: { warning, SelectionOff },
+  components: { warning, ps3demoMode, SelectionOff, MessageSettingsOutline },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
       haveFavs: computed(() => dataStore?.filters?.myFavs?.length),
       haveAPI: computed(() => dataStore.data.API),
+      demoMode: computed(() => state.haveAPI == "demo"),
+      viewAll: () => (dataStore.filters.viewFavs = false),
     });
     return { ...toRefs(state) };
   },

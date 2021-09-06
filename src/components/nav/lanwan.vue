@@ -1,6 +1,14 @@
 <template>
   <span class="text-lg hidden sm:block pr-1">
-    {{ filters.myList ? "collected" : favMode ? "myFavs" : "all" }}
+    {{
+      filters.myList
+        ? "collected"
+        : favMode
+        ? !favCount
+          ? "top20"
+          : "myFavs"
+        : "all"
+    }}
   </span>
   <component
     :is="filters.myList ? 'HomeAccount' : 'Earth'"
@@ -20,7 +28,7 @@ export default {
     const dataStore = inject("$dataStore");
     const state = reactive({
       filters: dataStore.filters,
-      gameCount: computed(() => dataStore.data?.theseGames?.length, 0),
+      favCount: computed(() => dataStore.filters?.myFavs?.length, 0),
       favMode: computed(() => dataStore.filters.viewFavs),
       goTime: () => {
         dataStore.filters.myList = !dataStore.filters.myList;

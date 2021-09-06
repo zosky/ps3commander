@@ -7,7 +7,7 @@
     ]"
     @click="filters.viewFavs = !filters?.viewFavs"
   />
-  <nav-bubble :value="`${myFavs}`" class="z-10" />
+  <nav-bubble :value="`${myFavs ? myFavs : 20}`" class="z-10" />
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
-      myFavs: computed(() => dataStore?.filters?.myFavs?.length, 0),
+      myFavs: computed(() => dataStore?.filters?.myFavs?.length, 20),
       filters: dataStore.filters,
     });
     return { ...toRefs(state) };

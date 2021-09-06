@@ -5,6 +5,7 @@ import gamesListALL from "./data/ps3all.json";
 import gameTags from "./data/ps3tags.json";
 import gamesListSNES from "./data/snes.json";
 import gamesTDB from "./data/gametdb.json";
+import top20 from "./data/top20.json";
 import { useRoute } from "vue-router";
 
 const data = reactive({
@@ -34,10 +35,13 @@ const data = reactive({
     const conList = data.gameTags.controllers[controller];
     const players = route?.params?.players;
     const search = filters?.search?.toLowerCase();
+    const hasFavs = filters?.myFavs?.length;
 
-    // WAN: favorites if in favView
+    // WAN: favorites if in favView (top20 if none)
     if (!myList && filters?.viewFavs)
-      dataARR = dataARR.filter((G) => filters?.myFavs?.includes(G.id));
+      dataARR = dataARR.filter((G) =>
+        filters?.[hasFavs ? "myFavs" : "top20"]?.includes(G.id)
+      );
     else {
       // LAN: myNav
       if (userName) dataARR = dataARR.filter((G) => userGames?.includes(G.id));
@@ -108,6 +112,8 @@ const filters = reactive({
       ?.sort(),
   },
   myFavs: JSON.parse(localStorage.getItem("myFavs")),
+  viewFavs: true,
+  top20: top20,
 });
 
 const getters = reactive({
