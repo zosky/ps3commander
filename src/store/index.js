@@ -53,6 +53,12 @@ const data = reactive({
     if (search?.length > 2)
       dataARR = dataARR.filter((G) => G.name.toLowerCase().includes(search));
 
+    // sort whats left over
+    // PROPS:https://stackoverflow.com/questions/1129216/sort-array-of-objects-by-string-property-value
+    dataARR = dataARR.sort((a, b) =>
+      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    );
+
     return dataARR;
   }),
 });
