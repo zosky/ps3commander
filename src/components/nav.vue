@@ -29,7 +29,10 @@
       <nav-zoom />
       <nav-search />
       <nav-gametdb />
-      <AlertRhombusOutline @click="$router.push({ name: '' })" v-if="!API" />
+      <AlertRhombusOutline
+        @click="$router.push({ name: 'howTo' })"
+        v-if="!API"
+      />
     </div>
   </div>
   <nav-search :mobile="true" />
