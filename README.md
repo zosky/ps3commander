@@ -4,15 +4,24 @@ handRolled controller v4(?) - vue3 spa ...
  - *(Doc:comingSoon)* ps3-API / nodeRed-webManMod-_inTheMiddle-ware_
 
 # TODO
-- decouple media from build - move to skyScraper subModule
-- decouple from nodeRed-API - hook wMM direct
-- decouple from myDB - hook to skyScraper output (need xml>json)
-- decouple from data.json - hardCoded at build time 
-  - make local browser-data ?
-  - node-red API ?
-  - wMM direct ?
-- audit: (app)db VS ps3
+- decouple media from build ?
+- decouple from nodeRed-API / hook wMM direct ?
+- ~~decouple from myDB - hook to skyScraper output (need xml>json)~~ 
+- current source = gameTDB - need permission
+- decouple user-data.json 
+  - hardCoded at build time 
+  - cache last API resp in browser localStorage 
+- massUpload: get gameList from console (w/wMM)
 # changeLog
+- 21.09.06 - lets call it alpha again
+  - added gameTDB dataSet 
+  - myFavs - store select games as array in browser storage
+  - seperated app and ps3 status
+  - added global warnings in nav
+  - seperated the nav into componenets
+  - made the howTO page
+  - moved APIurl to browserStorage
+  - and more
 - 21.09.01 - all ps3 games list - default=on (if LAN: off)
 - 21.08.31 - snes release
   - controller added to topNav ... sets `filters.console` 
