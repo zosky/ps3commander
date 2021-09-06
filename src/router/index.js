@@ -27,6 +27,12 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "admin" */ "@/views/adminHowTo.vue"),
       },
+      {
+        path: "git/log",
+        name: "gitLog",
+        component: () =>
+          import(/* webpackChunkName: "admin" */ "@/views/gitLog.vue"),
+      },
     ],
   },
   {
@@ -34,18 +40,6 @@ const routes = [
     name: "ps3status",
     component: () =>
       import(/* webpackChunkName: "ps3" */ "@/views/ps3status.vue"),
-  },
-  // {
-  //   path: "/howTo",
-  //   name: "ps3howTo",
-  //   component: () =>
-  //     import(/* webpackChunkName: "util" */ "@/views/ps3howTo.vue"),
-  // },
-  {
-    path: "/gitLog",
-    name: "gitLog",
-    component: () =>
-      import(/* webpackChunkName: "util" */ "@/views/gitLog.vue"),
   },
   {
     path: "/games/:console?/:name?/:genre?/:controller?/:players?",

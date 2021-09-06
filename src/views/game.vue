@@ -1,6 +1,20 @@
 <template>
   <div class="p-2 sm:grid sm:grid-cols-2">
-    <img :src="`${IMGdir}${game?.images?.image}`" :alt="game?.id" />
+    <img
+      :src="`${IMGdir}${
+        game?.images?.image ? game.images.image : `gametdb/${game.id}.jpg`
+      }`"
+      :alt="game?.id"
+      :style="
+        viewMode == 'gametdb'
+          ? 'transform: perspective(60em) rotateY(20deg);'
+          : ''
+      "
+      :class="{
+        'mt-4  ml-2 sm:mt-8 mb-4 ring-2 border-l-4 sm:border-l-8 border-b-4 rounded-xl sm:rounded-l-3xl':
+          viewMode == 'gametdb',
+      }"
+    />
     <div>
       <div
         :class="[
@@ -40,6 +54,7 @@
       </div>
       <div class="text-2xl w-full flex flex-row p-2 items-center pt-5"></div>
       <div
+        v-if="game?.desc"
         :class="[
           'col-span-full p-4 m-3',
           'ring ring-blue-300',
@@ -130,7 +145,8 @@ export default {
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       IMGdir: process.env.VUE_APP_IMG_BASE,
-      game: dataStore.data.games.find((g) => g.id == route.params.id),
+      game: dataStore.data.theseGames.find((g) => g.id == route.params.id),
+      viewMode: computed(() => dataStore.filters.viewMode),
       playing: computed(() => dataStore?.data?.status?.game?.id),
       user: computed(() => dataStore?.data?.status?.user?.icon != "lock"),
       powerOn: computed(() => dataStore?.data?.status?.on),

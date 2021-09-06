@@ -26,7 +26,7 @@
           ]"
           class="transform transition-transform hover:scale-110 z-10"
           @click="
-            myList
+            viewFavs
               ? $router.push({ name: 'game', params: { id: game.id } })
               : changeFav(game)
           "

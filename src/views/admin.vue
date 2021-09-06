@@ -38,7 +38,7 @@
     </div>
     <ps3-api-url :class="bubbleCSS" />
     <div
-      :class="bubbleCSS"
+      :class="[bubbleCSS, $route.name == 'howTo' ? hereCSS : '']"
       @click="
         $route.name == 'howTo'
           ? $router.go(-1)
@@ -48,7 +48,10 @@
       <HelpRhombusOutline class="text-6xl sm:text-9xl" />
       <span>how this works</span>
     </div>
-    <div :class="bubbleCSS" @click="$router.push({ name: 'gitLog' })">
+    <div
+      :class="[bubbleCSS, $route.name == 'gitLog' ? hereCSS : '']"
+      @click="$router.push({ name: 'gitLog' })"
+    >
       <CodeBraces class="text-6xl sm:text-9xl" />
       <div class="max-w-min leading-none text-sm">
         git
@@ -109,6 +112,7 @@ export default {
       status: computed(() => dataStore.data?.status),
       loading: computed(() => dataStore.filters?.loading),
       getStatus: dataStore.getters.getData,
+      hereCSS: "scale-105 transform transition-all filter -hue-rotate-90",
       bubbleCSS: computed(() => {
         return [
           "p-3 shadow-xl mx-auto sm:mx-0 rounded-xl text-center transition-all w-full sm:max-w-min",
