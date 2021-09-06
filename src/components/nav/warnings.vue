@@ -9,8 +9,10 @@
       <template #icon><SelectionOff /></template>
       <template #msg
         >showing the top 20 f/metecritic.<br />
-        <em>this msg will self-destruct</em></template
-      >
+        <em class="font-bold"
+          >smash <StarCircle class="inline-block text-xl -mx-0.5" /> for all </em
+        >(or this)
+      </template>
     </warning>
     <warning
       v-if="!haveAPI"
@@ -41,12 +43,18 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import { SelectionOff, MessageSettingsOutline } from "mdue";
+import { SelectionOff, MessageSettingsOutline, StarCircle } from "mdue";
 import warning from "@/components/MSGtimeOut.vue";
 import ps3demoMode from "../ps3api/demo.vue";
 export default {
   name: "warnings",
-  components: { warning, ps3demoMode, SelectionOff, MessageSettingsOutline },
+  components: {
+    warning,
+    ps3demoMode,
+    SelectionOff,
+    MessageSettingsOutline,
+    StarCircle,
+  },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
