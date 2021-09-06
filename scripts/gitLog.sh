@@ -28,3 +28,4 @@ git log --pretty=format:'{%n
     | sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g' \
     | awk 'BEGIN { print("[") } { print($0) } END { print("]") }' \
     > src/store/gitLog.json
+echo NEW LOG DONE
