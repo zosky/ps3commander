@@ -30,14 +30,21 @@ export default {
       WAN: computed(() => dataStore.data?.WAN),
       buttonSmash: (b) =>
         !state.WAN && b == "power"
-          ? (dataStore.data.status = !dataStore.data.status?.on
-              ? state.powerON
-              : state.powerOFF)
+          ? state.powerToggle()
           : b == "close"
           ? state.demoOver()
           : b == "wan"
-          ? (dataStore.data.WAN = !dataStore.data.WAN)
+          ? state.wanToggle()
           : "",
+      powerToggle: () => {
+        const pON = dataStore.data.status?.on;
+        dataStore.data.status = pON ? state.powerOFF : state.powerON;
+        dataStore.data.drives = dataStore.data.status?.on ? state.drives : null;
+      },
+      wanToggle: () => {
+        dataStore.data.status = state.powerOFF;
+        dataStore.data.WAN = !dataStore.data.WAN;
+      },
       demoOver: () => {
         dataStore.data.API = state.DEV ? process.env.VUE_APP_API : null;
         localStorage.setItem("APIurl", dataStore.data.API);
@@ -63,6 +70,24 @@ export default {
             power: 975,
             game: 0,
           },
+        },
+      },
+      drives: {
+        ext: {
+          free: 73,
+          size: 1000,
+          percent: 93,
+        },
+        int: {
+          free: 61,
+          size: 308,
+          percent: 80,
+        },
+        netfs: {
+          free: 49,
+          used: 3618,
+          size: 3667,
+          percent: 99,
         },
       },
     });

@@ -36,7 +36,6 @@
         "
       />
     </div>
-    <ps3-api-demo :class="bubbleCSS" v-if="demoMode" />
     <ps3-api-url :class="bubbleCSS" />
     <div
       :class="bubbleCSS"
@@ -66,7 +65,6 @@ import { reactive, toRefs, inject, computed } from "vue";
 import familySVGs from "@/components/family.vue";
 import timer from "@/components/ps3api/timer.vue";
 import ps3ApiUrl from "@/components/ps3api/apiURL.vue";
-import ps3ApiDemo from "@/components/ps3api/demo.vue";
 import {
   Ethernet,
   Harddisk,
@@ -89,7 +87,6 @@ export default {
     timer,
     familySVGs,
     ps3ApiUrl,
-    ps3ApiDemo,
     Memory,
     Harddisk,
     ServerNetwork,
@@ -110,7 +107,6 @@ export default {
     const state = reactive({
       WAN: computed(() => dataStore.data?.WAN),
       status: computed(() => dataStore.data?.status),
-      demoMode: computed(() => dataStore.data.API == "demo"),
       loading: computed(() => dataStore.filters?.loading),
       getStatus: dataStore.getters.getData,
       bubbleCSS: computed(() => {

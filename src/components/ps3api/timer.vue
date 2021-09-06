@@ -20,7 +20,14 @@
 </template>
 
 <script>
-import { reactive, toRefs, inject, computed, watchEffect } from "vue";
+import {
+  reactive,
+  toRefs,
+  inject,
+  computed,
+  watchEffect,
+  onUnmounted,
+} from "vue";
 export default {
   name: "ps3Timer",
   setup() {
@@ -56,6 +63,10 @@ export default {
           () => dataStore.data.status.time.seconds.power++,
           1000
         );
+    });
+    onUnmounted(() => {
+      clearInterval(dataStore.filters.ps3tick);
+      dataStore.filters.ps3tick = null;
     });
     return { ...toRefs(state) };
   },

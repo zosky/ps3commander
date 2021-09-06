@@ -48,9 +48,8 @@
           <ServerNetwork v-if="drives?.netfs" class="text-purple-200 text-sm" />
           <ServerNetworkOff v-else class="text-red-400 text-sm" />
         </div>
-        <LanDisconnect v-if="!loading && WAN" class="text-green-200" />
         <Ethernet
-          v-else-if="!loading"
+          v-if="!loading"
           :class="[
             status?.on
               ? 'text-3xl text-purple-200'
@@ -59,9 +58,17 @@
         />
       </div>
     </div>
-    <Reload
-      class="animate-spin text-purple-500 text-3xl m-1 mb-2 w-10 h-10"
-      v-if="loading"
+    <component
+      v-if="WAN || loading || !status?.on"
+      :is="WAN ? 'LanDisconnect' : loading ? 'Reload' : 'PowerPlugOff'"
+      :class="[
+        'text-3xl w-10 h-10',
+        {
+          'm-1 mb-2 animate-spin text-purple-500': loading,
+          'text-red-600 -mt-1': !status?.on,
+          'text-purple-700 py-1': WAN,
+        },
+      ]"
     />
   </div>
 </template>
@@ -76,11 +83,12 @@ import {
   ServerNetwork,
   ServerNetworkOff,
   Reload,
+  PowerPlugOff,
   Lock,
   LanDisconnect,
 } from "mdue";
 export default {
-  name: "ps3status",
+  name: "NAVps3status",
   components: {
     timer,
     familySVGs,
@@ -89,6 +97,7 @@ export default {
     HarddiskRemove,
     ServerNetwork,
     ServerNetworkOff,
+    PowerPlugOff,
     Reload,
     Lock,
     LanDisconnect,
