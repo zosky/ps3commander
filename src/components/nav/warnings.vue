@@ -8,7 +8,7 @@
     <warning v-if="!haveFavs" @click="viewAll()">
       <template #icon><SelectionOff /></template>
       <template #msg
-        >showing the top 20 f/metecritic.<br />
+        >showing the top 20 f/matecritic.<br />
         <em class="font-bold"
           >smash <StarCircle class="inline-block text-xl -mx-0.5" /> for all </em
         >(or this)

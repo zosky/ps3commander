@@ -117,6 +117,11 @@ const filters = reactive({
       )
       ?.sort(),
   },
+  historyMode: localStorage.getItem("historyMode"), // mounted|viewed
+  history: {
+    viewed: JSON.parse(localStorage.getItem("historyVIEW")), // view log
+    mounted: JSON.parse(localStorage.getItem("historyMOUNT")), // mount log
+  },
   myFavs: JSON.parse(localStorage.getItem("myFavs")),
   viewFavs: true,
   top20: top20,

@@ -166,8 +166,27 @@ export default {
       mountDisk: (gameId) => {
         dataStore.getters.postData("play", null, { id: gameId });
         dataStore.getters.getData();
+        dataStore.filters.history.mounted.push(gameId);
+        state.pushHistory("mounted", gameId); //++
+      },
+      pushHistory: (toWhere, withWhat) => {
+        // add to history -- max 10 -- store in browser
+        // push only if not in history already
+        if (!dataStore.filters.history[toWhere].includes(withWhat))
+          dataStore.filters.history[toWhere].push(withWhat);
+        if (dataStore.filters.history[toWhere]?.length > 10)
+          dataStore.filters.history[toWhere] =
+            dataStore.filters.history[toWhere].slice(1);
+        localStorage.setItem(
+          `history${toWhere == "viewed" ? "VIEW" : "MOUNT"}`,
+          JSON.stringify(dataStore.filters.history[toWhere])
+        );
       },
     });
+    // INIT -- add this game to history
+    if (!dataStore.filters.history.viewed)
+      dataStore.filters.history.viewed = [];
+    state.pushHistory("viewed", state.game.id); // ++
     return { ...toRefs(state) };
   },
 };

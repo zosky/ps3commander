@@ -3,12 +3,21 @@
     id="nav"
     :class="[
       'p-4 flex flex-row justify-between items-center',
-      'overflow-x-scroll overflow-y-visible',
+      'overflow-x-scroll overflow-y-hidden',
       'bg-gradient-to-r sticky top-0 z-20 shadow-lg',
       navThemeColor,
     ]"
   >
     <nav-mastheads class="overflow-visible z-20 fixed top-7" />
+    <nav-history
+      :class="[
+        'fixed w-full z-10 transform overflow-y-visible',
+        '-bottom-1 right-6 sm:w-96 sm:left-44',
+        'sm:-top-2 sm:right-auto sm:bottom-auto',
+        'scale-50 sm:scale-100 origin-right',
+      ]"
+    />
+
     <div id="logoPlaceHolder" class="pr-40" />
     <div
       :class="[
@@ -47,6 +56,7 @@ import navPlayerCount from "./nav/players.vue";
 import navControllers from "./nav/controllers.vue";
 import navMastheads from "./nav/mastheads.vue";
 import navWarnings from "./nav/warnings.vue";
+import navHistory from "./nav/history.vue";
 import navGametdb from "./nav/gametdb.vue";
 import navSearch from "./nav/search.vue";
 import navLanWan from "./nav/lanwan.vue";
@@ -64,6 +74,7 @@ export default {
     navControllers,
     navMastheads,
     navWarnings,
+    navHistory,
     navGametdb,
     navSearch,
     navLanWan,
@@ -98,6 +109,10 @@ export default {
           : "to-yellow-800 from-yellow-400"
       ),
     });
+
+    if (!dataStore.filters.historyMode)
+      dataStore.filters.historyMode = "viewed";
+
     return { ...toRefs(state) };
   },
 };

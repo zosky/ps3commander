@@ -36,7 +36,17 @@
         "
       />
     </div>
-    <ps3-api-url :class="bubbleCSS" />
+    <ps3-api-url :class="[bubbleCSS, 'select-none']" />
+    <div :class="bubbleCSS" @click="historyModeToggle()">
+      <component
+        :is="viewMode == 'mounted' ? 'History' : 'Disc'"
+        class="text-6xl sm:text-9xl"
+      />
+      <span>
+        <span class="font-bold">history</span>
+        <div>discs {{ viewMode }}</div>
+      </span>
+    </div>
     <div
       :class="[bubbleCSS, $route.name == 'howTo' ? hereCSS : '']"
       @click="
@@ -60,7 +70,7 @@
       </div>
     </div>
   </div>
-  <router-view class="w-1/2 mx-auto" />
+  <router-view class="m-2 w-full sm:w-1/2 sm:mx-auto" />
 </template>
 
 <script>
@@ -83,6 +93,8 @@ import {
   LanDisconnect,
   CodeBraces,
   PowerPlugOff,
+  History,
+  Disc,
 } from "mdue";
 export default {
   name: "ps3status",
@@ -104,6 +116,8 @@ export default {
     LanDisconnect,
     CodeBraces,
     PowerPlugOff,
+    History,
+    Disc,
   },
   setup() {
     const dataStore = inject("$dataStore");
@@ -126,6 +140,16 @@ export default {
             : "text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300",
         ];
       }),
+      viewMode: dataStore.filters.historyMode,
+      viewModes: ["mounted", "viewed"],
+      historyModeToggle: () => {
+        const v = state.viewMode;
+        const vm = state.viewModes;
+        const nv = v == vm[0] ? vm[1] : vm[0];
+        state.viewMode = nv;
+        dataStore.filters.historyMode = nv;
+        localStorage.setItem("historyMode", nv);
+      },
     });
     return { ...toRefs(state) };
   },

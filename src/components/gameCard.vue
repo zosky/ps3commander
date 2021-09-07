@@ -18,6 +18,7 @@
     />
     <template v-else>
       <component
+        v-if="!noLabel"
         :is="`StarCircle${!fav ? 'Outline' : ''}`"
         :class="[
           fav ? 'text-green-300' : 'text-blue-300',
@@ -25,10 +26,14 @@
           'mt-40 -ml-5 -rotate-6 text-9xl text-center',
         ]"
       />
-      <my-svg i="ps3" class="off m-6 transform -rotate-6 mt-52 pb-2" />
+      <my-svg
+        i="ps3"
+        class="off m-6 transform pb-2"
+        :class="noLabel ? 'transform rotate-90 mt-16' : '-rotate-6 mt-52'"
+      />
     </template>
     <div
-      v-if="gametdb"
+      v-if="gametdb && noLabel == false"
       :class="[
         'w-3/4 p-1 px-3 transform transition-colors',
         'skew-x-12 -rotate-3 translate-x-1/4 -translate-y-1/4',
@@ -95,6 +100,7 @@ export default {
     fav: { type: Boolean, default: false },
     favView: { type: Boolean, default: false },
     gametdb: { type: Boolean, default: false },
+    noLabel: { type: Boolean, default: false },
   },
   components: {
     DiscPlayer,
