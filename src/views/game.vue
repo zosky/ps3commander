@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, inject, computed } from "vue";
+import { reactive, toRefs, inject, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { DiscPlayer, Backburger, ServerPlus, Application } from "mdue";
 export default {
@@ -183,6 +183,13 @@ export default {
         );
       },
     });
+
+    watchEffect(() => {
+      // update page when route changed
+      const rID = route.params.id;
+      state.game = dataStore.data.theseGames.find((g) => g.id == rID);
+    });
+
     // INIT -- add this game to history
     if (!dataStore.filters.history.viewed)
       dataStore.filters.history.viewed = [];

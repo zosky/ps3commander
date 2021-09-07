@@ -48,18 +48,16 @@
       </span>
     </div>
     <div
-      :class="[bubbleCSS, $route.name == 'howTo' ? hereCSS : '']"
+      :class="[bubbleCSS, routeName == 'howTo' ? hereCSS : '']"
       @click="
-        $route.name == 'howTo'
-          ? $router.go(-1)
-          : $router.push({ name: 'howTo' })
+        routeName == 'howTo' ? $router.go(-1) : $router.push({ name: 'howTo' })
       "
     >
       <HelpRhombusOutline class="text-6xl sm:text-9xl" />
       <span>how this works</span>
     </div>
     <div
-      :class="[bubbleCSS, $route.name == 'gitLog' ? hereCSS : '']"
+      :class="[bubbleCSS, routeName == 'gitLog' ? hereCSS : '']"
       @click="$router.push({ name: 'gitLog' })"
     >
       <CodeBraces class="text-6xl sm:text-9xl" />
@@ -75,6 +73,7 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
+import { useRoute } from "vue-router";
 import familySVGs from "@/components/family.vue";
 import timer from "@/components/ps3api/timer.vue";
 import ps3ApiUrl from "@/components/ps3api/apiURL.vue";
@@ -120,8 +119,10 @@ export default {
     Disc,
   },
   setup() {
+    const route = useRoute();
     const dataStore = inject("$dataStore");
     const state = reactive({
+      routeName: computed(() => route.name),
       WAN: computed(() => dataStore.data?.WAN),
       status: computed(() => dataStore.data?.status),
       loading: computed(() => dataStore.filters?.loading),
