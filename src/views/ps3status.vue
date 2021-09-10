@@ -225,7 +225,7 @@
         v-else
       />
     </div>
-    <div class="grid grid-cols-2 gap-2 text-xs">
+    <div v-if="DEV" class="grid grid-cols-2 gap-2 text-xs">
       <pre class="text-red-400" v-text="status" />
       <pre class="text-green-400" v-text="drives" />
     </div>
