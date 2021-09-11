@@ -12,32 +12,26 @@
     <nav-history
       :class="[
         'fixed w-full z-10 transform overflow-y-visible',
-        '-bottom-1 right-6 sm:w-96 sm:left-44',
+        '-bottom-1 right-6 sm:w-96 sm:left-56',
         'sm:-top-2 sm:right-auto sm:bottom-auto',
         'scale-50 sm:scale-100 origin-right',
       ]"
     />
-
     <div id="logoPlaceHolder" class="pr-40" />
     <div
       :class="[
-        'flex flex-row gap-1  justify-around  items-center',
+        'z-20 flex flex-row gap-1  justify-around  items-center',
         { 'px-2 mx-2 text-blue-200 pl-2': ps3mode },
         'text-3xl text-blue-300',
       ]"
     >
-      <nav-lan-wan />
-      <nav-favs v-if="!myList" />
       <nav-pager />
-      <template v-if="myList">
-        <nav-family v-if="ps3mode" />
-        <nav-controllers v-if="ps3mode" />
-        <nav-genres />
-        <nav-player-count />
-      </template>
+      <nav-family v-if="ps3mode" />
+      <nav-controllers v-if="ps3mode" />
+      <nav-genres />
+      <nav-player-count />
       <nav-zoom />
       <nav-search />
-      <nav-gametdb />
       <AlertRhombusOutline
         @click="$router.push({ name: 'howTo' })"
         v-if="!API"
@@ -57,14 +51,11 @@ import navControllers from "./nav/controllers.vue";
 import navMastheads from "./nav/mastheads.vue";
 import navWarnings from "./nav/warnings.vue";
 import navHistory from "./nav/history.vue";
-import navGametdb from "./nav/gametdb.vue";
 import navSearch from "./nav/search.vue";
-import navLanWan from "./nav/lanwan.vue";
 import navFamily from "./nav/family.vue";
 import navGenres from "./nav/genres.vue";
 import navPager from "./nav/pager.vue";
 import navZoom from "./nav/zoom.vue";
-import navFavs from "./nav/favs.vue";
 import { AlertRhombusOutline } from "mdue";
 export default {
   name: "Nav",
@@ -75,34 +66,24 @@ export default {
     navMastheads,
     navWarnings,
     navHistory,
-    navGametdb,
     navSearch,
-    navLanWan,
     navFamily,
     navGenres,
     navPager,
     navZoom,
-    navFavs,
     AlertRhombusOutline,
   },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
-      WAN: computed(() => dataStore.data?.WAN),
       API: computed(() => dataStore.data?.API),
-      loading: computed(() => dataStore.filters?.loading),
-      myList: computed(() => dataStore.filters?.myList),
-      ps3on: computed(() => dataStore.data?.status?.on),
-      ps3mode: computed(() =>
-        ["ps3", "gametdb"].includes(dataStore.filters.viewMode)
-      ),
-      filters: dataStore.filters,
+      ps3mode: computed(() => dataStore.filters.viewMode == "ps3"),
       navThemeColor: computed(() =>
-        state.loading
+        dataStore.filters?.loading
           ? "to-purple-800 from-purple-400"
-          : state.ps3on
+          : dataStore.data?.status?.on
           ? "to-blue-800 from-blue-300"
-          : state.WAN
+          : dataStore.data?.WAN
           ? "to-indigo-800 from-indigo-400"
           : "to-yellow-800 from-yellow-400"
       ),

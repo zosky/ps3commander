@@ -1,20 +1,6 @@
 <template>
   <div class="p-2 sm:grid sm:grid-cols-2">
-    <img
-      :src="`${IMGdir}${
-        game?.images?.image ? game.images.image : `gametdb/${game.id}.jpg`
-      }`"
-      :alt="game?.id"
-      :style="
-        viewMode == 'gametdb'
-          ? 'transform: perspective(60em) rotateY(20deg);'
-          : ''
-      "
-      :class="{
-        'mt-4  ml-2 sm:mt-8 mb-4 ring-2 border-l-4 sm:border-l-8 border-b-4 rounded-xl sm:rounded-l-3xl':
-          viewMode == 'gametdb',
-      }"
-    />
+    <img :src="`${IMGdir}${game.images.image}`" :alt="game?.id" />
     <div>
       <div
         :class="[

@@ -5,18 +5,14 @@
       'gap-x-12 gap-y-2 justify-center my-2',
     ]"
   >
-    <warning v-if="!haveFavs" @click="viewAll()">
-      <template #icon><SelectionOff /></template>
-      <template #msg
-        >showing the top 20 f/matecritic.<br />
-        <em class="font-bold"
-          >smash <StarCircle class="inline-block text-xl -mx-0.5" /> for all </em
-        >(or this)
-      </template>
-    </warning>
     <warning
-      v-if="!haveAPI"
-      @click="$router.push({ name: 'admin', params: { api: 'edit' } })"
+      v-if="!haveAPI || demoMode"
+      @click="
+        $router.push({
+          name: 'admin',
+          params: { api: 'edit' },
+        })
+      "
     >
       <template #icon><my-svg i="ps3" class="loading h-20" /></template>
       <template #default>API url missing</template>
@@ -43,7 +39,7 @@
 
 <script>
 import { reactive, toRefs, inject, computed } from "vue";
-import { SelectionOff, MessageSettingsOutline, StarCircle } from "mdue";
+import { MessageSettingsOutline } from "mdue";
 import warning from "@/components/MSGtimeOut.vue";
 import ps3demoMode from "../ps3api/demo.vue";
 export default {
@@ -51,17 +47,13 @@ export default {
   components: {
     warning,
     ps3demoMode,
-    SelectionOff,
     MessageSettingsOutline,
-    StarCircle,
   },
   setup() {
     const dataStore = inject("$dataStore");
     const state = reactive({
-      haveFavs: computed(() => dataStore?.filters?.myFavs?.length),
       haveAPI: computed(() => dataStore.data.API),
       demoMode: computed(() => dataStore.data.API == "demo"),
-      viewAll: () => (dataStore.filters.viewFavs = false),
     });
     return { ...toRefs(state) };
   },

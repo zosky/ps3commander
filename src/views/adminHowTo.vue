@@ -4,63 +4,6 @@
       easy as 1, 2, 3...
     </div>
     <ol type="1" class="list-decimal p-3 pt-0 ml-2">
-      <admin-li class="pt-2">
-        <template #title> browse and favorite some ps3 games </template>
-        <template #row>
-          <ul class="ml-2">
-            <admin-li>
-              <template #row>
-                smash <my-svg i="ps3" class="h-4 px-1" /> or
-                <my-svg i="gameTDB" class="h-4" />
-                in eaither top corner
-              </template>
-            </admin-li>
-            <admin-li>
-              <template #col>
-                <div class="flex flex-row">
-                  search, and click to add/rm (
-                  <StarCheck class="text-lg text-blue-500" /> /
-                  <StarCheckOutline class="text-lg text-blue-500" />) from your
-                  collection
-                </div>
-                <div class="transform scale-75 origin-left -my-1">
-                  or manually: set
-                  <b class="font-mono">
-                    localStorage.myFavs = ["diskID1","diskID2","diskID3",...]
-                  </b>
-                </div>
-              </template>
-            </admin-li>
-            <admin-li>
-              <template #row>
-                view your favorites from nav (
-                <StarCircle class="text-lg text-blue-500" />/
-                <StarCircleOutline class="text-lg text-blue-500" />
-                )
-              </template>
-            </admin-li>
-            <admin-li>
-              <template #row>
-                toggle <b class="mx-0.5"> localNav </b>mode [
-                <Earth class="text-lg text-blue-500" />
-                /
-                <HomeAccount class="text-lg text-blue-500" />
-                ] for personalized filters
-              </template>
-              <template #col>
-                <span class="text-purple-500">
-                  TODO: changing the personalized filters
-                </span>
-              </template>
-            </admin-li>
-            <admin-li class="text-purple-500">
-              <template #row>
-                <b>TODO: view games</b>
-              </template>
-            </admin-li>
-          </ul>
-        </template>
-      </admin-li>
       <admin-li>
         <template #title>
           for this app to do any <em>commendering</em><br />
@@ -253,6 +196,25 @@
           </ul>
         </template>
       </admin-li>
+      <admin-li class="pt-2">
+        <template #title> browse your games </template>
+        <template #row>
+          <div class="flex flex-row align-middle text-sm gap-1">
+            by smashing
+            <my-svg i="ps3" class="h-6" />
+            or
+            <my-svg i="snes" class="h-6" />
+            in the corner ... then again on a game
+          </div>
+        </template>
+      </admin-li>
+      <admin-li class="pt-2">
+        <template #title> mount and play </template>
+        <template #row>
+          <div>TODO</div>
+        </template>
+      </admin-li>
+
       <admin-li>
         <template #title
           >if you want to host this app locally, look under the hood, or
@@ -278,20 +240,7 @@
 <script>
 import { computed, reactive, toRefs, inject } from "vue";
 import adminLi from "../components/adminHowToLI.vue";
-import {
-  // DiscPlayer,
-  // ServerNetwork,
-  // Application,
-  StarCheckOutline,
-  StarCheck,
-  // HelpRhombusOutline,
-  StarCircle,
-  StarCircleOutline,
-  HomeAccount,
-  LanDisconnect,
-  Earth,
-  Ethernet,
-} from "mdue";
+import { LanDisconnect, Ethernet } from "mdue";
 import nodeRedApiPng from "/src/assets/screens/nodeRed-api.png";
 import nrXmlJSON from "/src/assets/nodeRed/xml-to-json.json";
 import nrFlow from "@/assets/nodeRed/api.json";
@@ -299,12 +248,6 @@ export default {
   name: "howTo",
   components: {
     adminLi,
-    StarCircle,
-    StarCircleOutline,
-    StarCheckOutline,
-    StarCheck,
-    HomeAccount,
-    Earth,
     LanDisconnect,
     Ethernet,
   },

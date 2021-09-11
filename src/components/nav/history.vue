@@ -5,10 +5,6 @@
       v-for="game in games"
       :key="game.id"
       :game="game"
-      :myList="false"
-      :favView="true"
-      :gametdb="true"
-      :ps3="false"
       :noLabel="true"
       :class="[
         'min-w-min transform transition-transform',

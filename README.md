@@ -1,29 +1,27 @@
 # ps3commander
 handRolled controller v4(?) - vue3 spa ...
  - data backed in as json. at first extracted from my local gamesDB (scraped by skyScrapper)
- - currently using the gameTDB dataSet
- - nodeRed-webManMod-middleWare
+ - TODO:DOC: API nodeRed-webManMod *middleWare* > give/give status from lan
 
 # TODO
-- decouple media from build ?
 - decouple from nodeRed-API / hook wMM direct ?
-- ~~decouple from myDB - hook to skyScraper output (need xml>json)~~ 
-- current source = gameTDB - need permission
 - decouple user-data.json 
-  - hardCoded at build time 
+  - hardCoded at build time > move to api
   - cache last API resp in browser localStorage 
-- massUpload: get gameList from console (w/wMM)
+- massUpload: get gameList from console (w/wMM) || paste
 # changeLog
+- 21.09.11 - dropping catalogue vue - too much bloat
+  - its still in the gameTDB-catalogue branch - maybe later
 - 21.09.07 - historyMode widget shows last10 in nav
   - added toggle for gamesViewed or gamesMounted in admin
   - arrays put into browser localStore for safeKeeping
   - screenShot below
 - 21.09.06 - lets call it alpha again
-  - added gameTDB dataSet 
-  - myFavs - store select games as array in browser storage
-  - seperated app and ps3 status
+  - ~~added gameTDB dataSet~~
+  - ~~myFavs - store select games as array in browser storage~~
+  - separated app and ps3 status
   - added global warnings in nav
-  - seperated the nav into componenets
+  - separated the nav into components
   - made the howTO page
   - moved APIurl to browserStorage
   - and more
@@ -71,7 +69,7 @@ handRolled controller v4(?) - vue3 spa ...
   - fb8e649: current nav item hilighted & mobile search
   - caa3541: howTo - make/fork your own app/(NR)api
 - 21.08.29 - v1b ~complete
-  - ps3Status [componenet|vue] 
+  - ps3Status [component|vue] 
     - ps3:[on|off] as nav color + bottom-right
   - ps3Timer with moment and svgPie
   - ps3-nr-api [get|post]>(state|hdd|swichUser|mountDisk|eject)
