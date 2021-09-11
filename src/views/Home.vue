@@ -15,7 +15,7 @@
       <template v-for="(game, i) in games" :key="game.id">
         <game-card
           :game="game"
-          :noLabel="true"
+          :noLabel="!label"
           :class="[{ '-mr-5': ps3mode }]"
           class="transform transition-transform hover:scale-110 z-10"
           @click="
@@ -69,6 +69,7 @@ export default {
       ),
       flexWidth: computed(() => dataStore.filters.flexWidth),
       ps3mode: computed(() => dataStore?.filters?.viewMode == "ps3"),
+      label: computed(() => dataStore.filters.label),
     });
     onUpdated(() => {
       if (route?.params?.console)

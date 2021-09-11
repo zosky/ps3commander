@@ -8,7 +8,7 @@
       navThemeColor,
     ]"
   >
-    <nav-mastheads class="overflow-visible z-20 fixed top-7" />
+    <nav-mastheads class="overflow-visible z-30 fixed top-7" />
     <nav-history
       :class="[
         'fixed w-full z-10 transform overflow-y-visible',
@@ -31,6 +31,7 @@
       <nav-genres />
       <nav-player-count />
       <nav-zoom />
+      <nav-label />
       <nav-search />
       <AlertRhombusOutline
         @click="$router.push({ name: 'howTo' })"
@@ -55,6 +56,7 @@ import navSearch from "./nav/search.vue";
 import navFamily from "./nav/family.vue";
 import navGenres from "./nav/genres.vue";
 import navPager from "./nav/pager.vue";
+import navLabel from "./nav/label.vue";
 import navZoom from "./nav/zoom.vue";
 import { AlertRhombusOutline } from "mdue";
 export default {
@@ -70,6 +72,7 @@ export default {
     navFamily,
     navGenres,
     navPager,
+    navLabel,
     navZoom,
     AlertRhombusOutline,
   },

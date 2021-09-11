@@ -46,6 +46,7 @@ const filters = reactive({
   viewMode: "ps3",
   search: null,
   player: null,
+  label: false,
   flexWidth: { mobile: 3, big: 6 },
   pager: { p: 0, pp: 100 },
   players: data.ps3
