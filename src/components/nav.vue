@@ -87,8 +87,6 @@ export default {
   },
   setup() {
     const dataStore = inject("$dataStore");
-    dataStore.filters.search = null;
-    dataStore.filters.player = null;
     const state = reactive({
       WAN: computed(() => dataStore.data?.WAN),
       API: computed(() => dataStore.data?.API),
@@ -109,9 +107,6 @@ export default {
           : "to-yellow-800 from-yellow-400"
       ),
     });
-
-    if (!dataStore.filters.historyMode)
-      dataStore.filters.historyMode = "viewed";
 
     return { ...toRefs(state) };
   },

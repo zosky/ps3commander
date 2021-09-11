@@ -1,5 +1,5 @@
 // fakeStore used by most all vues
-import { reactive, computed } from "vue";
+import { reactive, computed, watchEffect } from "vue";
 import gamesList from "./data/ps3games.json";
 import gamesListALL from "./data/ps3all.json";
 import gameTags from "./data/ps3tags.json";
@@ -17,7 +17,8 @@ const data = reactive({
   gameTags: gameTags,
   theseGames: computed(() => {
     const route = useRoute();
-    const v = filters?.viewMode;
+    const vm = route?.params?.console;
+    const v = vm ? vm : filters?.viewMode;
     const myList = filters?.myList;
     let dataARR =
       v == "snes"
@@ -64,9 +65,12 @@ const data = reactive({
 });
 
 const filters = reactive({
-  /* filters: watched by display function */
   viewMode: "gametdb",
+  search: null,
+  player: null,
   myList: false,
+  flexWidth: { mobile: 3, big: 6 },
+  pager: { p: 0, pp: 100 },
   players: data.games
     .reduce(
       (acc, g) => {
@@ -125,6 +129,20 @@ const filters = reactive({
   myFavs: JSON.parse(localStorage.getItem("myFavs")),
   viewFavs: true,
   top20: top20,
+});
+
+// init data
+if (!filters.historyMode) filters.historyMode = "viewed";
+
+// linked data
+watchEffect(() => {
+  // reset pager on search
+  if (filters.search) filters.pager.p = 0;
+});
+
+watchEffect(() => {
+  if (filters.myList == "ps3") filters.viewFavs = true;
+  else if (filters.myList == "gametdb") filters.viewFavs = false;
 });
 
 const getters = reactive({

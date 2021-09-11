@@ -38,7 +38,7 @@
           alt="shelf"
           class="col-span-full h-20 w-full -mt-16 hidden sm:block"
         />
-        <!-- mobile shelf OR-->
+        <!-- mobile shelf OR LAST-->
         <img
           v-if="
             i % flexWidth.mobile == flexWidth.mobile - 1 ||
@@ -55,21 +55,13 @@
 </template>
 
 <script>
-import { reactive, toRefs, inject, computed, watchEffect } from "vue";
-import { useRoute } from "vue-router";
+import { reactive, toRefs, inject, computed } from "vue";
 import gameCard from "@/components/gameCard.vue";
 export default {
   name: "Home",
   components: { gameCard },
   setup() {
-    const route = useRoute();
     const dataStore = inject("$dataStore");
-    dataStore.filters.flexWidth = { mobile: 3, big: 6 };
-    dataStore.filters.pager = { p: 0, pp: 100 };
-    if (route?.params?.console)
-      dataStore.filters.viewMode = route?.params?.console;
-    // WAN LIST // if favs - favsMode - else init ARR
-    if (!dataStore?.filters?.myFavs?.length) dataStore.filters.myFavs = [];
     const state = reactive({
       DEV: process.env.NODE_ENV == "development",
       shelf: `${process.env.VUE_APP_IMG_BASE}woodShelf.png`,
@@ -97,11 +89,6 @@ export default {
         }
       },
     });
-
-    watchEffect(() => {
-      if (dataStore.filters.search) dataStore.filters.pager.p = 0;
-    });
-
     return { ...toRefs(state) };
   },
 };
