@@ -39,12 +39,12 @@
     <ps3-api-url :class="[bubbleCSS, 'select-none']" />
     <div :class="bubbleCSS" @click="historyModeToggle()">
       <component
-        :is="viewMode == 'mounted' ? 'History' : 'Disc'"
+        :is="historyMode == 'mounted' ? 'History' : 'Disc'"
         class="text-6xl sm:text-9xl"
       />
       <span>
         <span class="font-bold">history</span>
-        <div>discs {{ viewMode }}</div>
+        <div>discs {{ historyMode }}</div>
       </span>
     </div>
     <div
@@ -141,13 +141,13 @@ export default {
             : "text-red-500 bg-red-200 hover:text-red-700 hover:bg-red-300",
         ];
       }),
-      viewMode: dataStore.filters.historyMode,
-      viewModes: ["mounted", "viewed"],
+      historyMode: dataStore.filters.historyMode,
+      historyModes: ["mounted", "viewed"],
       historyModeToggle: () => {
-        const v = state.viewMode;
-        const vm = state.viewModes;
+        const v = state.historyMode;
+        const vm = state.historyModes;
         const nv = v == vm[0] ? vm[1] : vm[0];
-        state.viewMode = nv;
+        state.historyMode = nv;
         dataStore.filters.historyMode = nv;
         localStorage.setItem("historyMode", nv);
       },
